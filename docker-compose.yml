@@ -1,0 +1,51 @@
+# =============================================================================
+# Docker Compose — Ambiente de desenvolvimento local
+# =============================================================================
+# Uso:
+#   docker compose up -d db        # sobe apenas o Postgres (recomendado no dev)
+#   docker compose up --build web  # sobe web + db (simula produção localmente)
+# =============================================================================
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: miraf-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: miraf
+      POSTGRES_PASSWORD: miraf
+      POSTGRES_DB: miraf_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - miraf-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U miraf -d miraf_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: miraf-web
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://miraf:miraf@db:5432/miraf_dev?schema=public
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+      AUTH_SECRET: ${AUTH_SECRET}
+      AUTH_TRUST_HOST: "true"
+    ports:
+      - "3000:3000"
+    profiles:
+      # `web` só sobe quando explicitamente pedido (evita rebuild no dia-a-dia).
+      # Uso: docker compose --profile app up --build web
+      - app
+
+volumes:
+  miraf-db-data:

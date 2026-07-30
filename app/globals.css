@@ -1,0 +1,375 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/**
+ * Design tokens — Miraf Web Platform
+ *
+ * Identidade da marca Mira aplicada sobre a base shadcn/ui (Tailwind CSS v4).
+ * Azul institucional (#17479e) como cor primária e vermelho (#ed1c24) como
+ * acento de conversão (CTAs de cotação). Alterar as cores da marca aqui
+ * reflete em todos os componentes.
+ *
+ * Convenção de cor:
+ *   --primary  → azul da marca (botões base, links, estados ativos, foco)
+ *   --brand    → vermelho da marca (CTA de conversão: "Adicionar à cotação")
+ *   --accent   → tom claro de azul (hover/realce sutil)
+ */
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+
+  /* Azul da marca — #17479e */
+  --primary: #17479e;
+  --primary-foreground: #ffffff;
+
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+
+  /* Realce sutil em azul (hover de itens, badges) */
+  --accent: #eaf0fb;
+  --accent-foreground: #17479e;
+
+  /* Vermelho da marca — #ed1c24 — usado nos CTAs de conversão */
+  --brand: #ed1c24;
+  --brand-foreground: #ffffff;
+
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+
+  /* Anel de foco em azul da marca */
+  --ring: #17479e;
+
+  /* Cantos um pouco mais suaves (direção "Moderno") */
+  --radius: 0.75rem;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+
+  /* Azul mais claro para contraste no escuro */
+  --primary: #5b86d6;
+  --primary-foreground: #0b1220;
+
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+
+  --accent: #1c2c50;
+  --accent-foreground: #cdd8ee;
+
+  --brand: #f04b52;
+  --brand-foreground: #ffffff;
+
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: #5b86d6;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Public Sans no corpo, Archivo nos títulos (utilitário font-display) */
+  --font-sans: var(--font-public-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-archivo);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+  }
+  /* Acessibilidade: respeita usuários que desativaram animações */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/**
+ * Sistema de elevação — sombras suaves para dar percepção de camadas (superfícies
+ * elevadas) sem peso. Definidas com `color-mix` sobre `--foreground`, então
+ * funcionam no tema claro e no escuro. Uso consistente em toda a página de produto
+ * (cards de specs/benefícios, galeria, tabela nutricional, ficha técnica).
+ *
+ *   .shadow-soft     → repouso (cards, superfícies)
+ *   .shadow-soft-md  → hover/elevação (cards interativos, imagem em foco)
+ */
+@layer components {
+  .shadow-soft {
+    box-shadow:
+      0 1px 2px -1px color-mix(in oklab, var(--foreground) 8%, transparent),
+      0 6px 20px -12px color-mix(in oklab, var(--foreground) 14%, transparent);
+  }
+  .shadow-soft-md {
+    box-shadow:
+      0 2px 6px -2px color-mix(in oklab, var(--foreground) 10%, transparent),
+      0 16px 40px -18px color-mix(in oklab, var(--foreground) 20%, transparent);
+  }
+}
+
+/**
+ * Barra de rolagem global — fina e discreta, no lugar da nativa larga/escura do
+ * Windows (que destoava do layout). Firefox via `scrollbar-width/-color`; Chrome/
+ * Edge via `::-webkit-scrollbar`. Os carrosséis que ocultam a barra usam a classe
+ * `scrollbar-width:none` (maior especificidade), então continuam sem barra.
+ */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--foreground) 22%, transparent) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: color-mix(in oklab, var(--foreground) 20%, transparent);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in oklab, var(--foreground) 36%, transparent);
+}
+
+/**
+ * Oculta a barra de rolagem em carrosséis de linha única (a navegação é feita
+ * pelas setas ◂ ▸). Precisa ser NÃO-LAYERED — como a regra global de scrollbar
+ * acima também é não-layered, um utilitário do Tailwind (que vive em `@layer
+ * utilities`) perderia para ela no cascade; aqui vencemos por especificidade no
+ * mesmo nível (classe > seletor universal).
+ */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/**
+ * Carrossel infinito de fornecedores (home). A faixa duplica a lista e desliza
+ * até -50% (um conjunto completo), tornando o loop contínuo. O respeito a
+ * `prefers-reduced-motion` já vem da regra global acima.
+ */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/**
+ * Hero da home — animações discretas e sofisticadas.
+ *
+ * - `hero-ken-burns`: zoom lento e contínuo na imagem/degradê do slide ativo,
+ *   dando vida ao banner sem movimento brusco.
+ * - `hero-in-left` / `hero-in-up`: entrada do conteúdo (título desliza da
+ *   esquerda; descrição e botões surgem de baixo). O escalonamento é feito com
+ *   `animation-delay` no componente. Todas usam só `transform`/`opacity`
+ *   (composição na GPU) e `both` para o estado final (visível) persistir —
+ *   sob `prefers-reduced-motion` a regra global zera a duração e o conteúdo
+ *   aparece imediatamente, sem sumir.
+ */
+@keyframes hero-ken-burns {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1.16);
+  }
+}
+
+@keyframes hero-in-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-2.5rem, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hero-in-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.75rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hero-ken-burns {
+  animation: hero-ken-burns 9s ease-out forwards;
+}
+
+.hero-in-left {
+  animation: hero-in-left 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-in-up {
+  animation: hero-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/**
+ * Conteúdo rico (descrição de produto vinda do editor WYSIWYG).
+ *
+ * Estilos base para o HTML sanitizado renderizado via `dangerouslySetInnerHTML`
+ * (classe `.rich-content`). Cor do texto, tamanho de fonte e alinhamento vêm
+ * como estilos inline do editor e se aplicam por cima destes. Preferimos um
+ * bloco escopado a puxar o plugin de tipografia — menos peso e controle total.
+ */
+.rich-content {
+  color: var(--foreground);
+  line-height: 1.7;
+  overflow-wrap: break-word;
+}
+.rich-content > :first-child {
+  margin-top: 0;
+}
+.rich-content > :last-child {
+  margin-bottom: 0;
+}
+.rich-content p {
+  margin: 0 0 0.85em;
+}
+.rich-content h1,
+.rich-content h2,
+.rich-content h3,
+.rich-content h4 {
+  font-family: var(--font-display), var(--font-sans), sans-serif;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 1.4em 0 0.5em;
+  text-wrap: balance;
+}
+.rich-content h1 {
+  font-size: 1.6rem;
+}
+.rich-content h2 {
+  font-size: 1.35rem;
+}
+.rich-content h3 {
+  font-size: 1.15rem;
+}
+.rich-content h4 {
+  font-size: 1.02rem;
+}
+.rich-content ul,
+.rich-content ol {
+  margin: 0 0 0.85em;
+  padding-left: 1.5rem;
+}
+.rich-content ul {
+  list-style: disc;
+}
+.rich-content ol {
+  list-style: decimal;
+}
+.rich-content li {
+  margin: 0.25em 0;
+}
+.rich-content li > ul,
+.rich-content li > ol {
+  margin: 0.25em 0;
+}
+.rich-content a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.rich-content a:hover {
+  opacity: 0.85;
+}
+.rich-content blockquote {
+  border-left: 3px solid var(--brand);
+  padding-left: 1rem;
+  margin: 0 0 0.85em;
+  color: var(--muted-foreground);
+  font-style: italic;
+}
+.rich-content strong,
+.rich-content b {
+  font-weight: 600;
+}
+
+/**
+ * Editor (TipTap) no painel: a superfície editável reusa os estilos de
+ * `.rich-content` para o conteúdo aparecer WYSIWYG. Placeholder do parágrafo
+ * vazio e foco tratados aqui.
+ */
+.rich-editor .tiptap {
+  min-height: 12rem;
+  padding: 0.75rem;
+  outline: none;
+}
+.rich-editor .tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--muted-foreground);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

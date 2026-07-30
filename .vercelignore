@@ -1,0 +1,37 @@
+# =============================================================================
+# .vercelignore — o que NÃO enviar no deploy do Vercel
+# =============================================================================
+# Mantém as imagens reais do catálogo (public/uploads/{products,flavors,
+# categories,suppliers}) — elas são servidas como arquivos estáticos no preview.
+# =============================================================================
+
+# Dependências e build (o Vercel reconstrói)
+node_modules
+.next
+out
+build
+coverage
+
+# Segredos / ambiente (as variáveis são definidas no painel do Vercel)
+.env
+.env.*
+!.env.example
+
+# Docker / infra (não usado no Vercel)
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Ferramentas de dev
+.husky
+.vscode
+.idea
+*.log
+.eslintcache
+.prettiercache
+
+# Cópia acidental de fotos — NÃO deve ir para o deploy (~393 MB, sem uso)
+public/uploads/products/CATALOGO FOTOS/
+
+# Dados do preview — usados só localmente pelo script de import contra o Neon
+prisma/preview-seed.json

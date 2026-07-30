@@ -1,0 +1,478 @@
+// =============================================================================
+// Miraf Web Platform — Prisma Schema
+// =============================================================================
+// O site NÃO é um e-commerce: ele existe para gerar solicitações de cotação.
+// Por isso `Product` não possui campo de preço — a negociação de valores
+// acontece fora da plataforma, pela equipe comercial.
+// =============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// -----------------------------------------------------------------------------
+// Enums
+// -----------------------------------------------------------------------------
+
+/// Papel do usuário dentro do painel administrativo.
+enum UserRole {
+  /// Acesso total: produtos, categorias, marcas, receitas, cotações, usuários e configurações.
+  ADMIN
+  /// Acesso operacional: gerencia catálogo, receitas e cotações, sem gerenciar usuários/configurações.
+  EDITOR
+}
+
+/// Situação de visibilidade de um produto no catálogo público.
+enum ProductStatus {
+  /// Em edição, ainda não visível no site.
+  DRAFT
+  /// Visível no catálogo público.
+  ACTIVE
+  /// Oculto do catálogo público (ex.: produto descontinuado temporariamente).
+  INACTIVE
+}
+
+/// Estágio de atendimento de uma solicitação de cotação pela equipe comercial.
+enum QuoteStatus {
+  /// Recebida, aguardando atendimento.
+  PENDING
+  /// Em atendimento pela equipe comercial.
+  IN_PROGRESS
+  /// Atendimento concluído.
+  COMPLETED
+  /// Cancelada pelo cliente ou pela equipe comercial.
+  CANCELLED
+}
+
+/// Tipo de documento informado pelo cliente no formulário de cotação.
+enum DocumentType {
+  CPF
+  CNPJ
+}
+
+/// Nutriente de uma linha da tabela nutricional. Os obrigatórios (padrão ANVISA
+/// RDC 429/2020) têm rótulo/unidade/ordem canônicos no código; `OTHER` cobre
+/// vitaminas/minerais e demais itens opcionais, com rótulo/unidade livres.
+enum NutrientKind {
+  ENERGY
+  CARBOHYDRATES
+  SUGARS_TOTAL
+  SUGARS_ADDED
+  PROTEIN
+  FATS_TOTAL
+  FATS_SATURATED
+  FATS_TRANS
+  FIBER
+  SODIUM
+  OTHER
+}
+
+// -----------------------------------------------------------------------------
+// User
+// -----------------------------------------------------------------------------
+// Usuários do painel administrativo. Clientes que solicitam cotação NÃO são
+// usuários do sistema — eles apenas preenchem o formulário público de cotação.
+// -----------------------------------------------------------------------------
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  /// Hash da senha (bcrypt). Nunca armazenar em texto plano.
+  password  String
+  role      UserRole @default(EDITOR)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  /// Cotações sob responsabilidade deste usuário no painel.
+  handledQuotes Quote[] @relation("QuoteHandledBy")
+
+  @@index([role])
+}
+
+// -----------------------------------------------------------------------------
+// Category
+// -----------------------------------------------------------------------------
+// Categorias do catálogo. Suporta uma hierarquia opcional de um nível
+// (categoria > subcategoria), útil para segmentos como Panificação > Fermentos.
+// -----------------------------------------------------------------------------
+model Category {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  imageUrl    String?
+  /// Banner largo opcional (topo da página da categoria) — reservado para uso futuro.
+  bannerUrl   String?
+  order       Int      @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  parentId String?
+  parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children Category[] @relation("CategoryHierarchy")
+
+  /// Produtos cuja categoria PRINCIPAL é esta (Product.categoryId).
+  products            Product[] @relation("ProductCategory")
+  /// Produtos cuja SUBCATEGORIA é esta (Product.subcategoryId). Só subcategorias
+  /// costumam aparecer aqui, mas o relacionamento é genérico.
+  subcategoryProducts Product[] @relation("ProductSubcategory")
+
+  @@index([parentId])
+  @@index([active])
+}
+
+// -----------------------------------------------------------------------------
+// Supplier (Fornecedor)
+// -----------------------------------------------------------------------------
+// Antes chamado `Brand`. Renomeado para alinhar código e interface (o rótulo
+// visível é "Fornecedor"). A tabela física continua "Brand" via @@map — evita
+// uma migração destrutiva; é só cosmético no nível do banco. Os nomes de
+// constraints/índices também são preservados via `map:` (sem drift de schema).
+// -----------------------------------------------------------------------------
+model Supplier {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique(map: "Brand_slug_key")
+  logoUrl     String?
+  description String?
+  /// Ordem de exibição nas vitrines de fornecedores (carrossel, filtros).
+  order       Int      @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  products Product[]
+
+  @@index([active], map: "Brand_active_idx")
+  @@map("Brand")
+}
+
+// -----------------------------------------------------------------------------
+// Product
+// -----------------------------------------------------------------------------
+model Product {
+  id String @id @default(cuid())
+
+  name             String
+  slug             String   @unique
+  /// Descrição completa (HTML do editor rico).
+  description      String
+  /// Descrição resumida (texto curto exibido no topo do detalhe e em cards).
+  shortDescription String?
+  /// Composição/ingredientes (HTML do editor rico) — opcional; exibido no detalhe.
+  composition      String?
+  /// Modo de aplicação/uso (HTML do editor rico) — opcional; exibido no detalhe.
+  application      String?
+  /// Conservação/armazenamento (HTML do editor rico) — opcional; exibido no detalhe.
+  conservation     String?
+  /// Modo de preparo (HTML do editor rico) — opcional; exibido no detalhe.
+  preparation      String?
+  /// Ficha técnica (PDF ou imagem) — caminho do upload local; opcional.
+  technicalSheetUrl String?
+  /// Destaques/benefícios em bullets (ex.: "Alta qualidade e rendimento").
+  highlights       String[]
+  /// Peso/medida líquida (texto livre, ex.: "5 kg", "500 g").
+  weight           String?
+  /// Código interno (SKU), quando existir.
+  sku              String?  @unique
+  /// Unidade/forma de venda (ex.: "Caixa com 12 unidades de 1L").
+  packaging        String?
+  /// Unidade de comercialização exibida junto da quantidade na cotação
+  /// (ex.: "caixa", "unidade", "fardo", "kg"). Um valor por produto.
+  saleUnit         String   @default("unidade")
+
+  status   ProductStatus @default(DRAFT)
+  featured Boolean       @default(false)
+  order    Int           @default(0)
+
+  metaTitle       String?
+  metaDescription String?
+
+  /// Categoria PRINCIPAL do produto (sempre uma categoria raiz). Restrict:
+  /// preserva o vínculo (não deixa apagar a categoria com produtos).
+  categoryId String
+  category   Category @relation("ProductCategory", fields: [categoryId], references: [id], onDelete: Restrict)
+
+  /// Subcategoria (opcional) — sempre filha de `category`. SetNull: se a
+  /// subcategoria for excluída, o produto continua na categoria principal.
+  subcategoryId String?
+  subcategory   Category? @relation("ProductSubcategory", fields: [subcategoryId], references: [id], onDelete: SetNull)
+
+  supplierId String?   @map("brandId")
+  supplier   Supplier? @relation(fields: [supplierId], references: [id], onDelete: SetNull, map: "Product_brandId_fkey")
+
+  images     ProductImage[]
+  /// Sabores/variações do produto (ex.: Chocolate, Morango). Vazio = produto
+  /// sem sabores (cotação direta). Cada sabor tem nome + foto própria.
+  flavors    ProductFlavor[]
+  /// Tabela nutricional (opcional, 1:1). Ausente = produto sem tabela.
+  nutrition  NutritionFacts?
+  /// Receitas que sugerem/utilizam este produto.
+  recipes    Recipe[]
+  quoteItems QuoteItem[]
+
+  /// Produtos relacionados (auto-relação N:N). `relatedProducts` são os que
+  /// este produto aponta; `relatedFrom` são os que apontam para ele. A UI de
+  /// admin edita `relatedProducts`; a página pública exibe a mesma lista.
+  relatedProducts Product[] @relation("RelatedProducts")
+  relatedFrom     Product[] @relation("RelatedProducts")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([subcategoryId])
+  @@index([supplierId], map: "Product_brandId_idx")
+  @@index([status])
+  @@index([featured])
+  @@index([status, categoryId])
+}
+
+// -----------------------------------------------------------------------------
+// ProductImage
+// -----------------------------------------------------------------------------
+// Galeria de imagens de um produto (armazenadas no Cloudinary).
+// -----------------------------------------------------------------------------
+model ProductImage {
+  id        String   @id @default(cuid())
+  url       String
+  alt       String?
+  order     Int      @default(0)
+  /// Marca a imagem de capa exibida nas listagens do catálogo.
+  isPrimary Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  /// Quando preenchido, a imagem pertence à GALERIA daquela variação (sabor).
+  /// Nulo = galeria do produto (produtos sem variações). A imagem sempre tem
+  /// `productId`; `flavorId` apenas a associa a uma variação específica.
+  flavorId String?
+  flavor   ProductFlavor? @relation(fields: [flavorId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([flavorId])
+}
+
+// -----------------------------------------------------------------------------
+// ProductFlavor (Sabor / variação)
+// -----------------------------------------------------------------------------
+// Um produto pode existir em vários sabores. Em vez de um cadastro por sabor,
+// o produto guarda uma lista de sabores, cada um com nome e foto própria. Na
+// página pública o cliente escolhe o(s) sabor(es) a solicitar; cada escolha
+// vira uma linha na cotação. O nome do sabor é copiado para `QuoteItem.flavor`
+// no envio (snapshot), preservando o histórico se o sabor for renomeado/removido.
+// -----------------------------------------------------------------------------
+model ProductFlavor {
+  id       String  @id @default(cuid())
+  name     String
+  imageUrl String?
+  /// Código interno próprio da variação (ex.: SKU por sabor). Sem `@unique`:
+  /// evita colisão cross-table com `Product.sku` e atrito com dados nulos.
+  sku      String?
+  /// Descrição própria da variação (HTML) — sobrepõe a do produto quando presente.
+  description String?
+  /// Peso/medida líquida da variação (texto livre, ex.: "40 g").
+  weight   String?
+  /// Ficha técnica própria da variação (PDF ou imagem) — caminho do upload.
+  technicalSheetUrl String?
+  /// Disponibilidade: variação indisponível não pode ser adicionada à cotação.
+  available Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  /// Galeria própria da variação (frente, verso, embalagem…). Cada imagem é um
+  /// `ProductImage` com `flavorId` apontando para esta variação.
+  images ProductImage[]
+
+  /// Tabela nutricional própria do sabor (opcional, 1:1). Alguns produtos têm
+  /// valores diferentes por sabor (ex.: barrinhas); ausente = sabor sem tabela.
+  nutrition NutritionFacts?
+
+  @@index([productId])
+}
+
+// -----------------------------------------------------------------------------
+// NutritionFacts / NutritionRow  (Tabela nutricional — padrão ANVISA)
+// -----------------------------------------------------------------------------
+// Segue o formato brasileiro atual (RDC 429/2020 + IN 75/2020): colunas por
+// 100 g/ml, por porção e %VD. É a "cabeça" da tabela (porção, medida caseira,
+// rodapé); os nutrientes vão em `NutritionRow`. Pertence a um dono (produto OU
+// sabor — ver campos abaixo); sem tabela, a seção simplesmente não é renderizada.
+// Os valores são os oficiais da embalagem: guardamos como vêm, nunca recalculamos.
+// -----------------------------------------------------------------------------
+model NutritionFacts {
+  id String @id @default(cuid())
+
+  // A tabela pertence a EXATAMENTE UM dono: o produto (produto sem sabores) OU
+  // um sabor (produtos cujos valores mudam por sabor — ex.: barrinhas). Ambos
+  // são opcionais e únicos; a camada de aplicação garante que só um é gravado.
+  /// Dono = produto. Nulo quando a tabela é de um sabor.
+  productId String?  @unique
+  product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  /// Dono = sabor. Nulo quando a tabela é do produto.
+  flavorId String?        @unique
+  flavor   ProductFlavor? @relation(fields: [flavorId], references: [id], onDelete: Cascade)
+
+  /// Porções por embalagem — texto p/ acomodar aproximações ("500", "cerca de 10").
+  servingsPerPackage String?
+  /// Quantidade da porção; vira o cabeçalho da 3ª coluna (ex.: "50 g").
+  servingAmount      String
+  /// Medida caseira da porção (ex.: "1/2 xícara de chá").
+  servingHousehold   String?
+  /// Base da 2ª coluna. "100 ml" para líquidos.
+  referenceAmount    String  @default("100 g")
+  /// Rodapé; default definido no código quando ausente.
+  footnote           String?
+
+  rows NutritionRow[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model NutritionRow {
+  id String @id @default(cuid())
+
+  nutritionFactsId String
+  nutritionFacts   NutritionFacts @relation(fields: [nutritionFactsId], references: [id], onDelete: Cascade)
+
+  kind  NutrientKind
+  /// Rótulo (usado quando kind = OTHER; ex.: "Ácido Fólico").
+  label String?
+  /// Unidade (usada quando kind = OTHER; ex.: "µg", "mg").
+  unit  String?
+
+  /// Coluna "100 g/ml".
+  valuePer100       Decimal? @db.Decimal(10, 2)
+  /// Coluna da porção.
+  valuePerServing   Decimal? @db.Decimal(10, 2)
+  /// %VD — nulo quando não há valor diário de referência (ex.: açúcares totais).
+  dailyValuePercent Int?
+
+  order Int @default(0)
+
+  @@index([nutritionFactsId])
+}
+
+// -----------------------------------------------------------------------------
+// Recipe
+// -----------------------------------------------------------------------------
+model Recipe {
+  id              String  @id @default(cuid())
+  title           String
+  slug            String  @unique
+  description     String
+  instructions    String
+  imageUrl        String?
+  /// Tempo de preparo em minutos.
+  preparationTime Int?
+  /// Número de porções/rendimento.
+  servings        Int?
+  published       Boolean @default(true)
+
+  metaTitle       String?
+  metaDescription String?
+
+  /// Produtos do catálogo sugeridos/utilizados nesta receita.
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published])
+}
+
+// -----------------------------------------------------------------------------
+// Quote
+// -----------------------------------------------------------------------------
+// Solicitação de cotação enviada pelo formulário público. Este é o objetivo
+// principal do site.
+// -----------------------------------------------------------------------------
+model Quote {
+  id String @id @default(cuid())
+
+  /// Número de protocolo legível exibido ao cliente e à equipe comercial (ex.: "ORC-000123").
+  protocol String @unique
+
+  name         String
+  documentType DocumentType
+  /// CPF/CNPJ apenas com dígitos (sanitizado na camada de validação).
+  document     String
+  email        String
+  phone        String
+  /// Opcional, conforme fluxo de cotação.
+  company      String?
+  /// Observações opcionais informadas pelo cliente.
+  notes        String?
+
+  status QuoteStatus @default(PENDING)
+
+  handledById String?
+  handledBy   User?   @relation("QuoteHandledBy", fields: [handledById], references: [id], onDelete: SetNull)
+
+  items QuoteItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([email])
+  @@index([handledById])
+  @@index([createdAt])
+}
+
+// -----------------------------------------------------------------------------
+// QuoteItem
+// -----------------------------------------------------------------------------
+// Item de produto dentro de uma cotação.
+// -----------------------------------------------------------------------------
+model QuoteItem {
+  id        String   @id @default(cuid())
+  quantity  Int      @default(1)
+  /// Sabor solicitado (snapshot do nome), quando o produto tem sabores. Nulo
+  /// para produtos sem sabor. Guardado como texto para preservar o histórico.
+  flavor    String?
+  /// Unidade de venda no momento da solicitação (snapshot de `Product.saleUnit`,
+  /// ex.: "caixa"). Exibida junto da quantidade para a equipe comercial.
+  unit      String?
+  notes     String?
+  createdAt DateTime @default(now())
+
+  quoteId String
+  quote   Quote  @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+
+  /// Restrict: preserva o histórico de cotações mesmo se o produto for descontinuado.
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  /// Um produto pode aparecer em várias linhas (uma por sabor) na mesma cotação.
+  @@unique([quoteId, productId, flavor])
+  @@index([productId])
+}
+
+// -----------------------------------------------------------------------------
+// Settings
+// -----------------------------------------------------------------------------
+// Configurações do site em formato chave/valor, editáveis pelo painel
+// administrativo (ex.: dados de contato, redes sociais, textos do hero).
+// -----------------------------------------------------------------------------
+model Settings {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

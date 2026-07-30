@@ -1,0 +1,39 @@
+{
+  "runs": [
+    {
+      "date": "2026-07-08T22:57:05.371736+00:00",
+      "input_tokens": 0,
+      "output_tokens": 389503,
+      "files": 122
+    },
+    {
+      "date": "2026-07-09T00:35:41.480189+00:00",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "files": 18,
+      "mode": "incremental (AST-only)"
+    },
+    {
+      "date": "2026-07-09T02:28:53.057155+00:00",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "files": 9,
+      "mode": "incremental (AST-only)"
+    },
+    {
+      "date": "2026-07-09T14:31:14.557494+00:00",
+      "input_tokens": 0,
+      "output_tokens": 71727,
+      "files": 8
+    },
+    {
+      "date": "2026-07-09T18:33:39.905913+00:00",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "files": 159,
+      "note": "rename Brand->Supplier refresh (AST + cached docs, no new LLM)"
+    }
+  ],
+  "total_input_tokens": 0,
+  "total_output_tokens": 461230
+}

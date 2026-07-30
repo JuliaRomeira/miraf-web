@@ -1,0 +1,2797 @@
+{
+  "exportedAt": "2026-07-30T22:55:41.423Z",
+  "settings": [
+    {
+      "key": "quote_sequence",
+      "value": "1",
+      "description": null
+    },
+    {
+      "key": "contact_email",
+      "value": "marketing@miraff.com.br",
+      "description": "Email de contato institucional exibido no site."
+    },
+    {
+      "key": "contact_phone",
+      "value": "(19) 3638-2200",
+      "description": "Telefone de contato exibido no site. Atualizar no painel."
+    },
+    {
+      "key": "contact_whatsapp",
+      "value": "5511940000000",
+      "description": "Número de WhatsApp (formato E.164 sem símbolos) usado em links wa.me. Atualizar no painel."
+    },
+    {
+      "key": "address",
+      "value": "Av. Brasília, 910 - Vila Zanetti, São João da Boa Vista - SP",
+      "description": "Endereço físico exibido no rodapé e na página de contato."
+    },
+    {
+      "key": "instagram",
+      "value": "https://www.instagram.com/miradistribuidora_oficial/",
+      "description": "URL do perfil do Instagram."
+    },
+    {
+      "key": "facebook",
+      "value": "https://www.facebook.com/miradistribuidora/?locale=pt_BR",
+      "description": "URL da página do Facebook."
+    },
+    {
+      "key": "site_name",
+      "value": "Mira",
+      "description": "Nome do site, usado em título de páginas e metadados."
+    },
+    {
+      "key": "site_description",
+      "value": "Mira — soluções completas em insumos para food service, panificação, confeitaria e sorveterias.",
+      "description": "Descrição institucional usada em SEO (meta description) e rodapé."
+    },
+    {
+      "key": "quote_email_recipient",
+      "value": "juliaromeralage@gmail.com",
+      "description": "Email principal que recebe as notificações de novas cotações."
+    },
+    {
+      "key": "quote_email_cc",
+      "value": "",
+      "description": "Emails em cópia (separados por vírgula) para notificações de cotação. Opcional."
+    },
+    {
+      "key": "home_hero_title",
+      "value": "Tudo para o seu negócio de food service em um só lugar",
+      "description": "Título principal exibido na seção hero da home."
+    },
+    {
+      "key": "home_hero_subtitle",
+      "value": "Monte sua cotação em poucos cliques e receba um atendimento rápido da nossa equipe comercial.",
+      "description": "Subtítulo exibido na seção hero da home."
+    },
+    {
+      "key": "home_hero_image",
+      "value": "",
+      "description": "URL (Cloudinary) da imagem de fundo do hero da home. Enviar via painel."
+    }
+  ],
+  "users": [
+    {
+      "id": "cmr45oqmg0000p4bixsltp13x",
+      "name": "Administrador",
+      "email": "admin@miraf.com.br",
+      "password": "$2b$12$bHfWEEBqR7bZHxuuE18JCOGift5qvd88lMmqT7tJE0UahTaBacAAC",
+      "role": "ADMIN",
+      "active": true
+    },
+    {
+      "id": "cmrtr5qgp0000vkbizk1sk5ow",
+      "name": "Júlia",
+      "email": "juliaromeralage@gmail.com",
+      "password": "$2b$12$EFeInWm24InEh2QGa.rJQeeyEU6izVQyw.a8QQ9idZ8UE1PRSv72m",
+      "role": "ADMIN",
+      "active": true
+    }
+  ],
+  "categories": [
+    {
+      "id": "cmrtv9cf00005lobibfyt33f8",
+      "name": "Pré-Misturas para Bolos e Cakes",
+      "slug": "pre-misturas-para-bolos-e-cakes",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrtrc0ii0009vkbibk5ylo4x"
+    },
+    {
+      "id": "cmrtv9j7i0006lobizvjneq7p",
+      "name": "Pré-Misturas para Brownies",
+      "slug": "pre-misturas-para-brownies",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrtrc0ii0009vkbibk5ylo4x"
+    },
+    {
+      "id": "cmrtv9nxq0007lobin18icp4f",
+      "name": "Pré-Misturas para Pães",
+      "slug": "pre-misturas-para-paes",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrtrc0ii0009vkbibk5ylo4x"
+    },
+    {
+      "id": "cmrtv9ruh0008lobixrugoinl",
+      "name": "Pré-Misturas para Brioche, Croissant e Folhados",
+      "slug": "pre-misturas-para-brioche-croissant-e-folhados",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrtrc0ii0009vkbibk5ylo4x"
+    },
+    {
+      "id": "cmrtv9xlt0009lobiqyqawc1f",
+      "name": "ré-Misturas para Pão de Queijo e Chipa",
+      "slug": "re-misturas-para-pao-de-queijo-e-chipa",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrtrc0ii0009vkbibk5ylo4x"
+    },
+    {
+      "id": "cmrtva1t2000alobiy76snakx",
+      "name": "Farinhas e Amidos",
+      "slug": "farinhas-e-amidos",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrtrc0ii0009vkbibk5ylo4x"
+    },
+    {
+      "id": "cmrtva5o4000blobik651goih",
+      "name": "Fermento Biológico Fresco",
+      "slug": "fermento-biologico-fresco",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrtrc0ii0009vkbibk5ylo4x"
+    },
+    {
+      "id": "cmrtva9op000clobi55e8mpl3",
+      "name": "Fermento Biológico Seco e Instantâneo",
+      "slug": "fermento-biologico-seco-e-instantaneo",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrtrc0ii0009vkbibk5ylo4x"
+    },
+    {
+      "id": "cmrtvadpv000dlobi9w0f18og",
+      "name": "Fermento Químico e em Pó",
+      "slug": "fermento-quimico-e-em-po",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrtrc0ii0009vkbibk5ylo4x"
+    },
+    {
+      "id": "cmrtvaipf000elobiavpiur0l",
+      "name": "Melhoradores",
+      "slug": "melhoradores",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrtrc0ii0009vkbibk5ylo4x"
+    },
+    {
+      "id": "cmrtvam20000flobir1s0lriy",
+      "name": "Antimofos e Conservantes",
+      "slug": "antimofos-e-conservantes",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrtrc0ii0009vkbibk5ylo4x"
+    },
+    {
+      "id": "cmrtvaplw000globiipn6k7ca",
+      "name": "Desmoldantes",
+      "slug": "desmoldantes",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrtrc0ii0009vkbibk5ylo4x"
+    },
+    {
+      "id": "cmrlccctl005zd4bij2vakivs",
+      "name": "Confeitaria",
+      "slug": "confeitaria",
+      "description": "Recheios, coberturas, chocolates,decoração e finalização",
+      "imageUrl": "/uploads/categories/confeitaria.png",
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": null
+    },
+    {
+      "id": "cmrtti7zu000evkbifvp48xhw",
+      "name": "Embalagens e Equipamentos",
+      "slug": "embalagens-e-equipamentos",
+      "description": "Embalagens, descartáveis e utensílios",
+      "imageUrl": "/uploads/categories/embalagens-e-equipamentos.png",
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": null
+    },
+    {
+      "id": "cmrttckpj000cvkbix6wipwyl",
+      "name": "Lácteos, Gorduras e Ingredientes",
+      "slug": "lacteos-gorduras-e-ingredientes",
+      "description": "Leites, margarinas, coco e frutas secas",
+      "imageUrl": "/uploads/categories/lacteos-gorduras-e-ingredientes.png",
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": null
+    },
+    {
+      "id": "cmrttgh2r000dvkbiav4hbuan",
+      "name": "Padaria, Salgados e negócios de alimentação",
+      "slug": "padaria-salgados-e-negocios-de-alimentacao",
+      "description": "Biscoitos, salgados, caldos, molhos, congelados e conservas",
+      "imageUrl": "/uploads/categories/padaria-salgados-e-negocios-de-alimentacao.png",
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": null
+    },
+    {
+      "id": "cmrtrc0ii0009vkbibk5ylo4x",
+      "name": "Panificação",
+      "slug": "panificacao",
+      "description": "Pré-misturas, farinhas, fermentos e auxiliares de panificação",
+      "imageUrl": "/uploads/categories/panificacao.png",
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": null
+    },
+    {
+      "id": "cmrtvhkhv000hlobi6dzx4yvl",
+      "name": "Chantilly, Toppings e Bases para Sobremesa",
+      "slug": "chantilly-toppings-e-bases-para-sobremesa",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvhp99000ilobil68rkw1t",
+      "name": "Cremes Culinários",
+      "slug": "cremes-culinarios",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvhukm000jlobilg5dkydm",
+      "name": "Recheios",
+      "slug": "recheios",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvi1re000klobixdpoqzdf",
+      "name": "Ganaches",
+      "slug": "ganaches",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvi6jm000llobibs3dyuyp",
+      "name": "Coberturas",
+      "slug": "coberturas",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvi9tq000mlobiad1pnhph",
+      "name": "Chocolate em Barra",
+      "slug": "chocolate-em-barra",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvidid000nlobi9kknukvh",
+      "name": "Chocolate em Gotas e Moedas",
+      "slug": "chocolate-em-gotas-e-moedas",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvik1d000olobim8brgkgw",
+      "name": "Chocolate Fracionado e Coberturas",
+      "slug": "chocolate-fracionado-e-coberturas",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtviwd1000plobi5a4o731l",
+      "name": "Chocolate e Cacau em Pó",
+      "slug": "chocolate-e-cacau-em-po",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvj3bp000qlobimh7iwntt",
+      "name": "Linha Ovomaltine e Achocolatados",
+      "slug": "linha-ovomaltine-e-achocolatados",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvj7mh000rlobim56eg06f",
+      "name": "Granulados, Confeitos e Raspas",
+      "slug": "granulados-confeitos-e-raspas",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvjb8o000slobi8hiv2yir",
+      "name": "Bases para Tortas e Cheesecakes",
+      "slug": "bases-para-tortas-e-cheesecakes",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvjeqs000tlobi5u6mjsnk",
+      "name": "Essências, Corantes e Saborizadores",
+      "slug": "essencias-corantes-e-saborizadores",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvjifm000ulobiwvjtmdai",
+      "name": "Açúcares",
+      "slug": "acucares",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvjlxa000vlobin4g5pfv6",
+      "name": "Caldas, Glazes e Acabamento",
+      "slug": "caldas-glazes-e-acabamento",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvjpb4000wlobi2o65o7wg",
+      "name": "Geleias, Frutas e Doces",
+      "slug": "geleias-frutas-e-doces",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvjsoc000xlobi5y1f6kvl",
+      "name": "Sobremesas e Gelatinas",
+      "slug": "sobremesas-e-gelatinas",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrlccctl005zd4bij2vakivs"
+    },
+    {
+      "id": "cmrtvkten000ylobilnrgjjgt",
+      "name": "Bebidas Lácteas Prontas",
+      "slug": "bebidas-lacteas-prontas",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrttckpj000cvkbix6wipwyl"
+    },
+    {
+      "id": "cmrtvkydo000zlobik7e5npl8",
+      "name": "Ingredientes Lácteos",
+      "slug": "ingredientes-lacteos",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrttckpj000cvkbix6wipwyl"
+    },
+    {
+      "id": "cmrtvl24t0010lobiat5o3z9i",
+      "name": "Gorduras e Margarinas",
+      "slug": "gorduras-e-margarinas",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrttckpj000cvkbix6wipwyl"
+    },
+    {
+      "id": "cmrtvl5fe0011lobiian3c6pb",
+      "name": "Coco e Derivados",
+      "slug": "coco-e-derivados",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrttckpj000cvkbix6wipwyl"
+    },
+    {
+      "id": "cmrtvl8sa0012lobi3ti1tddq",
+      "name": "Ovos",
+      "slug": "ovos",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrttckpj000cvkbix6wipwyl"
+    },
+    {
+      "id": "cmrtvlcq80013lobid4t44pm2",
+      "name": "Frutas Secas e Ingredientes",
+      "slug": "frutas-secas-e-ingredientes",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrttckpj000cvkbix6wipwyl"
+    },
+    {
+      "id": "cmrtvo4ia0014lobi1j7kvctg",
+      "name": "Biscoitos e Bolos Prontos",
+      "slug": "biscoitos-e-bolos-prontos",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrttgh2r000dvkbiav4hbuan"
+    },
+    {
+      "id": "cmrtvo83a0015lobieixdl21i",
+      "name": "Salgados e Snacks",
+      "slug": "salgados-e-snacks",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrttgh2r000dvkbiav4hbuan"
+    },
+    {
+      "id": "cmrtvoch00016lobidoa8ylr1",
+      "name": "Caldos, Purês e Ingredientes Culinários",
+      "slug": "caldos-pures-e-ingredientes-culinarios",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrttgh2r000dvkbiav4hbuan"
+    },
+    {
+      "id": "cmrtvogsc0017lobit680e4uz",
+      "name": "Molhos em Sachê",
+      "slug": "molhos-em-sache",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrttgh2r000dvkbiav4hbuan"
+    },
+    {
+      "id": "cmrtvojwj0018lobipy92y6i8",
+      "name": "Congelados",
+      "slug": "congelados",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrttgh2r000dvkbiav4hbuan"
+    },
+    {
+      "id": "cmrtvoned0019lobieypzval8",
+      "name": "Conservas",
+      "slug": "conservas",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrttgh2r000dvkbiav4hbuan"
+    },
+    {
+      "id": "cmrtvp277001alobi0fpukj4i",
+      "name": "Embalagens",
+      "slug": "embalagens",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrtti7zu000evkbifvp48xhw"
+    },
+    {
+      "id": "cmrtvp5gh001blobiqqayxiiq",
+      "name": "Descartáveis",
+      "slug": "descartaveis",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrtti7zu000evkbifvp48xhw"
+    },
+    {
+      "id": "cmrtvp99t001clobixw23qbxb",
+      "name": "Equipamentos e Utensílios",
+      "slug": "equipamentos-e-utensilios",
+      "description": null,
+      "imageUrl": null,
+      "bannerUrl": null,
+      "order": 0,
+      "active": true,
+      "parentId": "cmrtti7zu000evkbifvp48xhw"
+    }
+  ],
+  "suppliers": [
+    {
+      "id": "cmrhvz7yr00006gbidpcgqost",
+      "name": "RUBY SNACKS",
+      "slug": "ruby-snacks",
+      "logoUrl": "/uploads/suppliers/56b67cc6-d4f8-4848-a50d-938af2b4ee7c.webp",
+      "description": null,
+      "order": 0,
+      "active": true
+    },
+    {
+      "id": "cmr8gzue80000akbiy7pnglkv",
+      "name": "Fleischmann",
+      "slug": "fleischmann",
+      "logoUrl": "/uploads/suppliers/3562ae19-e06a-461a-87d1-ccb8c89326a7.png",
+      "description": null,
+      "order": 0,
+      "active": true
+    },
+    {
+      "id": "cmrtx1itt000bokbirzoaha3d",
+      "name": "Adimix",
+      "slug": "adimix",
+      "logoUrl": "/uploads/suppliers/ba869dd4-0690-46f1-963e-505f86fc842d.webp",
+      "description": null,
+      "order": 0,
+      "active": true
+    }
+  ],
+  "products": [
+    {
+      "id": "cms3whthx0006zkbi4t6czz9h",
+      "name": "Concentrado Pão Australiano 10kg",
+      "slug": "concentrado-pao-australiano-10kg",
+      "description": "<p>Concentrado (pré-mistura) da Adimix para produção de pão australiano, o pão escuro levemente adocicado com cor característica. Prático de usar em panificadoras e no segmento industrial, garante padronização de cor, sabor e maciez. Embalagem de 10 kg.</p>",
+      "shortDescription": "Concentrado para o pão australiano — escuro, levemente adocicado e de sabor marcante.",
+      "composition": "<p>Farinha de trigo fortificada com ferro e ácido fólico, açúcar, gordura vegetal, fibras de trigo, extrato de malte, cacau em pó, lecitina de soja, propionato de cálcio, sal refinado, melhoradores de farinha (ácido ascórbico e enzima alfa-amilase) e aromatizante. Contém derivados de trigo; pode conter amendoim, soja, ovos, castanha de caju, centeio, aveia, cevada e derivados de leite.</p>",
+      "application": "<p>Proporção de uso: 1 kg da mistura para pão australiano, 2,5 kg de farinha de trigo, aproximadamente 1,5 L de água fria e 100 g de fermento biológico fresco.</p>",
+      "conservation": "<p>Conservar em local seco, fresco e arejado, à temperatura ambiente. Validade de 6 meses a partir da data de fabricação sob as condições recomendadas de armazenagem.</p>",
+      "preparation": "<p>Colocar na masseira a mistura e a farinha, adicionar a água aos poucos e misturar na velocidade 1; acrescentar o fermento e bater em velocidade rápida até formar massa homogênea em ponto de véu. Dividir nos pesos desejados, bolear, cobrir com plástico e deixar descansar cerca de 20 minutos. Modelar, dispor em formas untadas e deixar fermentar até o ponto de forneamento. Assar em forno turbo a 160°C com vapor ou forno convencional a 180°C por 35 a 40 minutos.</p>",
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Cor e sabor característicos do pão australiano",
+        "Padroniza a produção",
+        "Uso em panificadora e indústria",
+        "Adição de cacau e extrato de malte na formulação"
+      ],
+      "weight": "10 kg",
+      "sku": null,
+      "packaging": "Saco de 10 kg",
+      "saleUnit": "saco",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrtrc0ii0009vkbibk5ylo4x",
+      "subcategoryId": null,
+      "supplierId": "cmrtx1itt000bokbirzoaha3d",
+      "createdAt": "2026-07-28T00:11:33.141Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cms3whthz0007zkbips7jy1i5",
+          "url": "/uploads/products/d8e9074a-333b-4210-aed9-babfb4806fb0.png",
+          "alt": "Concentrado Pão Australiano 10kg",
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        }
+      ],
+      "flavors": [],
+      "nutrition": null
+    },
+    {
+      "id": "cms3whtiu000czkbitjvd4za4",
+      "name": "Fondant 1kg",
+      "slug": "fondant-1kg",
+      "description": "<p>Mistura preparada Adimix para fondant, ideal para dar o acabamento brilhante e adocicado em produtos de confeitaria e panificação doce. Após o preparo, é aplicada ainda morna sobre roscas, tortas e pães doces. Prática de usar, basta hidratar e aquecer.</p>",
+      "shortDescription": "Fondant para coberturas lisas e brilhantes de sonhos, bombas e éclairs.",
+      "composition": null,
+      "application": "<p>Cobertura/acabamento de roscas, tortas e pães doces.</p>",
+      "conservation": null,
+      "preparation": "<p>Dilua 1 kg da mistura em 100 a 140 ml de água. Aqueça por 30 segundos a 1 minuto no micro-ondas, fogão ou banho-maria e aplique sobre roscas, tortas e pão doce.</p>",
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Mistura preparada, fácil de usar",
+        "Acabamento brilhante para produtos doces",
+        "Validade de 9 meses"
+      ],
+      "weight": "1 kg",
+      "sku": null,
+      "packaging": "Pacote de 1 kg",
+      "saleUnit": "pacote",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrlccctl005zd4bij2vakivs",
+      "subcategoryId": null,
+      "supplierId": "cmrtx1itt000bokbirzoaha3d",
+      "createdAt": "2026-07-28T00:11:33.174Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cms3whtiv000dzkbioufv9kga",
+          "url": "/uploads/products/09b1577f-1a89-4c2e-b330-27e35828b755.png",
+          "alt": "Fondant 1kg",
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        }
+      ],
+      "flavors": [],
+      "nutrition": null
+    },
+    {
+      "id": "cms3whtj4000ezkbi7mrm3ps6",
+      "name": "Marshmallow Adimix",
+      "slug": "marshmallow-adimix",
+      "description": "<p>Marshmallow em pasta Adimix, pronto para uso, com textura leve e aerada e cor branca brilhante. Utilizado como cobertura, recheio e decoração em bolos, tortas, taças, sobremesas e demais produtos de confeitaria. Comercializado em balde para uso profissional.</p>",
+      "shortDescription": "Marshmallow cremoso e brilhante para coberturas, recheios e decoração.",
+      "composition": null,
+      "application": "<p>Cobertura, recheio e decoração de bolos, tortas, taças e sobremesas.</p>",
+      "conservation": null,
+      "preparation": null,
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Pronto para uso",
+        "Cor branca e textura aerada",
+        "Versátil: cobertura, recheio e decoração"
+      ],
+      "weight": null,
+      "sku": null,
+      "packaging": "Balde",
+      "saleUnit": "balde",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrlccctl005zd4bij2vakivs",
+      "subcategoryId": null,
+      "supplierId": "cmrtx1itt000bokbirzoaha3d",
+      "createdAt": "2026-07-28T00:11:33.184Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cms3whtj5000fzkbisedmctwf",
+          "url": "/uploads/products/dc30902f-f029-479b-a74d-42ae02a9f08e.png",
+          "alt": "Marshmallow Adimix",
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        }
+      ],
+      "flavors": [],
+      "nutrition": null
+    },
+    {
+      "id": "cms3whth70002zkbi6a63d6dg",
+      "name": "Mistura para Pão de Batata 5kg",
+      "slug": "mistura-pao-de-batata-5kg",
+      "description": "<p>Mistura em pó da Adimix para o preparo de pão de batata. Formulada com farinha de trigo fortificada e flocos de batata desidratada, resulta em pães macios e saborosos, com preparo prático na panificação. Embalagem de 5 kg.</p>",
+      "shortDescription": "Mistura preparada para pães de batata macios, de miolo claro e levemente adocicados.",
+      "composition": "<p>Farinha de trigo fortificada com ferro e ácido fólico, gordura vegetal hidrogenada, flocos de batata desidratado, açúcar refinado, leite em pó desnatado, sal refinado, melhoradores de farinha ácido ascórbico e enzima alfa amilase. Contém glúten.</p>",
+      "application": "<p>Panificação — preparo de pão de batata.</p>",
+      "conservation": "<p>Conservar em local seco, fresco e arejado, em temperatura ambiente. Não transportar com produtos não alimentícios. Validade: 4 meses a partir da data de fabricação, sob as condições de armazenagem recomendadas.</p>",
+      "preparation": null,
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Pães de batata macios e uniformes",
+        "Preparo prático e padronizado",
+        "Alto rendimento"
+      ],
+      "weight": "5 kg",
+      "sku": null,
+      "packaging": "Pacote de 5 kg",
+      "saleUnit": "pacote",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrtrc0ii0009vkbibk5ylo4x",
+      "subcategoryId": null,
+      "supplierId": "cmrtx1itt000bokbirzoaha3d",
+      "createdAt": "2026-07-28T00:11:33.115Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cms3whth80003zkbitj8dicen",
+          "url": "/uploads/products/41cf9cac-306b-4755-a5f7-4d228e5c65df.png",
+          "alt": "Mistura para Pão de Batata 5kg",
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        }
+      ],
+      "flavors": [],
+      "nutrition": null
+    },
+    {
+      "id": "cms3whti90008zkbi1zjvxmn5",
+      "name": "Mistura para Pão Francês Integral 5kg",
+      "slug": "mistura-pao-frances-integral-5kg",
+      "description": "<p>Mistura em pó da Adimix para o preparo de pão francês integral. Combina farinha de trigo fortificada e farinha integral, resultando em pães com aparência e sabor característicos da linha integral, com preparo prático na panificação. Embalagem de 5 kg.</p>",
+      "shortDescription": "Mistura para pão francês integral — a crocância do francês com o valor das fibras.",
+      "composition": "<p>Farinha de trigo fortificada com ferro e ácido fólico, farinha integral, sal refinado, emulsificante polisorbato 80, melhoradores de farinha ácido ascórbico e enzima alfa amilase. Contém glúten.</p>",
+      "application": "<p>Panificação — preparo de pão francês integral.</p>",
+      "conservation": "<p>Conservar em local seco, fresco e arejado, em temperatura ambiente. Não transportar com produtos não alimentícios. Validade: 4 meses a partir da data de fabricação, sob as condições de armazenagem recomendadas.</p>",
+      "preparation": null,
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Com farinha integral",
+        "Farinha de trigo fortificada com ferro e ácido fólico"
+      ],
+      "weight": "5 kg",
+      "sku": null,
+      "packaging": "Pacote de 5 kg",
+      "saleUnit": "pacote",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrtrc0ii0009vkbibk5ylo4x",
+      "subcategoryId": null,
+      "supplierId": "cmrtx1itt000bokbirzoaha3d",
+      "createdAt": "2026-07-28T00:11:33.153Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cms3whtia0009zkbieluasexk",
+          "url": "/uploads/products/70d9462a-63c4-4b8f-9f6d-ed6308a686d5.png",
+          "alt": "Mistura para Pão Francês Integral 5kg",
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        }
+      ],
+      "flavors": [],
+      "nutrition": null
+    },
+    {
+      "id": "cms3whtn10016zkbidvti0q2u",
+      "name": "Ganache 4kg",
+      "slug": "ganache-4kg",
+      "description": "<p>Creme tipo ganache Adimix pronto para uso, disponível em diversos sabores de chocolate (ao leite, meio amargo, branco e caramelo/toffee). Usado para cobrir, rechear e banhar bolos e tortas, com textura cremosa e sabor intenso. Balde de 4 kg voltado ao uso profissional em confeitarias.</p>",
+      "shortDescription": "Ganache pronta para recheios e coberturas de textura sedosa e brilho.",
+      "composition": null,
+      "application": "<p>Cobrir, rechear e banhar bolos e tortas.</p>",
+      "conservation": null,
+      "preparation": "<p>Para recheio, aplique em temperatura ambiente. Para cobertura, aqueça no micro-ondas (cerca de 15 segundos) ou em banho-maria até no máximo 38 °C. Havendo separação de fases, aqueça entre 34 e 36 °C e homogeneíze com espátula.</p>",
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Pronto para uso",
+        "Vários sabores de chocolate",
+        "Serve para cobrir, rechear e banhar",
+        "Validade de 12 meses"
+      ],
+      "weight": "4 kg",
+      "sku": null,
+      "packaging": "Balde de 4 kg",
+      "saleUnit": "balde",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrlccctl005zd4bij2vakivs",
+      "subcategoryId": null,
+      "supplierId": "cmrtx1itt000bokbirzoaha3d",
+      "createdAt": "2026-07-28T00:11:33.325Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cms3whtn20017zkbiqi6sygy5",
+          "url": "/uploads/products/b2e43759-4ce4-44ac-aa72-d17243f6a76d.png",
+          "alt": "Ganache 4kg",
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        },
+        {
+          "id": "fb7b30dc-b09e-44f7-97a0-13b596d98815",
+          "url": "/uploads/products/b2e43759-4ce4-44ac-aa72-d17243f6a76d.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtn20018zkbiabywrumz"
+        },
+        {
+          "id": "65619b98-e864-4c59-b85d-e4c8892fe290",
+          "url": "/uploads/products/e58e87c9-7160-4f36-be4b-28d1ba330dcd.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtn20019zkbi6jd00luv"
+        },
+        {
+          "id": "a161b372-ab9d-4a80-a2eb-381d4176849a",
+          "url": "/uploads/products/dceb9501-9f0b-43f4-9c3c-caedf80e6d2f.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtn2001azkbi0zrm2qh3"
+        },
+        {
+          "id": "921bfc3d-b358-49a4-afa4-3fd2a70f30fe",
+          "url": "/uploads/products/5f11c44e-031c-48df-8ff5-f4b2a13a5afb.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtn2001bzkbikqcnwbyy"
+        }
+      ],
+      "flavors": [
+        {
+          "id": "cms3whtn20018zkbiabywrumz",
+          "name": "Ao Leite",
+          "imageUrl": "/uploads/products/b2e43759-4ce4-44ac-aa72-d17243f6a76d.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 0,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtn20019zkbi6jd00luv",
+          "name": "Meio Amargo",
+          "imageUrl": "/uploads/products/e58e87c9-7160-4f36-be4b-28d1ba330dcd.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 1,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtn2001azkbi0zrm2qh3",
+          "name": "Branco",
+          "imageUrl": "/uploads/products/dceb9501-9f0b-43f4-9c3c-caedf80e6d2f.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 2,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtn2001bzkbikqcnwbyy",
+          "name": "Avelã",
+          "imageUrl": "/uploads/products/5f11c44e-031c-48df-8ff5-f4b2a13a5afb.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 3,
+          "nutrition": null
+        }
+      ],
+      "nutrition": null
+    },
+    {
+      "id": "cms3whtnq001czkbibj3kiugo",
+      "name": "Chocolisse Cobertura",
+      "slug": "chocolisse-cobertura",
+      "description": "<p><strong>Chocolisse</strong>: cobertura sabor chocolate de derretimento fácil e ótimo acabamento, para banhar, cobrir e decorar bombons, doces, sobremesas e sorvetes. Disponível ao leite, branco, meio amargo e caramelo/toffee.</p>",
+      "shortDescription": "Cobertura sabor chocolate de derretimento fácil e ótimo acabamento.",
+      "composition": null,
+      "application": null,
+      "conservation": null,
+      "preparation": null,
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Derretimento fácil",
+        "Ótimo acabamento e brilho",
+        "Banhar, cobrir e decorar"
+      ],
+      "weight": null,
+      "sku": null,
+      "packaging": null,
+      "saleUnit": "unidade",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrlccctl005zd4bij2vakivs",
+      "subcategoryId": null,
+      "supplierId": "cmrtx1itt000bokbirzoaha3d",
+      "createdAt": "2026-07-28T00:11:33.350Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cms3whtnr001dzkbiiyiihz6v",
+          "url": "/uploads/products/eb9e0a0d-25b0-4e7c-a1e9-ae5b8102b02d.png",
+          "alt": "Chocolisse Cobertura",
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        },
+        {
+          "id": "d6062e0f-6f39-4e25-992e-5a6f74a70f0e",
+          "url": "/uploads/products/eb9e0a0d-25b0-4e7c-a1e9-ae5b8102b02d.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtnr001ezkbiyadnl2im"
+        },
+        {
+          "id": "cd921efc-f366-42d1-a5c5-08154ddea47f",
+          "url": "/uploads/products/b9de8dfc-e9c6-42eb-807b-67e156e4d4e7.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtnr001fzkbi0uejqwik"
+        },
+        {
+          "id": "68b5e9b1-916f-4679-9410-f6b9c9c2896c",
+          "url": "/uploads/products/ecab1c1a-5063-4088-a8ad-81525361fa47.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtnr001gzkbirusuzc9s"
+        },
+        {
+          "id": "d33b56c5-7d51-4f56-9224-9aaac3c26445",
+          "url": "/uploads/products/1f50da34-a6a6-4f75-9a9c-7018ab144031.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtnr001hzkbi09ooi6uy"
+        }
+      ],
+      "flavors": [
+        {
+          "id": "cms3whtnr001ezkbiyadnl2im",
+          "name": "Ao Leite",
+          "imageUrl": "/uploads/products/eb9e0a0d-25b0-4e7c-a1e9-ae5b8102b02d.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 0,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtnr001fzkbi0uejqwik",
+          "name": "Branco",
+          "imageUrl": "/uploads/products/b9de8dfc-e9c6-42eb-807b-67e156e4d4e7.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 1,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtnr001gzkbirusuzc9s",
+          "name": "Meio Amargo",
+          "imageUrl": "/uploads/products/ecab1c1a-5063-4088-a8ad-81525361fa47.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 2,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtnr001hzkbi09ooi6uy",
+          "name": "Caramelo Toffee",
+          "imageUrl": "/uploads/products/1f50da34-a6a6-4f75-9a9c-7018ab144031.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 3,
+          "nutrition": null
+        }
+      ],
+      "nutrition": null
+    },
+    {
+      "id": "cms3whtkt000gzkbi7bxz77ba",
+      "name": "Bolo Cremoso 5kg",
+      "slug": "bolo-cremoso-5kg",
+      "description": "<p>Pré-mistura da Adimix para bolos cremosos, disponível em diversos sabores (como aipim, milho, limão, maracujá, frutas vermelhas, queijadinha e churros). Formulada para resultado macio e cremoso com preparo rápido e prático, mantendo o padrão de sabor a cada produção. Embalagem de 5 kg (caixa com 4 unidades).</p>",
+      "shortDescription": "Misturas para bolo cremoso — bolos úmidos e macios, em diversos sabores.",
+      "composition": "<p>Açúcar refinado, amido de milho, farinha de trigo enriquecida com ferro e ácido fólico, gordura vegetal, creme de milho, amido de mandioca, amido modificado, sal refinado, fermentos químicos, goma xantana, estabilizantes, aromatizantes e conservador propionato de cálcio. Contém glúten. (Composição referente ao sabor Aipim; pode variar conforme o sabor.)</p>",
+      "application": "<p>Indicado para o preparo de bolos cremosos em panificadoras, confeitarias e food service.</p>",
+      "conservation": "<p>Conservar em local seco, fresco e arejado, à temperatura ambiente. Validade de 6 meses a partir da data de fabricação sob as condições recomendadas de armazenagem.</p>",
+      "preparation": "<p>Bater a mistura com ovos e leite na batedeira em velocidade alta por 2 a 4 minutos até obter massa homogênea. Despejar em formas untadas e assar a 145°C em forno turbo ou 180°C em forno convencional por aproximadamente 30 a 35 minutos.</p>",
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Disponível em vários sabores",
+        "Preparo rápido e prático",
+        "Padrão de sabor a cada produção",
+        "Resultado macio e cremoso"
+      ],
+      "weight": "5 kg",
+      "sku": null,
+      "packaging": "Pacote de 5 kg",
+      "saleUnit": "pacote",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrlccctl005zd4bij2vakivs",
+      "subcategoryId": null,
+      "supplierId": "cmrtx1itt000bokbirzoaha3d",
+      "createdAt": "2026-07-28T00:11:33.245Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cms3whtku000hzkbi1p22xq1t",
+          "url": "/uploads/products/9a59e2a8-c7b3-4d35-8297-dd948425aafd.png",
+          "alt": "Bolo Cremoso 5kg",
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        },
+        {
+          "id": "67c53a86-93ee-4399-82d2-73776471daad",
+          "url": "/uploads/products/9a59e2a8-c7b3-4d35-8297-dd948425aafd.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtku000izkbii562igsx"
+        },
+        {
+          "id": "8dd61f5c-5219-4269-b8a4-208e53961353",
+          "url": "/uploads/products/6b6dac71-1781-4d69-830c-f01ab72e809b.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtku000jzkbihxnjps8c"
+        },
+        {
+          "id": "09924a0c-ec2b-44d3-b2ab-b1b466b71b5a",
+          "url": "/uploads/products/de4e0909-ccfe-4248-9c6e-90e0734bb1e3.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtku000kzkbiu79w5za4"
+        },
+        {
+          "id": "49c10579-7576-4dcb-ba8b-d8159f0b1485",
+          "url": "/uploads/products/c5219f47-5885-4ee3-a66b-8a6c22a4c93d.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtku000lzkbiq91qc1mu"
+        },
+        {
+          "id": "8f650d3d-89f0-4af4-b7f8-6c9f75240c8d",
+          "url": "/uploads/products/03d8c8e1-ca14-4d6c-83a1-58a7624119e1.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtku000mzkbiaqtrn55o"
+        },
+        {
+          "id": "46d5bdb8-34fd-48b1-b335-df1b52758433",
+          "url": "/uploads/products/66f1ba77-4006-4c60-9404-86dca3fb78f0.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtku000nzkbi21bpjhgr"
+        },
+        {
+          "id": "cbb97d87-a142-4c36-b232-36d9f92306ac",
+          "url": "/uploads/products/81c0b316-5dac-4315-9d65-1e0eb3069074.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtku000ozkbic0e795qr"
+        },
+        {
+          "id": "a903d911-b7da-47f8-9351-c803190c9c4c",
+          "url": "/uploads/products/2a3728a7-6d83-4e24-a3db-8f58b1dbcc6f.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtku000pzkbiljfu1674"
+        },
+        {
+          "id": "ac0575eb-e60f-4899-b7e7-e7a6ffc6cd0a",
+          "url": "/uploads/products/4cd2fc15-e28f-4949-a748-cfcaaeef4711.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtku000qzkbita97heml"
+        },
+        {
+          "id": "bd24e4c0-5c94-4337-9fd3-00424dc636cb",
+          "url": "/uploads/products/3f6e2bdf-78ee-4b19-a626-5abdfd192056.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtku000rzkbi4elxbklz"
+        },
+        {
+          "id": "05fedca5-b9eb-49ec-bf2f-a3074d5883cf",
+          "url": "/uploads/products/58db879e-3308-40cc-aa45-ba1737b69e15.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtku000szkbi2h6c8ssc"
+        },
+        {
+          "id": "ecd93121-785a-453d-bfa7-137b43ec82eb",
+          "url": "/uploads/products/aae4898d-b596-4080-b60f-8d812a22bf7b.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtku000tzkbify0vnzb6"
+        },
+        {
+          "id": "cms5e7tqe0000okbiqleiz9u9",
+          "url": "/uploads/products/9a59e2a8-c7b3-4d35-8297-dd948425aafd.png",
+          "alt": null,
+          "order": 1,
+          "isPrimary": false,
+          "flavorId": "cms3whtku000kzkbiu79w5za4"
+        },
+        {
+          "id": "cms5e7tqi0001okbi1oxnnv54",
+          "url": "/uploads/products/6b6dac71-1781-4d69-830c-f01ab72e809b.png",
+          "alt": null,
+          "order": 2,
+          "isPrimary": false,
+          "flavorId": "cms3whtku000kzkbiu79w5za4"
+        },
+        {
+          "id": "cms5e7tqj0002okbi28fl2r20",
+          "url": "/uploads/products/c5219f47-5885-4ee3-a66b-8a6c22a4c93d.png",
+          "alt": null,
+          "order": 3,
+          "isPrimary": false,
+          "flavorId": "cms3whtku000kzkbiu79w5za4"
+        }
+      ],
+      "flavors": [
+        {
+          "id": "cms3whtku000izkbii562igsx",
+          "name": "Aipim",
+          "imageUrl": "/uploads/products/9a59e2a8-c7b3-4d35-8297-dd948425aafd.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 0,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtku000jzkbihxnjps8c",
+          "name": "Banana",
+          "imageUrl": "/uploads/products/6b6dac71-1781-4d69-830c-f01ab72e809b.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 1,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtku000kzkbiu79w5za4",
+          "name": "Coco",
+          "imageUrl": "/uploads/products/de4e0909-ccfe-4248-9c6e-90e0734bb1e3.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 2,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtku000lzkbiq91qc1mu",
+          "name": "Laranja",
+          "imageUrl": "/uploads/products/c5219f47-5885-4ee3-a66b-8a6c22a4c93d.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 3,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtku000mzkbiaqtrn55o",
+          "name": "Limão",
+          "imageUrl": "/uploads/products/03d8c8e1-ca14-4d6c-83a1-58a7624119e1.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 4,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtku000nzkbi21bpjhgr",
+          "name": "Maracujá",
+          "imageUrl": "/uploads/products/66f1ba77-4006-4c60-9404-86dca3fb78f0.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 5,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtku000ozkbic0e795qr",
+          "name": "Milho",
+          "imageUrl": "/uploads/products/81c0b316-5dac-4315-9d65-1e0eb3069074.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 6,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtku000pzkbiljfu1674",
+          "name": "Leite Condensado",
+          "imageUrl": "/uploads/products/2a3728a7-6d83-4e24-a3db-8f58b1dbcc6f.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 7,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtku000qzkbita97heml",
+          "name": "Churros",
+          "imageUrl": "/uploads/products/4cd2fc15-e28f-4949-a748-cfcaaeef4711.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 8,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtku000rzkbi4elxbklz",
+          "name": "Floresta Negra",
+          "imageUrl": "/uploads/products/3f6e2bdf-78ee-4b19-a626-5abdfd192056.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 9,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtku000szkbi2h6c8ssc",
+          "name": "Frutas Vermelhas",
+          "imageUrl": "/uploads/products/58db879e-3308-40cc-aa45-ba1737b69e15.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 10,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtku000tzkbify0vnzb6",
+          "name": "Neutro",
+          "imageUrl": "/uploads/products/aae4898d-b596-4080-b60f-8d812a22bf7b.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 11,
+          "nutrition": null
+        }
+      ],
+      "nutrition": null
+    },
+    {
+      "id": "cms3whtmg000uzkbi9llsnm6t",
+      "name": "Granfil Recheio e Cobertura",
+      "slug": "granfil-recheio-cobertura",
+      "description": "<p>Recheio cremoso Adimix da linha Granfil, pronto para uso e estável em forno e congelamento. Disponível em diversos sabores (baunilha, morango, brigadeiro, chocolate, maracujá, limão, entre outros), é indicado para rechear e complementar bolos, tortas, sonhos e folhados. Praticidade e rendimento para o dia a dia da confeitaria.</p>",
+      "shortDescription": "Recheio e cobertura cremosos, prontos para uso, em ampla variedade de sabores.",
+      "composition": null,
+      "application": "<p>Recheio e cobertura de bolos, tortas, sonhos, folhados e demais produtos de confeitaria.</p>",
+      "conservation": null,
+      "preparation": "<p>Produto pronto para usar.</p>",
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Pronto para usar",
+        "Estável em forno e congelamento",
+        "Diversos sabores disponíveis",
+        "Rende em bolos, tortas e sonhos"
+      ],
+      "weight": null,
+      "sku": null,
+      "packaging": "Balde",
+      "saleUnit": "balde",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrlccctl005zd4bij2vakivs",
+      "subcategoryId": null,
+      "supplierId": "cmrtx1itt000bokbirzoaha3d",
+      "createdAt": "2026-07-28T00:11:33.304Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cms3whtmh000vzkbipp7tjn4w",
+          "url": "/uploads/products/23a63e53-3629-4c12-b8e9-3af3be0415a9.png",
+          "alt": "Granfil Recheio e Cobertura",
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        },
+        {
+          "id": "3a62ba3a-340f-443c-b589-d79351ae78d8",
+          "url": "/uploads/products/23a63e53-3629-4c12-b8e9-3af3be0415a9.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtmi000wzkbiadc6p482"
+        },
+        {
+          "id": "cb60bb37-eeab-4e31-bf80-515dfea527de",
+          "url": "/uploads/products/57d16d0a-8a81-478e-91da-0dbb3601c855.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtmi000xzkbi1pj79e12"
+        },
+        {
+          "id": "b07b875e-d336-4d03-aabf-34b2b9f077d0",
+          "url": "/uploads/products/5ab8a08e-293b-4a72-a7f7-785474cc5428.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtmi000yzkbiytm0m9vj"
+        },
+        {
+          "id": "c587b029-4f0b-469d-be37-9891aa42221a",
+          "url": "/uploads/products/1d9266ed-d4be-4f82-b796-0cc360c3d323.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtmi000zzkbisto4vd4c"
+        },
+        {
+          "id": "1cd1ef94-dae4-4cf7-a571-f2906e650626",
+          "url": "/uploads/products/a819e177-5079-4cea-95ce-79723bfa750d.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtmi0010zkbit72zonmh"
+        },
+        {
+          "id": "21dd8c61-b588-4e93-b624-2f4c27aa9933",
+          "url": "/uploads/products/3e6bea04-1f85-4078-a750-63a6cbda2a6b.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtmi0011zkbieab0otzu"
+        },
+        {
+          "id": "b7ccead0-ee67-4637-a1aa-6fde7d2ce346",
+          "url": "/uploads/products/b77c21c2-35ba-4772-aac0-dffcf497f98e.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtmi0012zkbi6q7b67qw"
+        },
+        {
+          "id": "9c1bfd85-6a08-45ea-a4bc-fa0e0ba57079",
+          "url": "/uploads/products/0c7c4d5c-7c03-4e76-8cdc-13b89a4c66f0.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtmi0013zkbi00ud1d84"
+        },
+        {
+          "id": "956097c6-933f-48f8-8c50-952444ead424",
+          "url": "/uploads/products/5ca6d0c9-db37-47fe-8338-c99328c7f914.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtmi0014zkbiih8tuclf"
+        },
+        {
+          "id": "bf860f4b-2015-4682-990f-0df7f7e298ee",
+          "url": "/uploads/products/00fd9329-7209-41cf-bac7-f8dc38b45009.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cms3whtmi0015zkbi4uuj9x0g"
+        }
+      ],
+      "flavors": [
+        {
+          "id": "cms3whtmi000wzkbiadc6p482",
+          "name": "Brigadeiro",
+          "imageUrl": "/uploads/products/23a63e53-3629-4c12-b8e9-3af3be0415a9.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 0,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtmi000xzkbi1pj79e12",
+          "name": "Chocolate",
+          "imageUrl": "/uploads/products/57d16d0a-8a81-478e-91da-0dbb3601c855.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 1,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtmi000yzkbiytm0m9vj",
+          "name": "Doce de Leite",
+          "imageUrl": "/uploads/products/5ab8a08e-293b-4a72-a7f7-785474cc5428.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 2,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtmi000zzkbisto4vd4c",
+          "name": "Morango",
+          "imageUrl": "/uploads/products/1d9266ed-d4be-4f82-b796-0cc360c3d323.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 3,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtmi0010zkbit72zonmh",
+          "name": "Coco",
+          "imageUrl": "/uploads/products/a819e177-5079-4cea-95ce-79723bfa750d.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 4,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtmi0011zkbieab0otzu",
+          "name": "Goiabada",
+          "imageUrl": "/uploads/products/3e6bea04-1f85-4078-a750-63a6cbda2a6b.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 5,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtmi0012zkbi6q7b67qw",
+          "name": "Leite Condensado",
+          "imageUrl": "/uploads/products/b77c21c2-35ba-4772-aac0-dffcf497f98e.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 6,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtmi0013zkbi00ud1d84",
+          "name": "Baunilha",
+          "imageUrl": "/uploads/products/0c7c4d5c-7c03-4e76-8cdc-13b89a4c66f0.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 7,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtmi0014zkbiih8tuclf",
+          "name": "Maracujá",
+          "imageUrl": "/uploads/products/5ca6d0c9-db37-47fe-8338-c99328c7f914.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 8,
+          "nutrition": null
+        },
+        {
+          "id": "cms3whtmi0015zkbi4uuj9x0g",
+          "name": "Limão",
+          "imageUrl": "/uploads/products/00fd9329-7209-41cf-bac7-f8dc38b45009.png",
+          "sku": null,
+          "description": null,
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 9,
+          "nutrition": null
+        }
+      ],
+      "nutrition": null
+    },
+    {
+      "id": "cmrtxbivk000cokbit6ujmzx4",
+      "name": "Pão De Cebola - 5,01KG",
+      "slug": "pao-de-cebola-501kg",
+      "description": "<p>Mistura em pó da Adimix para o preparo de pão de cebola. Rende pães aromáticos e saborosos, podendo ser modelado como baguete, bola ou laminado. Preparo prático na panificação, com boa validade de estoque.</p>",
+      "shortDescription": null,
+      "composition": null,
+      "application": "<p>Panificação — preparo de pão de cebola (modelagem em baguete, bola ou laminado).</p>",
+      "conservation": "<p>Validade: 6 meses.</p>",
+      "preparation": "<p>Colocar na masseira a mistura com parte da água (velocidade 1); incorporar o fermento e o restante da água em velocidade alta até obter massa homogênea e no ponto de véu. Dividir, modelar e deixar descansar cerca de 20 minutos. Modelar (baguete, bola ou laminado), colocar em formas untadas e fermentar até o ponto de forneamento. Assar em forno turbo a 160°C ou forno lastro a 180°C por aproximadamente 25 minutos. Proporção de referência (Adimix): 2,5 kg de mistura, aprox. 1,5 l de água fria e 75 g de fermento biológico fresco.</p>",
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Aromático",
+        "Versátil na modelagem (baguete, bola ou laminado)"
+      ],
+      "weight": null,
+      "sku": "5040",
+      "packaging": "5,01 KG",
+      "saleUnit": "unidade",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrtrc0ii0009vkbibk5ylo4x",
+      "subcategoryId": "cmrtv9nxq0007lobin18icp4f",
+      "supplierId": "cmrtx1itt000bokbirzoaha3d",
+      "createdAt": "2026-07-21T00:36:57.296Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cmrtxe3xv000dokbi1ifk9lp4",
+          "url": "/uploads/products/54c0f963-9324-4760-9e35-f9bff7808d7e.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        }
+      ],
+      "flavors": [],
+      "nutrition": null
+    },
+    {
+      "id": "cms3whthj0004zkbi8q22w0ga",
+      "name": "Mistura para Brioche 5kg",
+      "slug": "mistura-brioche-5kg",
+      "description": "<p>Mistura em pó pronta da Adimix para o preparo de pão tipo brioche, com o sabor do verdadeiro brioche, maciez e aroma diferenciados. Basta adicionar manteiga, ovos, água e fermento. Fácil preparo, ideal para versões doces ou salgadas, que podem ser recheadas e modeladas a gosto.</p>",
+      "shortDescription": "Mistura para brioche — pão doce, amanteigado e macio de origem francesa.",
+      "composition": "<p>Farinha de trigo fortificada com ferro e ácido fólico, açúcar, gordura vegetal, soro de leite, leite em pó, sal. Contém glúten.</p>",
+      "application": "<p>Panificação — preparo de pão tipo brioche (doce ou salgado), podendo ser recheado e modelado conforme a necessidade.</p>",
+      "conservation": null,
+      "preparation": "<p>Colocar na masseira a mistura com a manteiga e misturar por 2 minutos. Acrescentar os ovos e bater por mais 4 minutos; em seguida adicionar aos poucos a água e, por último, o fermento (fresco ou seco). Dividir a massa em porções de 400 g e deixar descansar de 20 a 25 minutos coberta com plástico. Modelar, colocar em formas untadas e fermentar até dobrar de volume. Pincelar com gema antes de assar. Assar a aprox. 140°C (forno turbo) ou 170°C (forno lastro) por cerca de 20 minutos. Proporção de referência (Adimix): 2 kg de mistura, 300 g de manteiga, 600 g de ovos, 300 ml de água (aprox.) e 150 g de fermento fresco (ou 50 g seco).</p>",
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Macio",
+        "Fácil preparo",
+        "Sabor e aroma diferenciados",
+        "Versátil (doce ou salgado)"
+      ],
+      "weight": "5 kg",
+      "sku": null,
+      "packaging": "Pacote de 5 kg",
+      "saleUnit": "pacote",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrtrc0ii0009vkbibk5ylo4x",
+      "subcategoryId": null,
+      "supplierId": "cmrtx1itt000bokbirzoaha3d",
+      "createdAt": "2026-07-28T00:11:33.127Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cms3whthk0005zkbietvstsjx",
+          "url": "/uploads/products/62d77e89-bb2d-49c3-a768-33645f5fcca4.png",
+          "alt": "Mistura para Brioche 5kg",
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        }
+      ],
+      "flavors": [],
+      "nutrition": null
+    },
+    {
+      "id": "cms3w7a3d00000obi0julbdy1",
+      "name": "AdiMix Super 2kg",
+      "slug": "adimix-super-2kg",
+      "description": "<p>A <strong>AdiMix Super</strong> é uma mistura preparada em pó, versátil e prática, para o preparo de <strong>mais de 100 produtos</strong> de panificação e confeitaria — de pão de hambúrguer, pão de hot dog e pão de leite a pão doce, pão de forma, pão sovado, pão caseiro e bisnaguinha.</p><p>Desenvolvida pela Adimix, oferece praticidade e economia no dia a dia da padaria, padronizando a produção com qualidade constante.</p><h3>Composição</h3><p>Farinha de trigo fortificada com ferro e ácido fólico, açúcar, gordura vegetal, sal, leite em pó desnatado e soro de leite, emulsificante monoglicerídeo e melhoradores de farinha (ácido ascórbico e enzima alfa-amilase). <strong>Contém glúten.</strong></p><h3>Validade e conservação</h3><p>Validade de 4 meses a partir da data de fabricação. Conservar em local seco, fresco e arejado, em temperatura ambiente.</p>",
+      "shortDescription": "Mistura preparada versátil para mais de 100 produtos de panificação e confeitaria — pães, pão de forma, pão doce e muito mais.",
+      "composition": "<p>Farinha de trigo enriquecida com ferro e ácido fólico, açúcar, gordura vegetal, sal, leite em pó desnatado e soro de leite, emulsificante monoglicerídeo e melhoradores de farinha (ácido ascórbico e enzima alfa-amilase). Contém glúten.</p>",
+      "application": "<p>Colocar na masseira o AdiMix Super e parte da água. Misturar na velocidade 1, adicionar o fermento e o restante da água, colocar na velocidade rápida até formar massa homogênea e atingir ponto de véu. Dosagem sugerida (por 2 kg de farinha): 45 g para croissant; 60 g para sonho, pão sírio, esfiha e pizza; 80 g para pão doce. Assar a 160°C em forno turbo ou 180°C em forno de lastro por aproximadamente 25 minutos.</p>",
+      "conservation": "<p>Conservar em local seco, fresco e arejado, à temperatura ambiente. Validade de 6 meses a partir da data de fabricação sob as condições recomendadas de armazenagem.</p>",
+      "preparation": "<p>Colocar na masseira o AdiMix Super e parte da água; misturar na velocidade 1, adicionar o fermento e o restante da água e bater em velocidade rápida até obter massa homogênea em ponto de véu. Modelar e assar a 160°C (forno turbo) ou 180°C (forno de lastro) por cerca de 25 minutos.</p>",
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Melhorador multiuso para mais de uma dezena de aplicações",
+        "Padroniza a produção de pães e massas",
+        "Contribui para maciez e desenvolvimento da massa",
+        "Dosagem prática conforme o produto"
+      ],
+      "weight": "2 kg",
+      "sku": null,
+      "packaging": "Pacote de 2 kg",
+      "saleUnit": "pacote",
+      "status": "ACTIVE",
+      "featured": true,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrtrc0ii0009vkbibk5ylo4x",
+      "subcategoryId": null,
+      "supplierId": "cmrtx1itt000bokbirzoaha3d",
+      "createdAt": "2026-07-28T00:03:21.433Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cms3w7a3h00010obi2750ghef",
+          "url": "/uploads/products/73a731c0-29bf-4221-996c-1c9a3b71b9b1.png",
+          "alt": "AdiMix Super 2kg — mistura preparada Adimix",
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        }
+      ],
+      "flavors": [],
+      "nutrition": null
+    },
+    {
+      "id": "cms3whtil000azkbiiyowu0zv",
+      "name": "Creme Confeiteiro em Pó 1kg",
+      "slug": "creme-confeiteiro-po-1kg",
+      "description": "<p>Mistura em pó da Adimix para preparo de creme confeiteiro, indicada como recheio e cobertura de pães, doces, sonhos e tortas. Fácil de preparar, basta misturar com leite e levar à fervura, oferecendo praticidade e padronização na confeitaria. Embalagem de 1 kg.</p>",
+      "shortDescription": "Creme confeiteiro em pó — o tradicional creme baunilha, com praticidade.",
+      "composition": null,
+      "application": "<p>Utilizar como recheio e cobertura de pães, doces, sonhos, tortas e demais aplicações de confeitaria.</p>",
+      "conservation": "<p>Validade de 6 meses a partir da data de fabricação sob as condições recomendadas de armazenagem. (Alguns distribuidores indicam refrigerar e consumir em até 60 dias após aberto.)</p>",
+      "preparation": "<p>Ferver 3 L de leite, adicionar 1 kg da mistura, ferver por 1 minuto, resfriar e utilizar como recheio ou cobertura.</p>",
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Preparo rápido e prático (só com leite)",
+        "Serve como recheio e cobertura",
+        "Padroniza o creme na confeitaria",
+        "Alto rendimento (1 kg + 3 L de leite)"
+      ],
+      "weight": "1 kg",
+      "sku": null,
+      "packaging": "Pacote de 1 kg",
+      "saleUnit": "pacote",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrlccctl005zd4bij2vakivs",
+      "subcategoryId": null,
+      "supplierId": "cmrtx1itt000bokbirzoaha3d",
+      "createdAt": "2026-07-28T00:11:33.165Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cms3whtil000bzkbib5k2z75q",
+          "url": "/uploads/products/f156a71e-821e-4edf-b099-a56870624178.png",
+          "alt": "Creme Confeiteiro em Pó 1kg",
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        }
+      ],
+      "flavors": [],
+      "nutrition": null
+    },
+    {
+      "id": "cmrtxm1ij000eokbiajom3908",
+      "name": "Desmoldante - 600ML",
+      "slug": "desmoldante-600ml",
+      "description": "<p>Desmoldante em spray aerossol Lisse da Adimix, desenvolvido para untar formas e assadeiras de forma prática e uniforme. Cria uma película antiaderente que facilita a desmoldagem de bolos, pães e demais assados, evitando que grudem. Formulado à base de óleos e ceras vegetais, é concentrado e rende bastante.</p>",
+      "shortDescription": null,
+      "composition": "<p>Óleos vegetais, ceras vegetais e lecitina de soja. Não contém glúten. Alérgicos: contém derivados de soja.</p>",
+      "application": "<p>Untar formas, assadeiras e superfícies para assar bolos, pães e outros produtos de panificação e confeitaria, garantindo desmoldagem fácil.</p>",
+      "conservation": null,
+      "preparation": "<p>Retire a tampa, agite bem e borrife uma camada leve sobre a superfície desejada. Aplique a uma distância mínima de 20 cm da forma, sem excesso (produto concentrado). Não utilize próximo ao fogão.</p>",
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Não contém glúten",
+        "Película antiaderente uniforme",
+        "Produto concentrado e rendoso",
+        "Praticidade na aplicação em spray"
+      ],
+      "weight": null,
+      "sku": "5189",
+      "packaging": "1 unidade",
+      "saleUnit": "unidade",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrtrc0ii0009vkbibk5ylo4x",
+      "subcategoryId": "cmrtvaplw000globiipn6k7ca",
+      "supplierId": "cmrtx1itt000bokbirzoaha3d",
+      "createdAt": "2026-07-21T00:45:08.011Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cmrwsoa7800004obi6odefoc6",
+          "url": "/uploads/products/2f95dea1-d464-460f-8c71-09ff6b3aaa0c.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        }
+      ],
+      "flavors": [],
+      "nutrition": null
+    },
+    {
+      "id": "cms3whtgd0000zkbii612d16j",
+      "name": "Mistura para Pão de Queijo 25kg",
+      "slug": "mistura-pao-de-queijo-25kg",
+      "description": "<p>Mistura pronta para o preparo de <strong>pão de queijo</strong>, o clássico salgado brasileiro: macio por dentro e levemente crocante por fora. Basta adicionar água, queijo e ovos conforme a receita.</p><h3>Composição</h3><p>Fécula de mandioca, polvilho azedo, amido modificado, gordura vegetal, leite em pó desnatado, sal e aroma artificial de queijo. <strong>Contém glúten. Contém lactose.</strong> Alérgicos: contém derivados de leite e soja; pode conter amendoim, ovos, trigo, centeio, aveia, cevada, castanha-de-caju, pistaches, avelãs e nozes.</p><h3>Conservação</h3><p>Conservar em local seco, fresco e arejado.</p>",
+      "shortDescription": "Mistura pronta para o preparo de pão de queijo — basta adicionar água, queijo e ovos.",
+      "composition": null,
+      "application": "<p>Panificação/food service — preparo de pão de queijo.</p>",
+      "conservation": "<p>Validade: 6 meses.</p>",
+      "preparation": "<p>Colocar na batedeira a mistura de pão de queijo, os ovos, o queijo ralado e a água aos poucos. Misturar na velocidade 1 até obter uma massa lisa e homogênea. Bolear e colocar na assadeira sem necessidade de untar a forma. Fornear durante 20 minutos a 150°C em forno turbo ou 190°C em forno lastro. Proporção de referência (Adimix): 1 kg de mistura, aprox. 400 ml de água, 400 g de queijo meia cura ou muçarela ralada e 400 g de ovos.</p>",
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Não precisa untar a forma",
+        "Preparo prático",
+        "Embalagem industrial 25 kg"
+      ],
+      "weight": "25 kg",
+      "sku": null,
+      "packaging": "Saco de 25 kg",
+      "saleUnit": "saco",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrtrc0ii0009vkbibk5ylo4x",
+      "subcategoryId": null,
+      "supplierId": "cmrtx1itt000bokbirzoaha3d",
+      "createdAt": "2026-07-28T00:11:33.085Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cms3whtgr0001zkbimvwzpb13",
+          "url": "/uploads/products/3c02ea74-b45f-4468-a635-ec051120a4f9.png",
+          "alt": "Mistura para Pão de Queijo 25kg",
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        }
+      ],
+      "flavors": [],
+      "nutrition": null
+    },
+    {
+      "id": "cmrtrkdew000avkbi7r4yqzqq",
+      "name": "Bolo de Aipim -  5KG",
+      "slug": "bolo-de-aipim-5kg",
+      "description": "<p>Mistura pronta profissional Fleischmann para bolo cremoso de aipim (macaxeira/mandioca), da linha de Bolos Cremosos. Rende um bolo de sabor marcante, com textura úmida e macia e boa resistência, sem esfarelar. Preparo rápido e padronizado, ideal para o giro de padarias e confeitarias. Embalagem de 5 kg.</p>",
+      "shortDescription": null,
+      "composition": "<p>Açúcar, amido (milho geneticamente modificado), farinha de trigo enriquecida com ferro e ácido fólico, gordura vegetal hidrogenada, fécula de mandioca, soro de leite, sal, fermentos químicos (bicarbonato de sódio, fosfato monocálcico, pirofosfato dissódico), conservador (propionato de cálcio), espessantes (goma guar e goma xantana) e aromatizante. Contém glúten e lactose. Pode conter centeio, cevada, aveia e ovos.</p>",
+      "application": "<p>Pré-mistura para uso profissional em padarias e confeitarias na produção de bolos de aipim/mandioca; basta acrescentar leite, ovos e coco ralado.</p>",
+      "conservation": "<p>Manter o produto em local seco, fresco e ao abrigo da luz solar direta. Após aberto, consumir em até 15 dias. Validade de 6 meses a partir da data de fabricação.</p>",
+      "preparation": "<p>Misturar 5 kg da mistura com 3.000 mL de leite integral, 1.750 g de ovos pasteurizados e 300 a 500 g de coco ralado. Na batedeira, bater em velocidade lenta por cerca de 1 minuto até homogeneizar (evitar bater vigorosamente para não aerar em excesso). Colocar em formas untadas e assar a 180°C (forno de lastro) ou 140°C (turbo) por aproximadamente 35 minutos; banho-maria deixa o bolo mais cremoso.</p>",
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Textura úmida e macia, não esfarela",
+        "Preparo rápido (cerca de 3 minutos de mistura)",
+        "Qualidade padronizada e maior rendimento",
+        "Basta adicionar leite, ovos e coco"
+      ],
+      "weight": null,
+      "sku": "3040",
+      "packaging": "5kg",
+      "saleUnit": "unidade",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrtrc0ii0009vkbibk5ylo4x",
+      "subcategoryId": "cmrtv9cf00005lobibfyt33f8",
+      "supplierId": "cmr8gzue80000akbiy7pnglkv",
+      "createdAt": "2026-07-20T21:55:52.424Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cmrtwmmki0008okbibe655m1x",
+          "url": "/uploads/products/aede716b-740a-4eb4-a4d5-3eb73d355a48.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        }
+      ],
+      "flavors": [],
+      "nutrition": null
+    },
+    {
+      "id": "cmrtws9070009okbiiu0p67re",
+      "name": "CREME CHANTILLY CHOC - 1KG",
+      "slug": "creme-chantilly-choc-1kg",
+      "description": "<p>Creme tipo chantilly sabor chocolate da linha Gran Finale (Fleischmann), para uso profissional em confeitaria. Tem sabor e cor intensos de chocolate, com cacau na formulação, textura ultracremosa e ótima estabilidade de bancada. Indicado como base para recheios, coberturas e decoração de bolos, tortas, mousses e sobremesas.</p>",
+      "shortDescription": null,
+      "composition": "<p>Água, açúcar, gordura vegetal de palmiste interesterificada, cacau, caseinato de sódio, sal, umectante sorbitol, aromatizantes, estearoil-2-lactil lactato de sódio, lecitina de soja, mono e diglicerídeos de ácidos graxos, ésteres de ácido diacetil tartárico, estabilizante hidroxipropilcelulose e corantes (vermelho 40, tartrazina e azul brilhante FCF). Contém derivados de leite e soja; pode conter trigo e glúten.</p>",
+      "application": "<p>Base para recheios, coberturas e decoração de bolos, tortas, mousses e parfaits em confeitaria profissional.</p>",
+      "conservation": "<p>Armazenar em local seco, fresco e limpo, entre 5°C e 20°C, ao abrigo da luz solar direta; evitar variações de temperatura e não congelar antes de bater. Após aberto, refrigerar entre 5°C e 10°C e usar em até 3 dias. Validade de 7 meses a partir da fabricação.</p>",
+      "preparation": "<p>Refrigerar por 12 horas antes de bater (produto entre 5°C e 10°C). Bater em velocidade média até atingir a consistência desejada; o tempo de batimento varia conforme o equipamento.</p>",
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Sabor e cor intensos de chocolate, com cacau",
+        "Textura ultracremosa e fácil aplicação",
+        "Ótima estabilidade prolongada, sem perda de cor",
+        "Resiste à sinérese e a rachaduras"
+      ],
+      "weight": null,
+      "sku": "3144",
+      "packaging": "1 kg",
+      "saleUnit": "unidade",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrlccctl005zd4bij2vakivs",
+      "subcategoryId": "cmrtvhkhv000hlobi6dzx4yvl",
+      "supplierId": "cmr8gzue80000akbiy7pnglkv",
+      "createdAt": "2026-07-21T00:21:58.039Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cmrtws90j000aokbiqqi7vkho",
+          "url": "/uploads/products/321af0b8-cdff-4cb6-8d54-e5f3d136ae2c.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        }
+      ],
+      "flavors": [],
+      "nutrition": null
+    },
+    {
+      "id": "cmrwpcdhz0000swbi1e5c93kj",
+      "name": "MIX FLEISCH. CROISSANT 5KG",
+      "slug": "mix-fleisch-croissant-5kg",
+      "description": "<p><span style=\"background-color: rgb(255, 255, 255); color: rgb(26, 26, 26); font-family: &quot;Merriweather Sans&quot;, sans-serif; font-size: 18px;\"><strong>Mistura para Croissant Fleischmann®</strong></span><br><br><strong>Modo de Preparo:</strong></p><ul><li><p style=\"text-align: justify;\">Na masseira bater a Misturar a Mistura para Preparo de Croissant (5,0 kg) com água gelada (2.300 –2.400 mL) por 2 minutos em velocidade lenta. Adicionar de 80 g a 150 g de fermento fresco (deacordo com o tempo de fermentação desejado) e passar para velocidade rápida. Bater até que amassa fique lisa e enxuta.</p></li><li><p style=\"text-align: justify;\">Fazer uma placa com a margarina para folhados (2,0kg).</p></li><li><p style=\"text-align: justify;\">Abrir a massa e colocar a margarina para folhados em ⅔ da massa. Cobrir a margarina com a massa e dobrar em 3 partes. Abrir a massa utilizando uma laminadora ou no processo manual através deuma bilha profissional. Dobre um 1/3 da massa em direção ao centro, e depois sobreponha com o1/3 restante (Dobra de três). Abrir novamente a massa e dar mais 2 dobras de três. Total 3 dobras de três. Modelar.</p></li><li><p style=\"text-align: justify;\">Fermentar por aproximadamente 2 horas em estufa a temperatura de 32ºC e umidade de 85% ou até dobrar de volume. Pincelar na metade do crescimento com gemas ou ovos.</p></li><li><p style=\"text-align: justify;\">Assar em forno de lastro a 180°C ou turbo a 150°C por aproximadamente 15 minutos.</p></li></ul><p style=\"text-align: justify;\"><strong><em>Os tempos de fermentação e forneamento podem variar dependendo do tamanho das peças.</em></strong></p><p style=\"text-align: justify;\"></p><p style=\"text-align: justify;\"><strong>Recomendações de Armazenamento</strong></p><ul><li><p style=\"text-align: justify;\">Manter o produto em local seco, fresco e ao abrigo da luz solar direta.</p></li><li><p style=\"text-align: justify;\">Depois de aberta, utilizar o conteúdo da embalagem em até 15 dias.</p></li></ul><p style=\"text-align: justify;\"></p><p style=\"text-align: justify;\"><strong>Prazo de validade</strong></p><p style=\"text-align: justify;\">6 meses a partir da data de fabricação.</p>",
+      "shortDescription": null,
+      "composition": "<p>Farinha de trigo enriquecida com ferro e ácido fólico, açúcar, composto lácteo com gordura vegetal (sabor leite), gordura vegetal, sal, ovo em pó, emulsificante estearoil lactilato de sódio, conservador propionato de cálcio, aromatizante e melhoradores de farinha (ácido ascórbico e alfa-amilase). Contém glúten, ovos, derivados de leite, derivados de trigo e soja.</p>",
+      "application": "<p>Pré-mistura para panificação profissional na produção de croissants (doces e salgados).</p>",
+      "conservation": "<p>Manter em local seco, fresco e ao abrigo da luz solar direta. Usar em até 15 dias após aberto. Validade de 6 meses a partir da data de fabricação.</p>",
+      "preparation": "<p>Na batedeira, bater 5,0 kg da mistura com 2.300 a 2.400 mL de água gelada por 2 minutos em velocidade lenta; acrescentar 80 a 150 g de fermento fresco e aumentar a velocidade. Trabalhar a camada de margarina (cerca de 2 kg) e laminar com três dobras triplas. Fermentar por aproximadamente 2 horas a 32°C e 85% de umidade. Assar a 180°C (ou 150°C em forno turbo) por cerca de 15 minutos.</p>",
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Alvéolos abertos e uniformes",
+        "Massa estica com facilidade, sem descanso entre dobras",
+        "Sabor leve para recheios doces e salgados",
+        "Padronização e maciez prolongada"
+      ],
+      "weight": null,
+      "sku": "3073",
+      "packaging": "5kg",
+      "saleUnit": "unidade",
+      "status": "ACTIVE",
+      "featured": false,
+      "order": 0,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrtrc0ii0009vkbibk5ylo4x",
+      "subcategoryId": "cmrtv9ruh0008lobixrugoinl",
+      "supplierId": "cmr8gzue80000akbiy7pnglkv",
+      "createdAt": "2026-07-22T23:16:58.583Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cms203uc9000318bida71xw2i",
+          "url": "/uploads/products/8ddf85a0-0e26-4bd2-9d82-0b7fe30adf84.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        }
+      ],
+      "flavors": [],
+      "nutrition": null
+    },
+    {
+      "id": "cmrhwbew200016gbi4oiia57b",
+      "name": "Barra de Proteína - Ruby",
+      "slug": "barra-de-proteina-ruby",
+      "description": "<p>Barra de proteína da <strong>Ruby Snacks</strong> — a proposta de unir sabor e nutrição num snack que dá vontade de comer. <strong>Sem açúcar adicionado</strong> e <strong>sem glúten</strong>, é fonte de proteínas e ainda traz vitamina B12, ácido fólico, zinco e cromo. Disponível em vários sabores, em barra de 40 g (display com 12 unidades).</p>",
+      "shortDescription": "Barra de proteína sem açúcar adicionado e sem glúten, fonte de proteínas — em vários sabores.",
+      "composition": "<p><strong>Ingredientes:</strong> Blend proteico Ruby (proteína do soro de leite concentrada, proteína do leite concentrada, colágeno hidrolisado e caseinato de cálcio), água, clara de ovo desidratada, cacau alcalino, fibra de trigo, gordura vegetal de palmiste, inulina, sal, premix de vitaminas e minerais (vitaminas A, B6, B9, B12, D3, selênio, cromo e zinco), cobertura de chocolate meio amargo zero adição de açúcar e recheio zero adição de açúcar, além de aromatizantes, edulcorantes, espessantes, emulsificantes, estabilizantes, conservantes e antioxidante.</p><p><strong>Alérgicos:</strong> contém leite, ovo, derivados de leite, trigo e soja. Pode conter amendoim, nozes, avelãs e pistache. Contém lactose.</p><p><em>A composição pode variar conforme o sabor.</em></p>",
+      "application": "<p>Snack proteico de consumo direto, para lanches e complementação da rotina alimentar.</p>",
+      "conservation": "<p>Conservar em local seco, fresco e ao abrigo de luz. Após aberto, consumir imediatamente.</p><p><strong>Peso líquido:</strong> 40 g por unidade.</p><p><strong>Recomendação de uso:</strong> adultos (≥ 19 anos), consumir até 2 unidades ao dia. Este produto não é um medicamento; não exceder a recomendação diária indicada na embalagem.</p>",
+      "preparation": null,
+      "technicalSheetUrl": null,
+      "highlights": [
+        "Sem açúcar adicionado",
+        "Sem glúten",
+        "Fonte de vitamina B12, ácido fólico, zinco e cromo",
+        "Barra de 40 g (display com 12 unidades)"
+      ],
+      "weight": null,
+      "sku": "JOO-001",
+      "packaging": "Caixa com 12 unidades",
+      "saleUnit": "CAIXA",
+      "status": "ACTIVE",
+      "featured": true,
+      "order": 1,
+      "metaTitle": null,
+      "metaDescription": null,
+      "categoryId": "cmrlccctl005zd4bij2vakivs",
+      "subcategoryId": null,
+      "supplierId": "cmrhvz7yr00006gbidpcgqost",
+      "createdAt": "2026-07-12T14:35:38.402Z",
+      "relatedProductIds": [],
+      "images": [
+        {
+          "id": "cmrlci46y007td4bi1vb61pyv",
+          "url": "/uploads/products/9946add0-d424-4762-88e1-0e36abc193a1.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": null
+        },
+        {
+          "id": "979ab4ec-2f9d-4620-92f4-2605bcca7aca",
+          "url": "/uploads/flavors/5257ff15-ee70-498c-9b9b-0af86f87de9e.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cmrlci46y007ud4bi1sqi5uzd"
+        },
+        {
+          "id": "16b20e66-533f-4586-ae07-0df66c9fffd8",
+          "url": "/uploads/flavors/6ce73664-a2ed-4462-9884-a2f56a1a53bf.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cmrlci471008ad4bir6cvyqh3"
+        },
+        {
+          "id": "2eb5677f-f178-4e7e-b8bb-86436a03a942",
+          "url": "/uploads/flavors/988fcb25-f954-4af0-808e-51f6ad3d5e0d.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cmrlci472008qd4biybpvsexi"
+        },
+        {
+          "id": "5e6e7208-e0f1-4d74-8714-477883892d88",
+          "url": "/uploads/flavors/69a9e15b-6bb9-4010-a6dc-b4be2e508470.png",
+          "alt": null,
+          "order": 0,
+          "isPrimary": true,
+          "flavorId": "cmrlci4740096d4bi94dv0i00"
+        }
+      ],
+      "flavors": [
+        {
+          "id": "cmrlci46y007ud4bi1sqi5uzd",
+          "name": "Bolo de Cenoura com Chocolate",
+          "imageUrl": "/uploads/flavors/5257ff15-ee70-498c-9b9b-0af86f87de9e.png",
+          "sku": null,
+          "description": "<p>O sabor afetivo do bolo de cenoura com cobertura de chocolate, numa barra rica em proteínas e <strong>sem açúcar adicionado</strong>. A dobradinha clássica da confeitaria brasileira em versão prática para o dia a dia.</p>",
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 0,
+          "nutrition": {
+            "id": "cmrlci46z007vd4biibdme82h",
+            "servingsPerPackage": "1 porção",
+            "servingAmount": "40g",
+            "servingHousehold": null,
+            "referenceAmount": "100 g",
+            "footnote": null,
+            "rows": [
+              {
+                "id": "cmrlci46z007wd4bixzza8hcl",
+                "kind": "ENERGY",
+                "label": "Valor energético",
+                "unit": "kcal",
+                "valuePer100": "338",
+                "valuePerServing": "135",
+                "dailyValuePercent": 7,
+                "order": 0
+              },
+              {
+                "id": "cmrlci46z007xd4biu8vzfzdr",
+                "kind": "CARBOHYDRATES",
+                "label": "Carboidratos",
+                "unit": "g",
+                "valuePer100": "37.5",
+                "valuePerServing": "15",
+                "dailyValuePercent": 5,
+                "order": 1
+              },
+              {
+                "id": "cmrlci46z007yd4biy14l3pj7",
+                "kind": "SUGARS_TOTAL",
+                "label": "Açúcares totais",
+                "unit": "g",
+                "valuePer100": "3.5",
+                "valuePerServing": "1.4",
+                "dailyValuePercent": null,
+                "order": 2
+              },
+              {
+                "id": "cmrlci46z007zd4bigx4h5xqm",
+                "kind": "SUGARS_ADDED",
+                "label": "Açúcares adicionados",
+                "unit": "g",
+                "valuePer100": "0",
+                "valuePerServing": "0",
+                "dailyValuePercent": 0,
+                "order": 3
+              },
+              {
+                "id": "cmrlci46z0080d4bivuufpmyl",
+                "kind": "PROTEIN",
+                "label": "Proteínas",
+                "unit": "g",
+                "valuePer100": "30",
+                "valuePerServing": "12",
+                "dailyValuePercent": 24,
+                "order": 4
+              },
+              {
+                "id": "cmrlci46z0081d4bidg2kmmmu",
+                "kind": "FATS_TOTAL",
+                "label": "Gorduras totais",
+                "unit": "g",
+                "valuePer100": "12.5",
+                "valuePerServing": "5",
+                "dailyValuePercent": 8,
+                "order": 5
+              },
+              {
+                "id": "cmrlci46z0082d4binfs091ly",
+                "kind": "FATS_SATURATED",
+                "label": "Gorduras saturadas",
+                "unit": "g",
+                "valuePer100": "4.3",
+                "valuePerServing": "1.7",
+                "dailyValuePercent": 9,
+                "order": 6
+              },
+              {
+                "id": "cmrlci46z0083d4bi8pwjc98j",
+                "kind": "FATS_TRANS",
+                "label": "Gorduras trans",
+                "unit": "g",
+                "valuePer100": "0",
+                "valuePerServing": "0",
+                "dailyValuePercent": 0,
+                "order": 7
+              },
+              {
+                "id": "cmrlci46z0084d4bis3aag7to",
+                "kind": "FIBER",
+                "label": "Fibras alimentares",
+                "unit": "g",
+                "valuePer100": "8.3",
+                "valuePerServing": "3.3",
+                "dailyValuePercent": 14,
+                "order": 8
+              },
+              {
+                "id": "cmrlci46z0085d4bisqnag16x",
+                "kind": "SODIUM",
+                "label": "Sódio",
+                "unit": "mg",
+                "valuePer100": "223",
+                "valuePerServing": "89",
+                "dailyValuePercent": 5,
+                "order": 9
+              },
+              {
+                "id": "cmrlci46z0086d4bibynyskpl",
+                "kind": "OTHER",
+                "label": "Ácido Fólico",
+                "unit": "mcg",
+                "valuePer100": "150",
+                "valuePerServing": "60",
+                "dailyValuePercent": 100,
+                "order": 10
+              },
+              {
+                "id": "cmrlci46z0087d4bipn70c7rp",
+                "kind": "OTHER",
+                "label": "Vitamina B12",
+                "unit": "mcg",
+                "valuePer100": "0.9",
+                "valuePerServing": "0.36",
+                "dailyValuePercent": 100,
+                "order": 11
+              },
+              {
+                "id": "cmrlci46z0088d4big0d37e4g",
+                "kind": "OTHER",
+                "label": "Zinco",
+                "unit": "mg",
+                "valuePer100": "4.1",
+                "valuePerServing": "1.65",
+                "dailyValuePercent": 100,
+                "order": 12
+              },
+              {
+                "id": "cmrlci46z0089d4bipted5zp0",
+                "kind": "OTHER",
+                "label": "Cromo",
+                "unit": "mcg",
+                "valuePer100": "13.1",
+                "valuePerServing": "5.25",
+                "dailyValuePercent": 100,
+                "order": 13
+              }
+            ]
+          }
+        },
+        {
+          "id": "cmrlci471008ad4bir6cvyqh3",
+          "name": "Pão de Mel com Doce de Leite",
+          "imageUrl": "/uploads/flavors/6ce73664-a2ed-4462-9884-a2f56a1a53bf.png",
+          "sku": null,
+          "description": "<p>Inspirada no pão de mel com recheio de doce de leite: barra proteica macia, de sabor aconchegante e <strong>sem açúcar adicionado</strong>. Indulgência com proteína de verdade.</p>",
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 1,
+          "nutrition": {
+            "id": "cmrlci471008bd4binlwt59dt",
+            "servingsPerPackage": "1 porção",
+            "servingAmount": "40g",
+            "servingHousehold": null,
+            "referenceAmount": "100 g",
+            "footnote": null,
+            "rows": [
+              {
+                "id": "cmrlci471008cd4bit8vpj56x",
+                "kind": "ENERGY",
+                "label": "Valor energético",
+                "unit": "kcal",
+                "valuePer100": "333",
+                "valuePerServing": "133",
+                "dailyValuePercent": 7,
+                "order": 0
+              },
+              {
+                "id": "cmrlci471008dd4biyua390pe",
+                "kind": "CARBOHYDRATES",
+                "label": "Carboidratos",
+                "unit": "g",
+                "valuePer100": "37.5",
+                "valuePerServing": "15",
+                "dailyValuePercent": 5,
+                "order": 1
+              },
+              {
+                "id": "cmrlci471008ed4bibcgi439k",
+                "kind": "SUGARS_TOTAL",
+                "label": "Açúcares totais",
+                "unit": "g",
+                "valuePer100": "4.5",
+                "valuePerServing": "2",
+                "dailyValuePercent": null,
+                "order": 2
+              },
+              {
+                "id": "cmrlci471008fd4bifwpsnwwd",
+                "kind": "SUGARS_ADDED",
+                "label": "Açúcares adicionados",
+                "unit": "g",
+                "valuePer100": "0",
+                "valuePerServing": "0",
+                "dailyValuePercent": 0,
+                "order": 3
+              },
+              {
+                "id": "cmrlci471008gd4biq2ntb4f5",
+                "kind": "PROTEIN",
+                "label": "Proteínas",
+                "unit": "g",
+                "valuePer100": "30",
+                "valuePerServing": "12",
+                "dailyValuePercent": 24,
+                "order": 4
+              },
+              {
+                "id": "cmrlci471008hd4biy5o119nv",
+                "kind": "FATS_TOTAL",
+                "label": "Gorduras totais",
+                "unit": "g",
+                "valuePer100": "11.3",
+                "valuePerServing": "4.5",
+                "dailyValuePercent": 7,
+                "order": 5
+              },
+              {
+                "id": "cmrlci471008id4bili86qcx5",
+                "kind": "FATS_SATURATED",
+                "label": "Gorduras saturadas",
+                "unit": "g",
+                "valuePer100": "10.3",
+                "valuePerServing": "4.1",
+                "dailyValuePercent": 21,
+                "order": 6
+              },
+              {
+                "id": "cmrlci471008jd4bido2ttigt",
+                "kind": "FATS_TRANS",
+                "label": "Gorduras trans",
+                "unit": "g",
+                "valuePer100": "0",
+                "valuePerServing": "0",
+                "dailyValuePercent": 0,
+                "order": 7
+              },
+              {
+                "id": "cmrlci471008kd4birhsfh7ex",
+                "kind": "FIBER",
+                "label": "Fibras alimentares",
+                "unit": "g",
+                "valuePer100": "8",
+                "valuePerServing": "3.2",
+                "dailyValuePercent": 13,
+                "order": 8
+              },
+              {
+                "id": "cmrlci471008ld4bik333vl69",
+                "kind": "SODIUM",
+                "label": "Sódio",
+                "unit": "mg",
+                "valuePer100": "230",
+                "valuePerServing": "92",
+                "dailyValuePercent": 5,
+                "order": 9
+              },
+              {
+                "id": "cmrlci471008md4biezcuf8zg",
+                "kind": "OTHER",
+                "label": "Ácido Fólico",
+                "unit": "mcg",
+                "valuePer100": "150",
+                "valuePerServing": "60",
+                "dailyValuePercent": 100,
+                "order": 10
+              },
+              {
+                "id": "cmrlci471008nd4birovqsnog",
+                "kind": "OTHER",
+                "label": "Vitamina B12",
+                "unit": "mcg",
+                "valuePer100": "0.9",
+                "valuePerServing": "0.36",
+                "dailyValuePercent": 100,
+                "order": 11
+              },
+              {
+                "id": "cmrlci471008od4bi1b3f1ywq",
+                "kind": "OTHER",
+                "label": "Zinco",
+                "unit": "mg",
+                "valuePer100": "4.1",
+                "valuePerServing": "1.65",
+                "dailyValuePercent": 100,
+                "order": 12
+              },
+              {
+                "id": "cmrlci471008pd4bixvdmqlpj",
+                "kind": "OTHER",
+                "label": "Cromo",
+                "unit": "mcg",
+                "valuePer100": "13.1",
+                "valuePerServing": "5.25",
+                "dailyValuePercent": 100,
+                "order": 13
+              }
+            ]
+          }
+        },
+        {
+          "id": "cmrlci472008qd4biybpvsexi",
+          "name": "Doce de Leite com Amendoim",
+          "imageUrl": "/uploads/flavors/988fcb25-f954-4af0-808e-51f6ad3d5e0d.png",
+          "sku": null,
+          "description": "<p>Doce de leite com a crocância do amendoim numa barra rica em proteínas e <strong>sem açúcar adicionado</strong> — o equilíbrio entre o docinho que conforta e a nutrição do dia a dia.</p>",
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 2,
+          "nutrition": {
+            "id": "cmrlci473008rd4bifckt7t8w",
+            "servingsPerPackage": "1 porção",
+            "servingAmount": "40g",
+            "servingHousehold": null,
+            "referenceAmount": "100 g",
+            "footnote": null,
+            "rows": [
+              {
+                "id": "cmrlci473008sd4bin3nttjt7",
+                "kind": "ENERGY",
+                "label": "Valor energético",
+                "unit": "kcal",
+                "valuePer100": "333",
+                "valuePerServing": "133",
+                "dailyValuePercent": 7,
+                "order": 0
+              },
+              {
+                "id": "cmrlci473008td4bigt52ay00",
+                "kind": "CARBOHYDRATES",
+                "label": "Carboidratos",
+                "unit": "g",
+                "valuePer100": "37.5",
+                "valuePerServing": "15",
+                "dailyValuePercent": 5,
+                "order": 1
+              },
+              {
+                "id": "cmrlci473008ud4bi43q8f2i1",
+                "kind": "SUGARS_TOTAL",
+                "label": "Açúcares totais",
+                "unit": "g",
+                "valuePer100": "4.5",
+                "valuePerServing": "1.6",
+                "dailyValuePercent": null,
+                "order": 2
+              },
+              {
+                "id": "cmrlci473008vd4bid7gekyj6",
+                "kind": "SUGARS_ADDED",
+                "label": "Açúcares adicionados",
+                "unit": "g",
+                "valuePer100": "0",
+                "valuePerServing": "0",
+                "dailyValuePercent": 0,
+                "order": 3
+              },
+              {
+                "id": "cmrlci473008wd4bi2wofv0zn",
+                "kind": "PROTEIN",
+                "label": "Proteínas",
+                "unit": "g",
+                "valuePer100": "30",
+                "valuePerServing": "12",
+                "dailyValuePercent": 24,
+                "order": 4
+              },
+              {
+                "id": "cmrlci473008xd4biyrm05bm1",
+                "kind": "FATS_TOTAL",
+                "label": "Gorduras totais",
+                "unit": "g",
+                "valuePer100": "11.3",
+                "valuePerServing": "4.5",
+                "dailyValuePercent": 7,
+                "order": 5
+              },
+              {
+                "id": "cmrlci473008yd4biz9yskkzj",
+                "kind": "FATS_SATURATED",
+                "label": "Gorduras saturadas",
+                "unit": "g",
+                "valuePer100": "10.3",
+                "valuePerServing": "4.1",
+                "dailyValuePercent": 21,
+                "order": 6
+              },
+              {
+                "id": "cmrlci473008zd4bi24vbcu6o",
+                "kind": "FATS_TRANS",
+                "label": "Gorduras trans",
+                "unit": "g",
+                "valuePer100": "0",
+                "valuePerServing": "0",
+                "dailyValuePercent": 0,
+                "order": 7
+              },
+              {
+                "id": "cmrlci4730090d4biihb31xwv",
+                "kind": "FIBER",
+                "label": "Fibras alimentares",
+                "unit": "g",
+                "valuePer100": "7",
+                "valuePerServing": "2.8",
+                "dailyValuePercent": 11,
+                "order": 8
+              },
+              {
+                "id": "cmrlci4730091d4bi4yom7k1f",
+                "kind": "SODIUM",
+                "label": "Sódio",
+                "unit": "mg",
+                "valuePer100": "225",
+                "valuePerServing": "90",
+                "dailyValuePercent": 5,
+                "order": 9
+              },
+              {
+                "id": "cmrlci4730092d4bi403qtk0p",
+                "kind": "OTHER",
+                "label": "Ácido Fólico",
+                "unit": "mcg",
+                "valuePer100": "150",
+                "valuePerServing": "60",
+                "dailyValuePercent": 100,
+                "order": 10
+              },
+              {
+                "id": "cmrlci4730093d4biqo6oz7tn",
+                "kind": "OTHER",
+                "label": "Vitamina B12",
+                "unit": "mcg",
+                "valuePer100": "0.9",
+                "valuePerServing": "0.36",
+                "dailyValuePercent": 100,
+                "order": 11
+              },
+              {
+                "id": "cmrlci4730094d4bic2ucepfk",
+                "kind": "OTHER",
+                "label": "Zinco",
+                "unit": "mg",
+                "valuePer100": "4.1",
+                "valuePerServing": "1.65",
+                "dailyValuePercent": 100,
+                "order": 12
+              },
+              {
+                "id": "cmrlci4730095d4bif7s5fvgp",
+                "kind": "OTHER",
+                "label": "Cromo",
+                "unit": "mcg",
+                "valuePer100": "13.1",
+                "valuePerServing": "5.25",
+                "dailyValuePercent": 100,
+                "order": 13
+              }
+            ]
+          }
+        },
+        {
+          "id": "cmrlci4740096d4bi94dv0i00",
+          "name": "Brigadeiro Belga",
+          "imageUrl": "/uploads/flavors/69a9e15b-6bb9-4010-a6dc-b4be2e508470.png",
+          "sku": null,
+          "description": "<p>O clássico brigadeiro em barra de proteína, com recheio cremoso e cobertura de chocolate meio amargo, <strong>sem açúcar adicionado</strong>. O sabor mais querido do Brasil, agora proteico.</p>",
+          "weight": null,
+          "technicalSheetUrl": null,
+          "available": true,
+          "order": 3,
+          "nutrition": {
+            "id": "cmrlci4740097d4bienipkrd6",
+            "servingsPerPackage": "1 porção",
+            "servingAmount": "40g",
+            "servingHousehold": null,
+            "referenceAmount": "100 g",
+            "footnote": null,
+            "rows": [
+              {
+                "id": "cmrlci4740098d4biros695uw",
+                "kind": "ENERGY",
+                "label": "Valor energético",
+                "unit": "kcal",
+                "valuePer100": "335",
+                "valuePerServing": "134",
+                "dailyValuePercent": 7,
+                "order": 0
+              },
+              {
+                "id": "cmrlci4740099d4bijsjqvnd2",
+                "kind": "CARBOHYDRATES",
+                "label": "Carboidratos",
+                "unit": "g",
+                "valuePer100": "37.5",
+                "valuePerServing": "15",
+                "dailyValuePercent": 5,
+                "order": 1
+              },
+              {
+                "id": "cmrlci474009ad4bivw3xsnrz",
+                "kind": "SUGARS_TOTAL",
+                "label": "Açúcares totais",
+                "unit": "g",
+                "valuePer100": "3.5",
+                "valuePerServing": "1.4",
+                "dailyValuePercent": null,
+                "order": 2
+              },
+              {
+                "id": "cmrlci474009bd4bijicy2mrd",
+                "kind": "SUGARS_ADDED",
+                "label": "Açúcares adicionados",
+                "unit": "g",
+                "valuePer100": "0",
+                "valuePerServing": "0",
+                "dailyValuePercent": 0,
+                "order": 3
+              },
+              {
+                "id": "cmrlci474009cd4bi30ydye4b",
+                "kind": "PROTEIN",
+                "label": "Proteínas",
+                "unit": "g",
+                "valuePer100": "30",
+                "valuePerServing": "12",
+                "dailyValuePercent": 24,
+                "order": 4
+              },
+              {
+                "id": "cmrlci474009dd4biw549c0k6",
+                "kind": "FATS_TOTAL",
+                "label": "Gorduras totais",
+                "unit": "g",
+                "valuePer100": "12.3",
+                "valuePerServing": "4.9",
+                "dailyValuePercent": 7,
+                "order": 5
+              },
+              {
+                "id": "cmrlci474009ed4bi8nsnnf8i",
+                "kind": "FATS_SATURATED",
+                "label": "Gorduras saturadas",
+                "unit": "g",
+                "valuePer100": "4.3",
+                "valuePerServing": "1.7",
+                "dailyValuePercent": 8,
+                "order": 6
+              },
+              {
+                "id": "cmrlci474009fd4bie4i4llqv",
+                "kind": "FATS_TRANS",
+                "label": "Gorduras trans",
+                "unit": "g",
+                "valuePer100": "0",
+                "valuePerServing": "0",
+                "dailyValuePercent": 0,
+                "order": 7
+              },
+              {
+                "id": "cmrlci474009gd4biph9uuae9",
+                "kind": "FIBER",
+                "label": "Fibras alimentares",
+                "unit": "g",
+                "valuePer100": "8.5",
+                "valuePerServing": "3.4",
+                "dailyValuePercent": 13,
+                "order": 8
+              },
+              {
+                "id": "cmrlci474009hd4bi7dl8y1uj",
+                "kind": "SODIUM",
+                "label": "Sódio",
+                "unit": "mg",
+                "valuePer100": "222.5",
+                "valuePerServing": "89",
+                "dailyValuePercent": 4,
+                "order": 9
+              },
+              {
+                "id": "cmrlci474009id4bi9k00v6p5",
+                "kind": "OTHER",
+                "label": "Ácido Fólico",
+                "unit": "mcg",
+                "valuePer100": "150",
+                "valuePerServing": "60",
+                "dailyValuePercent": 100,
+                "order": 10
+              },
+              {
+                "id": "cmrlci474009jd4biuqdudd7j",
+                "kind": "OTHER",
+                "label": "Vitamina B12",
+                "unit": "mcg",
+                "valuePer100": "0.9",
+                "valuePerServing": "0.36",
+                "dailyValuePercent": 100,
+                "order": 11
+              },
+              {
+                "id": "cmrlci474009kd4bim5kkci7d",
+                "kind": "OTHER",
+                "label": "Zinco",
+                "unit": "mg",
+                "valuePer100": "4.1",
+                "valuePerServing": "1.65",
+                "dailyValuePercent": 100,
+                "order": 12
+              },
+              {
+                "id": "cmrlci474009ld4bizsajj9h1",
+                "kind": "OTHER",
+                "label": "Cromo",
+                "unit": "mcg",
+                "valuePer100": "13.1",
+                "valuePerServing": "5.25",
+                "dailyValuePercent": 100,
+                "order": 13
+              }
+            ]
+          }
+        }
+      ],
+      "nutrition": null
+    }
+  ]
+}

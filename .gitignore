@@ -1,0 +1,68 @@
+# =============================================================================
+# .gitignore — Miraf Web Platform
+# =============================================================================
+
+# Dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Testing
+/coverage
+
+# Next.js
+/.next/
+/out/
+
+# Uploads locais. As imagens já cadastradas (produtos, fornecedores, categorias,
+# sabores) SÃO versionadas — servem de backup e vão para o deploy do preview.
+# Apenas a cópia acidental de fotos brutas (~393 MB, sem uso) fica de fora.
+/public/uploads/products/CATALOGO FOTOS/
+
+# Production build
+/build
+/dist
+
+# Misc
+.DS_Store
+Thumbs.db
+*.pem
+*.log
+.eslintcache
+.prettiercache
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment (permite versionar apenas o example)
+.env
+.env.*
+!.env.example
+
+# IDE / Editor
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Prisma
+/prisma/*.db
+/prisma/*.db-journal
+
+# Docker
+docker-compose.override.yml
