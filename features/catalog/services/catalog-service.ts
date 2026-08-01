@@ -19,11 +19,18 @@ const CATALOG_CARD_SELECT = {
   saleUnit: true,
   category: { select: { name: true, slug: true } },
   supplier: { select: { name: true, slug: true } },
-  // Capa: a marcada como capa, senão a 1ª disponível (inclui imagens de
-  // variação — produtos com variações não têm imagem de nível produto).
+  // Capa do card. Prioriza a imagem de NÍVEL PRODUTO (flavorId null) — a capa
+  // "oficial" (ex.: a caixa/display). Só cai para imagem de variação quando o
+  // produto não tem imagem própria (produtos cuja galeria vive só nos sabores).
+  // `flavorId nulls: "first"` garante isso mesmo quando produto e sabores estão
+  // todos marcados como capa (isPrimary=true) — evita empate não-determinístico.
   images: {
     take: 1,
-    orderBy: [{ isPrimary: "desc" }, { order: "asc" }],
+    orderBy: [
+      { flavorId: { sort: "asc", nulls: "first" } },
+      { isPrimary: "desc" },
+      { order: "asc" },
+    ],
     select: { url: true, alt: true },
   },
   _count: { select: { flavors: true } },
