@@ -2044,3 +2044,59 @@ Rodada de acabamento (UI polish) a pedido da cliente, em duas telas públicas �
 - Verificado no Chrome real: **alturas de card idênticas por linha** (392px nos 4 cards de cada linha → botões alinhados), **zero overflow** (1080px), card de filtros 286px, busca 44px, imagem padding 16px, fornecedor 56px; sem erros de console. `type-check` + `lint` + Prettier limpos em toda a rodada.
 
 Pendências inalteradas (produção: domínio/e-mails, Resend com domínio verificado, senha admin, deploy; conteúdo: números de marketing, modo escuro, `/contato` 404). Nota: o **banner definitivo do hero do catálogo** ainda será desenvolvido — a estrutura atual está preparada para recebê-lo.
+
+---
+
+## 2026-07-31 — Versionamento no GitHub + preview grátis publicado (Vercel + Neon)
+
+A cliente/dev (Júlia) quis publicar um **preview gratuito e temporário** para o cliente ver o andamento — **não** é a produção definitiva (essa segue sendo VPS + Docker + Nginx, ainda pendente). Duas decisões importantes tomadas nesta sessão:
+
+1. **O projeto virou um repositório git e foi para o GitHub** (antes existia só no disco local — risco real, sem backup/histórico). Repo **privado**: `JuliaRomeira/miraf-web` (branch `main`, commit inicial `6c8b254`).
+2. **Preview hospedado no Vercel** (não no Cloudflare, embora a cliente tenha cogitado): para Next.js, o Vercel é nativo e o Prisma fala direto com um Postgres externo **sem trocar o driver** — o Cloudflare Workers exigiria migrar `pg`/TCP → `@prisma/adapter-neon` + R2 para uploads, muito mais trabalho para o mesmo resultado grátis. Cloudflare-na-frente-da-VPS foi descartado porque pressupõe servidor pago.
+
+### Por que o app "as-is" não vai em serverless sem ajustes (contexto)
+
+O app foi feito para VPS: **uploads gravam em disco** (`lib/storage/local.ts` → `public/uploads`, sem FS em serverless) e **dados só existem no Postgres de dev**. Para um preview *view-only* isso é contornável: as imagens são commitadas (servidas estáticas) e os dados são copiados para um Postgres gerenciado. Upload novo pelo painel **não persiste** no Vercel (aceitável — o preview é para visualizar; edição de catálogo continua no dev).
+
+### Banco do preview — Neon (Postgres grátis)
+
+- Migrations aplicadas com `prisma migrate deploy` na conexão **direta** do Neon (sem `-pooler`) — a **pooled** (PgBouncer) pode falhar em migração. Runtime no Vercel usa a **pooled** (recomendada para serverless).
+- `prisma.config.ts` carrega a URL via `dotenv` (`env("DATABASE_URL")`). Para rodar contra o Neon sem expor a senha no chat, usei um arquivo **`.env.preview`** (gitignored via `.env.*`) e:
+  - migrate: `DOTENV_CONFIG_PATH=.env.preview npx prisma migrate deploy` (o `dotenv/config` do `prisma.config.ts` respeita `DOTENV_CONFIG_PATH`).
+  - import: `npx tsx --env-file=.env.preview scripts/preview-import.ts`.
+
+### Scripts de dados (novos, versionados)
+
+- **`scripts/preview-export.ts`** — lê o banco de dev (via Prisma) e escreve `prisma/preview-seed.json` (catálogo com IDs/relações preservados; **não** exporta cotações). Rodar: `npx tsx --env-file=.env scripts/preview-export.ts`. Exportado nesta sessão: 14 settings, 2 users, 49 categorias, 3 fornecedores, 19 produtos, 56 imagens, 34 sabores.
+- **`scripts/preview-import.ts`** — importa esse JSON para `DATABASE_URL` (Neon). Idempotente (limpa as tabelas gerenciadas antes). **Trava de segurança:** recusa rodar se a URL contém `localhost`/`127.0.0.1` (evita apagar o dev). Insere em ordem de FK: settings/users → categorias (2 passadas por causa da auto-relação `parentId`) → fornecedores → produtos (+ sabores, imagens, nutrição produto/sabor) → conecta `relatedProducts`. Resultado no Neon: `products=19 categories=49 suppliers=3`.
+- **`prisma/preview-seed.json`** — snapshot do catálogo (dados, sem segredos). Versionado (serve de backup); excluído do bundle do Vercel pelo `.vercelignore`.
+
+### Git / imagens / segredos
+
+- **`.gitignore`**: a linha `/public/uploads/` (que ignorava TODAS as imagens) foi trocada por ignorar **só** `/public/uploads/products/CATALOGO FOTOS/` (a cópia acidental de ~393 MB). Assim as imagens reais do catálogo (~133 MB: products 7 MB + flavors 105 MB + categories 21 MB + suppliers) **são versionadas** — servem de backup e vão para o deploy. `.env`/`.env.*` seguem ignorados (só `.env.example` versionado). Verificado no staging: nenhum `.env` entrou; a pasta stray ficou de fora.
+- **`.vercelignore`** (novo) — exclui do deploy: a pasta stray de 393 MB, `.env*`, Docker/infra, `node_modules`/`.next`, `prisma/preview-seed.json`. **Mantém** `public/uploads/{products,flavors,categories,suppliers}` (imagens servidas estáticas no Vercel — como `next/image` mesma-origem, funcionam sem `remotePatterns`).
+- Push inicial via HTTPS (Git Credential Manager já autenticado; `gh` CLI não está instalado). `output: "standalone"` no `next.config` é ignorado pelo Vercel (inofensivo).
+
+### Vercel — configuração
+
+- **Import Git Repository** → `JuliaRomeira/miraf-web` → Next.js detectado automaticamente. **Redeploy automático a cada `git push` na `main`.**
+- **Environment Variables** (valores reais ficam no painel do Vercel / Neon — NUNCA neste arquivo):
+  - `DATABASE_URL` = connection string **pooled** do Neon (`...-pooler...sslmode=require&channel_binding=require`).
+  - `AUTH_SECRET` = segredo do Auth.js (gerado com `openssl rand -base64 32`).
+  - `AUTH_TRUST_HOST` = `true` (Auth.js v5 infere a URL a partir dos headers — não precisa de `AUTH_URL`).
+  - `NEXT_PUBLIC_APP_URL` = a URL pública do preview.
+- **Ordem que funcionou:** Neon criado → `migrate deploy` + import (banco populado) → deploy no Vercel. A home é async e lê o banco no build, então o `DATABASE_URL` precisa estar setado e o Neon populado **antes** do build.
+
+### Resultado — verificado ao vivo (Chrome real)
+
+- **https://miraf-web.vercel.app** no ar. `/produtos` mostra **"19 produtos encontrados"** (Neon conectado em produção), catálogo real (AdiMix/Ruby/Fleischmann), **12/12 imagens** da 1ª página carregando (arquivo estático + rota `/_next/image` ambos **200**, `naturalWidth 640`), **zero erros** de console. O "branco" nos screenshots é o glitch de compositing já registrado — o DOM confirma as imagens carregadas.
+
+### Limitações do preview (avisadas à cliente)
+
+- **View-only:** upload de foto novo pelo painel **não persiste** no Vercel (sem disco). Editar catálogo continua no dev.
+- Dados são **cópia do dev no momento do export**; para atualizar: `preview-export` no dev → `git push` (imagens novas) → rodar o import no Neon de novo.
+- **Segurança:** a connection string do Neon foi colada no chat nesta sessão — recomendado **Reset password** no Neon depois e atualizar `DATABASE_URL` no Vercel + `.env.preview`. Rate limit em memória zera por invocação (irrelevante no preview).
+
+### Pendências (produção definitiva, inalteradas)
+
+VPS + Docker + Nginx (uploads locais em volume, `client_max_body_size` no Nginx, `migrate deploy` no servidor), domínio/e-mails oficiais, Resend com domínio verificado, senha do admin. O preview no Vercel **não substitui** esse deploy — é só vitrine temporária.
