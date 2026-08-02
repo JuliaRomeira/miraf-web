@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -85,23 +86,50 @@ export default async function ProductsPage({
 
   return (
     <>
-      {/* Hero institucional — mesma linguagem visual da Home e da página Sobre
-          (base #0e2c62 + gradiente da marca + acento vermelho). Altura fixa,
-          conteúdo centralizado verticalmente, container 1280px, apenas título +
-          subtítulo. A navbar fica transparente por cima (rota em HERO_ROUTES). */}
-      <section className="text-primary-foreground relative flex min-h-[340px] items-center overflow-hidden bg-[#0e2c62]">
+      {/* Hero institucional — banner definitivo do catálogo. Faixa ultra-larga
+          (6:1) na MESMA proporção de um hero de largura total e altura baixa,
+          então o object-cover preenche de ponta a ponta praticamente SEM cortar
+          (só uns pixels das bordas laterais). Fundo azul de mesmo tom como
+          fallback. No mobile o object-position puxa os insumos e o scrim mantém
+          o texto legível. A navbar fica transparente por cima (HERO_ROUTES). */}
+      <section
+        className="text-primary-foreground relative isolate flex h-[340px] items-center overflow-hidden sm:h-[400px] lg:h-[440px]"
+        style={{
+          backgroundImage: "linear-gradient(180deg, #01256f 0%, #032e7c 72%, #032e7c 100%)",
+        }}
+      >
+        <Image
+          src="/images/hero/produtos.png"
+          alt="Variedade de insumos para panificação e confeitaria distribuídos pela Mira"
+          fill
+          priority
+          unoptimized
+          className="object-cover object-[72%_center] sm:object-center"
+        />
+        {/* Scrim desktop/tablet — leve: funde a emenda entre o fundo e a borda
+            esquerda da imagem e garante a leitura do texto; some antes dos
+            insumos para não escurecê-los. */}
         <div
-          className="pointer-events-none absolute inset-0"
+          className="pointer-events-none absolute inset-0 hidden sm:block"
           style={{
             backgroundImage:
-              "linear-gradient(135deg, #0e2c62 0%, #17479e 58%, #2159bd 100%), radial-gradient(60% 120% at 100% 0%, rgba(237,28,36,0.14) 0%, rgba(237,28,36,0) 55%), radial-gradient(45% 90% at 0% 100%, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 60%)",
+              "linear-gradient(90deg, rgba(3,46,124,0.85) 0%, rgba(3,46,124,0.45) 26%, rgba(3,46,124,0.1) 42%, rgba(3,46,124,0) 52%)",
           }}
         />
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-16 pb-24 lg:px-8">
-          <h1 className="font-display text-4xl leading-[1.08] font-extrabold tracking-tight text-balance sm:text-5xl">
+        {/* Scrim mobile — mais forte: com o recorte estreito, o texto passa
+            sobre os produtos, então mantemos a faixa azul por baixo. */}
+        <div
+          className="pointer-events-none absolute inset-0 sm:hidden"
+          style={{
+            backgroundImage:
+              "linear-gradient(90deg, rgba(1,42,122,0.96) 0%, rgba(1,42,122,0.88) 42%, rgba(1,42,122,0.55) 74%, rgba(1,42,122,0.2) 100%)",
+          }}
+        />
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-10 lg:px-8">
+          <h1 className="font-display text-4xl leading-[1.08] font-extrabold tracking-tight text-balance drop-shadow-sm sm:text-5xl">
             Produtos
           </h1>
-          <p className="mt-3.5 max-w-2xl text-base leading-relaxed text-pretty text-white/85 sm:text-lg">
+          <p className="mt-3.5 max-w-xl text-base leading-relaxed text-pretty text-white/90 [text-shadow:0_1px_10px_rgba(1,42,122,0.55)] sm:text-lg sm:[text-shadow:none]">
             Encontre os produtos ideais para o seu negócio. Navegue pelas categorias e fornecedores
             para montar sua cotação de forma rápida e organizada.
           </p>
