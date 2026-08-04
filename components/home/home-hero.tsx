@@ -45,9 +45,9 @@ const TRUST_ICONS: Record<HeroTrustIcon, LucideIcon> = {
  *
  * Mantém: Ken Burns, fade entre slides, parallax sutil e overlay azul/vermelho
  * da marca. Comportamento: troca automática (6,5s), pausa no hover/foco e com a
- * aba oculta, navegação por setas (tablet+) e bolinhas, teclado ←/→. Tudo
- * desligado sob `prefers-reduced-motion`. Performance: só o 1º banner é
- * pré-carregado; animações em `transform`/`opacity`.
+ * aba oculta. Navegação: swipe por toque (mobile), setas (tablet+), indicadores
+ * em barra e teclado ←/→. Tudo desligado sob `prefers-reduced-motion`.
+ * Performance: só o 1º banner é pré-carregado; animações em `transform`/`opacity`.
  *
  * A transição para a próxima seção não é feita aqui: `HomeSuppliers` é um card
  * flutuante que sobe e sobrepõe a base do hero (continuidade visual). As
@@ -59,6 +59,7 @@ export function HomeHero(): React.ReactElement {
   const [reducedMotion, setReducedMotion] = useState(false);
 
   const parallaxRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
   const slideCount = HERO_SLIDES.length;
 
   const goTo = useCallback(
@@ -67,6 +68,25 @@ export function HomeHero(): React.ReactElement {
   );
   const next = useCallback(() => goTo(current + 1), [current, goTo]);
   const prev = useCallback(() => goTo(current - 1), [current, goTo]);
+
+  // Navegação por gesto (swipe) no mobile — o padrão mais intuitivo em telas de
+  // toque. Só reage a arrastos majoritariamente horizontais (> 40px) para não
+  // atrapalhar a rolagem vertical da página.
+  const onTouchStart = useCallback((event: React.TouchEvent) => {
+    touchStartX.current = event.touches[0]?.clientX ?? null;
+  }, []);
+  const onTouchEnd = useCallback(
+    (event: React.TouchEvent) => {
+      const start = touchStartX.current;
+      touchStartX.current = null;
+      if (start === null || slideCount <= 1) return;
+      const delta = (event.changedTouches[0]?.clientX ?? start) - start;
+      if (Math.abs(delta) < 40) return;
+      if (delta < 0) next();
+      else prev();
+    },
+    [next, prev, slideCount],
+  );
 
   // Respeita a preferência de movimento reduzido do sistema.
   useEffect(() => {
@@ -124,11 +144,13 @@ export function HomeHero(): React.ReactElement {
     <section
       aria-roledescription="carrossel"
       aria-label="Destaques da Mira Distribuidora"
-      className="relative flex min-h-[78svh] w-full items-center overflow-hidden bg-[#0e2c62]"
+      className="relative flex min-h-[78svh] w-full touch-pan-y items-center overflow-hidden bg-[#0e2c62]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
       onBlurCapture={() => setPaused(false)}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
       onKeyDown={(event) => {
         if (event.key === "ArrowLeft") prev();
         else if (event.key === "ArrowRight") next();
@@ -291,11 +313,15 @@ export function HomeHero(): React.ReactElement {
         <ChevronRight className="size-5" />
       </button>
 
-      {/* Indicadores (bolinhas) — navegação manual discreta, centralizada. */}
+      {/* Indicadores de slide — barras dentro de um contêiner translúcido que os
+          identifica como um controle interativo. Cada botão tem área de toque
+          ampla (h-9 ≈ 36px) para o dedo, com a barra visível pequena. O slide
+          ativo vira uma barra vermelha larga (feedback claro). Junto com o swipe
+          e as setas (tablet+), a navegação fica intuitiva em qualquer tela. */}
       <div
         role="tablist"
         aria-label="Selecionar destaque"
-        className="absolute bottom-24 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2.5 sm:bottom-28"
+        className="absolute bottom-24 left-1/2 z-30 flex -translate-x-1/2 items-center gap-1 rounded-full bg-black/25 px-2 py-1 ring-1 ring-white/15 backdrop-blur-sm sm:bottom-28"
       >
         {HERO_SLIDES.map((item, index) => {
           const isActive = index === current;
@@ -307,11 +333,15 @@ export function HomeHero(): React.ReactElement {
               aria-selected={isActive}
               aria-label={`Ir para: ${item.eyebrow}`}
               onClick={() => goTo(index)}
-              className={cn(
-                "h-2.5 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none",
-                isActive ? "bg-brand w-8" : "w-2.5 bg-white/50 hover:bg-white/80",
-              )}
-            />
+              className="group flex h-9 touch-manipulation items-center justify-center px-1.5 focus-visible:outline-none"
+            >
+              <span
+                className={cn(
+                  "h-2 rounded-full transition-all duration-300 group-focus-visible:ring-2 group-focus-visible:ring-white group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-transparent",
+                  isActive ? "bg-brand w-9 shadow-sm" : "w-2.5 bg-white/55 group-hover:bg-white/90",
+                )}
+              />
+            </button>
           );
         })}
       </div>

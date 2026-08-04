@@ -25,12 +25,14 @@ const HOME_STATS: readonly HomeStat[] = [
 export function HomeStats(): React.ReactElement {
   return (
     <section className="mx-auto w-full max-w-7xl px-6 py-8 lg:py-10">
-      <div className="bg-primary text-primary-foreground rounded-[22px] px-8 py-11 lg:px-[46px]">
-        <dl className="grid grid-cols-2 gap-y-8 lg:flex lg:items-center lg:justify-between">
+      <div className="bg-primary text-primary-foreground rounded-[22px] px-6 py-11 sm:px-8 lg:px-[46px]">
+        <dl className="grid grid-cols-2 gap-x-4 gap-y-8 lg:flex lg:items-center lg:justify-between">
           {HOME_STATS.map(({ value, label }, index) => (
             <div key={label} className="flex items-center lg:flex-1">
               <div className="flex-1 text-center">
-                <dd className="text-4xl font-bold tracking-tight lg:text-[40px]">{value}</dd>
+                <dd className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-[40px]">
+                  {value}
+                </dd>
                 <dt className="text-primary-foreground/60 mt-2.5 text-[10.5px] font-medium tracking-[0.15em] uppercase">
                   {label}
                 </dt>

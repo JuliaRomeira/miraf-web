@@ -40,11 +40,15 @@ export default function AboutPage(): React.ReactElement {
   return (
     <>
       {/* HERO institucional — mesmo CONCEITO do hero da home: imagem de fundo
-          full-width + overlay escuro + texto sobreposto à esquerda (não é cópia).
-          Altura mantida ~igual à versão em duas colunas (lg:min-h-[600px] no
-          desktop; no mobile o texto dirige a altura, como antes). Base azul da
+          full-width + overlay escuro + texto sobreposto (não é cópia).
+          Altura mínima CONSISTENTE em todas as larguras (min-h-[540px] no mobile
+          → 580 no sm → 600 no desktop) para o banner ter presença e a
+          sobreposição do texto sobre a foto valer também no mobile — sem vãos e
+          sem colapso de altura. No mobile o conteúdo é centralizado
+          verticalmente (items-center); no desktop volta ao topo (lg:items-start)
+          para os cards de "Números" subirem sobre a base do hero. Base azul da
           marca (#0e2c62) como fallback enquanto a imagem carrega. */}
-      <section className="text-primary-foreground relative flex items-start overflow-hidden bg-[#0e2c62] lg:min-h-[600px]">
+      <section className="text-primary-foreground relative flex min-h-[540px] items-center overflow-hidden bg-[#0e2c62] sm:min-h-[580px] lg:min-h-[600px] lg:items-start">
         {/* Imagem de fundo full-bleed. object-position um pouco à direita/baixo
             para tirar o bolo principal de trás do título (composição equilibrada). */}
         <Image
@@ -75,7 +79,7 @@ export default function AboutPage(): React.ReactElement {
         />
         {/* Conteúdo sobreposto — alinhado à esquerda. Empurrado um pouco para
             baixo (pt) para dar respiro em relação à navbar, mantendo a altura. */}
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-24 pb-12 lg:pt-36 lg:pb-12">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-20 sm:py-24 lg:pt-36 lg:pb-12">
           <div className="max-w-[640px] space-y-6">
             <div className="space-y-3">
               <p className="font-mono text-sm font-semibold tracking-[0.3em] text-white/80 uppercase">
@@ -83,13 +87,13 @@ export default function AboutPage(): React.ReactElement {
               </p>
               <div className="bg-brand h-1 w-24 rounded-full" aria-hidden />
             </div>
-            <h1 className="font-display text-5xl font-extrabold tracking-tight text-balance sm:text-6xl">
-              Distribuindo qualidade e confiança
+            <h1 className="font-display text-4xl font-extrabold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+              Há mais de 40 anos impulsionando o crescimento de milhares de negócios.
             </h1>
             <p className="max-w-[620px] text-lg leading-relaxed text-white/85 sm:text-xl sm:leading-9">
-              Há mais de quatro décadas, a Mira Distribuidora conecta qualidade, agilidade e as
-              melhores marcas do mercado para atender padarias, confeitarias e negócios de
-              alimentação em todo o estado de São Paulo.
+              Com um catálogo completo e as principais marcas do mercado, abastecemos padarias,
+              confeitarias e negócios de alimentação com qualidade, agilidade e atendimento
+              especializado.
             </p>
           </div>
         </div>

@@ -19,9 +19,11 @@ interface SupplierCarouselProps {
  * Carrossel infinito de fornecedores (marquee) para a home.
  *
  * O loop contínuo é feito com CSS: a lista é duplicada e a faixa desliza até
- * `-50%` (exatamente um conjunto), então o corte é imperceptível. Pausa no
- * hover. A animação respeita `prefers-reduced-motion` graças à regra global em
- * `globals.css` (que zera `animation-duration`), sem lógica extra aqui.
+ * `-50%` (exatamente um conjunto), então o corte é imperceptível — sem reinício
+ * brusco. Velocidade calma (50s) para um deslize suave, sem parecer acelerado.
+ * Pausa no hover e no foco por teclado (interação manual). A animação respeita
+ * `prefers-reduced-motion` graças à regra global em `globals.css` (que zera
+ * `animation-duration`), sem lógica extra aqui.
  *
  * Cada fornecedor leva à listagem de produtos já filtrada por ele
  * (`/produtos?fornecedor=slug`). A cópia duplicada é escondida de leitores de
@@ -40,7 +42,7 @@ export function SupplierCarousel({ suppliers }: SupplierCarouselProps): React.Re
 
   return (
     <div className="group relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-      <ul className="flex w-max animate-[marquee_40s_linear_infinite] items-center gap-16 group-hover:[animation-play-state:paused] lg:gap-20">
+      <ul className="flex w-max animate-[marquee_50s_linear_infinite] items-center gap-16 group-focus-within:[animation-play-state:paused] group-hover:[animation-play-state:paused] lg:gap-20">
         {track.map((supplier, index) => {
           const isClone = index >= suppliers.length;
           return (

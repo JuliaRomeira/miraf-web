@@ -32,9 +32,9 @@ export function QuoteItemList(): React.ReactElement {
         {items.map((item) => (
           <li
             key={`${item.productId}::${item.flavorId ?? ""}`}
-            className="flex items-center gap-4 p-4"
+            className="flex items-center gap-3 p-3 sm:gap-4 sm:p-4"
           >
-            <div className="bg-muted relative size-16 shrink-0 overflow-hidden rounded-md">
+            <div className="bg-muted relative size-14 shrink-0 overflow-hidden rounded-md sm:size-16">
               {item.imageUrl ? (
                 <Image
                   src={item.imageUrl}

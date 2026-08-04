@@ -2081,3 +2081,47 @@ A cliente iterou a arte várias vezes e a **versão final é uma cena escura em 
 - **Fundo/scrim passaram para navy escuro `#040a24`** (antes o azul claro da marca `#01256f`), casando com a cena.
 - Como a arte **não tem área limpa à esquerda** (há ingredientes por toda a largura), o **scrim da esquerda escurece um pouco** para dar leitura ao título/subtítulo (`rgba(4,10,36,…)`), fadeando antes do centro; a cliente pediu para **deixar menos azul à esquerda**, então o scrim ficou numa redução leve (0.85→0 até ~64%). `text-shadow` navy no subtítulo em todos os tamanhos.
 - **Qualidade — limite atingido:** a fonte da cliente tem só ~2491px (≈1:1 na tela dela de 2560px). Faço upscale (Lanczos)+realce+PNG sem perdas e sirvo `unoptimized` (resolução cheia), mas **não dá para criar detalhe que não existe** — sem super-resolução por IA aqui. **Pendência real:** a cliente exportar a mesma arte em ~**3840×640** para nitidez máxima; aí é só trocar o arquivo (mesma proporção), sem mudança de código. ⚠️ Lição recorrente desta sessão: **não apagar (`rm`) o arquivo-fonte pristino** ao instalar — perdi as versões originais e fiquei só com cópias já processadas.
+
+---
+
+## 2026-08-04 — Rodada de refinamento (feedbacks da cliente + UX/UI + responsividade)
+
+Rodada de acabamento (sem novas features, sem mudar identidade visual/paleta/tipografia). Prompt da cliente com 8 itens. Nenhuma mudança de schema/DB.
+
+### 1. Hero da Home — textos + redução para 3 slides
+
+`components/home/hero-slides.ts`: `HERO_SLIDES` passou de **6 → 3 slides** com os textos definitivos da cliente (a cliente forneceu exatamente 3), mapeando as imagens existentes por tema: **Panificação** (`panificacao.png`), **Confeitaria** (`confeitaria.png`), **Atendimento** (`equipe-comercial.png`). As fotos `food-service/sorveterias/centro-distribuicao` ficam como assets não usados (nada quebra). O motor do slider (`home-hero.tsx`) já é agnóstico à quantidade (`slideCount`), então nada mais mudou na lógica.
+
+### 2. Hero da Sobre — textos
+
+`app/(public)/sobre/page.tsx`: novo `h1` ("Há mais de 40 anos impulsionando o crescimento de milhares de negócios.") + subtítulo definitivo. O `h1` teve o tamanho-base mobile reduzido (`text-5xl` → `text-4xl sm:text-5xl lg:text-6xl`) para leitura confortável em 320px (desktop inalterado).
+
+### 3. Hero da Sobre no mobile — sobreposição corrigida
+
+Antes: `flex items-start` + `lg:min-h-[600px]` (sem min-height no mobile) → no mobile a seção colapsava para a altura do texto e a foto quase não aparecia (a sobreposição "sumia"). Agora espelha o padrão do hero da home: **altura mínima consistente** (`min-h-[540px] sm:min-h-[580px] lg:min-h-[600px]`) + **conteúdo centralizado verticalmente no mobile** (`items-center`, voltando a `lg:items-start` no desktop para os cards de "Números" subirem sobre a base). A imagem `fill object-cover` preenche (sem vãos), o texto fica sobreposto (z-10) e centralizado, sem overflow horizontal. Desktop preservado.
+
+### 4. Navegação do Hero no mobile — swipe + indicadores redesenhados
+
+Causa raiz: o hero **não tinha suporte a toque** (as setas são `sm:flex` = ocultas no mobile), sobrando só bolinhas de 10px pouco perceptíveis. `components/home/home-hero.tsx`:
+- **Swipe por toque** (`onTouchStart`/`onTouchEnd`, limiar 40px horizontal; `touch-pan-y` preserva a rolagem vertical) — o padrão mais intuitivo no mobile.
+- **Indicadores redesenhados**: barras dentro de um **contêiner translúcido** (`bg-black/25 ring-white/15 backdrop-blur`) que os identifica como controle; cada botão com **área de toque ampla** (`h-9` ≈ 36px) e a barra visível pequena; o ativo vira **barra vermelha larga** (`bg-brand w-9`). Foco por teclado com ring.
+- Setas seguem tablet+ (swipe cobre o mobile). Teclado ←/→ e autoplay/pausa mantidos.
+
+### 5. Carrossel de Fornecedores
+
+`features/catalog/components/supplier-carousel.tsx`: marquee CSS já era contínuo/sem emenda (loop `-50%`, sem reinício brusco) e pausava no hover. Ajustes: **velocidade mais calma** (40s → **50s**, "não parecer acelerado") e **pausa também no foco por teclado** (`group-focus-within`). Respeito a `prefers-reduced-motion` mantido (regra global).
+
+### 6 e 7. Responsividade + carrosséis
+
+Auditoria de código (agente) das páginas públicas em 320/375/390/414/768/1024/desktop. A base estava disciplinada (tracks flexíveis com `minmax(0,…)`, scrollers em `min-w-0`/`overflow-x-auto`, tipografia com base mobile, larguras fixas atrás de `lg:`). Dois **overflows reais só em 320px** corrigidos:
+- `features/quote/components/quote-item-list.tsx`: linha `gap-4 p-4` + imagem `size-16` estourava ~10px em 320px → `gap-3 p-3 sm:gap-4 sm:p-4` + imagem `size-14 sm:size-16`.
+- `components/home/home-stats.tsx`: grade `grid-cols-2` sem gap de coluna + valor `text-4xl` (`+2.500`) espremia em 320px → `text-3xl sm:text-4xl`, `gap-x-4`, box `px-6 sm:px-8`.
+Todos os carrosséis (hero, fornecedores, segmentos, filtros de categoria/fornecedor, galeria) já usam scroll nativo por toque + setas no overflow + parents contidos — confirmado pela auditoria.
+
+### Verificação
+
+- `type-check` + `lint` + Prettier limpos; **build de produção passa** (todas as rotas compilam, sem warnings).
+- Desktop verificado no **Chrome real**: hero da home com os 3 slides novos, indicadores em barra (ativo vermelho), clique/autoplay trocam o slide; hero da Sobre com os textos novos + números sobrepondo. 
+- ⚠️ **Limitação de ambiente registrada** (ver memória): o **preview embutido** não faz layout com a pane oculta (rects/offsetHeight = 0) e o **`resize_window` do Chrome real não altera o viewport** (trava em 2560px, dpr 1). Portanto **larguras mobile (320–768) não foram verificadas ao vivo** nesta rodada — foram validadas por auditoria de código + classes responsivas + build. Recomenda-se um passe visual mobile em ambiente com viewport real antes do go-live.
+
+Pendências anteriores seguem (produção: domínio/e-mails, Resend com domínio verificado, senha admin, deploy; conteúdo: números de marketing a confirmar, horário das unidades, `/contato` 404; visual: modo escuro).
