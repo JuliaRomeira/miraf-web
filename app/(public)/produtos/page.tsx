@@ -89,13 +89,14 @@ export default async function ProductsPage({
       {/* Hero institucional — banner definitivo do catálogo. Faixa ultra-larga
           (6:1) na MESMA proporção de um hero de largura total e altura baixa,
           então o object-cover preenche de ponta a ponta praticamente SEM cortar
-          (só uns pixels das bordas laterais). Fundo azul de mesmo tom como
-          fallback. No mobile o object-position puxa os insumos e o scrim mantém
-          o texto legível. A navbar fica transparente por cima (HERO_ROUTES). */}
+          (só uns pixels das bordas laterais). A arte é uma cena escura (navy);
+          o fundo/scrim usam o mesmo navy (#040a24) para fundir e para garantir
+          a leitura do texto sobre os ingredientes espalhados à esquerda. A
+          navbar fica transparente por cima (HERO_ROUTES). */}
       <section
         className="text-primary-foreground relative isolate flex h-[340px] items-center overflow-hidden sm:h-[400px] lg:h-[440px]"
         style={{
-          backgroundImage: "linear-gradient(180deg, #01256f 0%, #032e7c 72%, #032e7c 100%)",
+          backgroundImage: "linear-gradient(180deg, #040a24 0%, #0a1533 100%)",
         }}
       >
         <Image
@@ -106,30 +107,29 @@ export default async function ProductsPage({
           unoptimized
           className="object-cover object-[72%_center] sm:object-center"
         />
-        {/* Scrim desktop/tablet — leve: funde a emenda entre o fundo e a borda
-            esquerda da imagem e garante a leitura do texto; some antes dos
-            insumos para não escurecê-los. */}
+        {/* Scrim desktop/tablet — navy escurecendo a esquerda p/ leitura do
+            texto; some antes do centro. Redução leve vs. original. */}
         <div
           className="pointer-events-none absolute inset-0 hidden sm:block"
           style={{
             backgroundImage:
-              "linear-gradient(90deg, rgba(3,46,124,0.85) 0%, rgba(3,46,124,0.45) 26%, rgba(3,46,124,0.1) 42%, rgba(3,46,124,0) 52%)",
+              "linear-gradient(90deg, rgba(4,10,36,0.85) 0%, rgba(4,10,36,0.66) 32%, rgba(4,10,36,0.3) 50%, rgba(4,10,36,0) 64%)",
           }}
         />
-        {/* Scrim mobile — mais forte: com o recorte estreito, o texto passa
-            sobre os produtos, então mantemos a faixa azul por baixo. */}
+        {/* Scrim mobile — mais forte (recorte estreito) para manter o texto
+            legível sobre os ingredientes. */}
         <div
           className="pointer-events-none absolute inset-0 sm:hidden"
           style={{
             backgroundImage:
-              "linear-gradient(90deg, rgba(1,42,122,0.96) 0%, rgba(1,42,122,0.88) 42%, rgba(1,42,122,0.55) 74%, rgba(1,42,122,0.2) 100%)",
+              "linear-gradient(90deg, rgba(4,10,36,0.92) 0%, rgba(4,10,36,0.84) 45%, rgba(4,10,36,0.52) 75%, rgba(4,10,36,0.22) 100%)",
           }}
         />
         <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-10 lg:px-8">
           <h1 className="font-display text-4xl leading-[1.08] font-extrabold tracking-tight text-balance drop-shadow-sm sm:text-5xl">
             Produtos
           </h1>
-          <p className="mt-3.5 max-w-xl text-base leading-relaxed text-pretty text-white/90 [text-shadow:0_1px_10px_rgba(1,42,122,0.55)] sm:text-lg sm:[text-shadow:none]">
+          <p className="mt-3.5 max-w-xl text-base leading-relaxed text-pretty text-white/90 [text-shadow:0_1px_12px_rgba(4,10,36,0.75)] sm:text-lg">
             Encontre os produtos ideais para o seu negócio. Navegue pelas categorias e fornecedores
             para montar sua cotação de forma rápida e organizada.
           </p>

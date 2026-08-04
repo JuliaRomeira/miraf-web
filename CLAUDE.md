@@ -2044,3 +2044,40 @@ Rodada de acabamento (UI polish) a pedido da cliente, em duas telas públicas �
 - Verificado no Chrome real: **alturas de card idênticas por linha** (392px nos 4 cards de cada linha → botões alinhados), **zero overflow** (1080px), card de filtros 286px, busca 44px, imagem padding 16px, fornecedor 56px; sem erros de console. `type-check` + `lint` + Prettier limpos em toda a rodada.
 
 Pendências inalteradas (produção: domínio/e-mails, Resend com domínio verificado, senha admin, deploy; conteúdo: números de marketing, modo escuro, `/contato` 404). Nota: o **banner definitivo do hero do catálogo** ainda será desenvolvido — a estrutura atual está preparada para recebê-lo.
+
+---
+
+## 2026-08-03 — Banner definitivo no hero da página de produtos
+
+Supersede a pendência "banner definitivo do hero do catálogo". A cliente forneceu a arte; entrou como fundo do hero de `/produtos` (`app/(public)/produtos/page.tsx`). Commitado e no ar (commit `f93de97`, push para `origin/main` → deploy automático no Vercel). Só a página + o asset; nenhuma mudança de schema/DB.
+
+### Decisão-chave (geometria do hero de largura total)
+
+A cliente está numa tela de **2560px** (medido no navegador real). Um hero de **largura total + altura baixa (~440px)** vira uma faixa de proporção **~5,8:1**; com `object-cover`, qualquer imagem "mais quadrada" **é obrigada a cortar** topo/base, e ao ser esticada além da resolução **borra**. Iteramos até chegar na solução correta:
+
+- **A arte tem que ter a proporção da faixa.** A versão final é **6:1** (a cliente gerou depois de eu especificar ~7:2/6:1). Com 6:1, o `object-cover object-center` preenche **de ponta a ponta praticamente sem cortar** (só uns pixels de fundo azul nas bordas laterais) — os insumos ficam inteiros.
+- **Fundo azul em largura total** (via `bg`/style no `<section>`, mesmo tom da arte) é obrigatório para o **menu transparente** funcionar sobre o hero (rota já em `HERO_ROUTES`). Não dá para conter a imagem numa `max-w` centrada, senão a navbar transparente fica sobre fundo branco nas laterais (logo/links brancos somem).
+- **Altura fixa** `h-[340px] sm:h-[400px] lg:h-[440px]` (a cliente quis compacto, "não muito grande").
+- **Nitidez:** o `next/image` estava servindo uma variante menor (~2048px) e o navegador esticava para ~2640px → borrado. Solução: **`unoptimized`** no `<Image>` — serve o arquivo cru em resolução cheia (o navegador então **reduz** para exibir = nítido). Confirmado: `naturalWidth` 3000 exibido a ~2550px (downscale). No mobile o `object-position` puxa os insumos e um scrim azul mantém o texto legível.
+
+### Asset
+
+- **`public/images/hero/produtos.png`** (versionado, **não** gitignorado; não está no `.vercelignore`). Arte 6:1, ~3000×500. **PNG sem perdas** (evita banding no degradê azul + artefato de JPEG nos produtos) com leve realce de nitidez (`sharp`).
+- **⚠️ Teto de qualidade = resolução da fonte.** A arte 6:1 original da cliente tinha só **2496px** de largura (≈1:1 numa tela de 2560px → IA nesse tamanho tende a ficar "macia"). Para nitidez máxima, o ideal é a **mesma arte 6:1 exportada maior (~3840×640)**; é só substituir `public/images/hero/produtos.png` (mesma proporção) — nenhuma mudança de código. Registrado como melhoria opcional.
+
+### Padrão registrado (para heros de largura total)
+
+Imagem de fundo full-bleed **só fica sem corte** se sua proporção ≈ a da faixa (largura/altura do hero). Para altura baixa em telas largas isso exige uma arte **ultra-panorâmica** (6:1). Quando a arte é mais "quadrada", ou se aceita corte (`object-cover` + `object-position` em margens seguras), ou se mostra inteira encaixada (`object-contain` sobre fundo de cor, com letterbox). Para nitidez em telas grandes: fonte com largura ≥ a da tela e, se o `next/image` sub-dimensionar, `unoptimized` para servir em resolução cheia.
+
+### Verificação
+
+- **Chrome real (2560px):** banner edge-to-edge, insumos inteiros (nada cortado), nítido (zoom confirma degradê liso + produtos crispados), altura 440px, menu transparente por cima, sem overflow. Mobile sem overflow. `type-check` + `lint` + Prettier limpos.
+- Processo: o **preview embutido** teve frames de composição velhos várias vezes nesta sessão (forçar repaint com scroll resolvia); o **Chrome real** foi o que confirmou o resultado. Glitch já registrado em memória.
+
+### Atualização (mesma data) — arte trocada por cena escura (navy)
+
+A cliente iterou a arte várias vezes e a **versão final é uma cena escura em navy** (bancada azul-escura com ingredientes espalhados por toda a largura — ovos, farinha, cacau, canela, cranberries), ainda **6:1** (`produtos.png` atual = 3200×534). Ajustes decorrentes em `app/(public)/produtos/page.tsx`:
+
+- **Fundo/scrim passaram para navy escuro `#040a24`** (antes o azul claro da marca `#01256f`), casando com a cena.
+- Como a arte **não tem área limpa à esquerda** (há ingredientes por toda a largura), o **scrim da esquerda escurece um pouco** para dar leitura ao título/subtítulo (`rgba(4,10,36,…)`), fadeando antes do centro; a cliente pediu para **deixar menos azul à esquerda**, então o scrim ficou numa redução leve (0.85→0 até ~64%). `text-shadow` navy no subtítulo em todos os tamanhos.
+- **Qualidade — limite atingido:** a fonte da cliente tem só ~2491px (≈1:1 na tela dela de 2560px). Faço upscale (Lanczos)+realce+PNG sem perdas e sirvo `unoptimized` (resolução cheia), mas **não dá para criar detalhe que não existe** — sem super-resolução por IA aqui. **Pendência real:** a cliente exportar a mesma arte em ~**3840×640** para nitidez máxima; aí é só trocar o arquivo (mesma proporção), sem mudança de código. ⚠️ Lição recorrente desta sessão: **não apagar (`rm`) o arquivo-fonte pristino** ao instalar — perdi as versões originais e fiquei só com cópias já processadas.
