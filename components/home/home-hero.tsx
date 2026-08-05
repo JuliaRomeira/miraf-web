@@ -45,9 +45,11 @@ const TRUST_ICONS: Record<HeroTrustIcon, LucideIcon> = {
  *
  * Mantém: Ken Burns, fade entre slides, parallax sutil e overlay azul/vermelho
  * da marca. Comportamento: troca automática (6,5s), pausa no hover/foco e com a
- * aba oculta. Navegação: swipe por toque (mobile), setas (tablet+), indicadores
- * em barra e teclado ←/→. Tudo desligado sob `prefers-reduced-motion`.
- * Performance: só o 1º banner é pré-carregado; animações em `transform`/`opacity`.
+ * aba oculta. Navegação: swipe por toque + setas na barra (mobile), setas
+ * laterais grandes (tablet+), indicadores em barra e teclado ←/→. Os selos de
+ * confiança ficam ocultos no mobile (hero lotado) e reaparecem no tablet+.
+ * Tudo desligado sob `prefers-reduced-motion`. Performance: só o 1º banner é
+ * pré-carregado; animações em `transform`/`opacity`.
  *
  * A transição para a próxima seção não é feita aqui: `HomeSuppliers` é um card
  * flutuante que sobe e sobrepõe a base do hero (continuidade visual). As
@@ -273,9 +275,12 @@ export function HomeHero(): React.ReactElement {
             </Button>
           </div>
 
+          {/* Selos de confiança — ocultos no mobile (o hero fica lotado e o
+              controle de navegação passava por cima deles); reaparecem no
+              tablet/desktop, onde há espaço. */}
           <ul
             className={cn(
-              "mt-8 grid max-w-xl grid-cols-2 gap-x-6 gap-y-3 border-t border-white/15 pt-6",
+              "mt-8 hidden max-w-xl grid-cols-2 gap-x-6 gap-y-3 border-t border-white/15 pt-6 sm:grid",
               animate && "hero-in-up",
             )}
             style={animate ? { animationDelay: "0.62s" } : undefined}
@@ -313,37 +318,56 @@ export function HomeHero(): React.ReactElement {
         <ChevronRight className="size-5" />
       </button>
 
-      {/* Indicadores de slide — barras dentro de um contêiner translúcido que os
-          identifica como um controle interativo. Cada botão tem área de toque
-          ampla (h-9 ≈ 36px) para o dedo, com a barra visível pequena. O slide
-          ativo vira uma barra vermelha larga (feedback claro). Junto com o swipe
-          e as setas (tablet+), a navegação fica intuitiva em qualquer tela. */}
-      <div
-        role="tablist"
-        aria-label="Selecionar destaque"
-        className="absolute bottom-24 left-1/2 z-30 flex -translate-x-1/2 items-center gap-1 rounded-full bg-black/25 px-2 py-1 ring-1 ring-white/15 backdrop-blur-sm sm:bottom-28"
-      >
-        {HERO_SLIDES.map((item, index) => {
-          const isActive = index === current;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              role="tab"
-              aria-selected={isActive}
-              aria-label={`Ir para: ${item.eyebrow}`}
-              onClick={() => goTo(index)}
-              className="group flex h-9 touch-manipulation items-center justify-center px-1.5 focus-visible:outline-none"
-            >
-              <span
-                className={cn(
-                  "h-2 rounded-full transition-all duration-300 group-focus-visible:ring-2 group-focus-visible:ring-white group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-transparent",
-                  isActive ? "bg-brand w-9 shadow-sm" : "w-2.5 bg-white/55 group-hover:bg-white/90",
-                )}
-              />
-            </button>
-          );
-        })}
+      {/* Controle de navegação — contêiner translúcido que agrupa as SETAS
+          (‹ ›, só no mobile; no desktop há setas laterais grandes) e os
+          indicadores em barra. Cada indicador tem área de toque ampla (h-9 ≈
+          36px), com a barra visível pequena; o slide ativo vira uma barra
+          vermelha larga (feedback claro). Junto com o swipe, a navegação fica
+          intuitiva e óbvia em qualquer tela. */}
+      <div className="absolute bottom-24 left-1/2 z-30 flex -translate-x-1/2 items-center gap-0.5 rounded-full bg-black/30 px-1.5 py-1 ring-1 ring-white/15 backdrop-blur-sm sm:bottom-28 sm:gap-1 sm:px-2">
+        <button
+          type="button"
+          onClick={prev}
+          aria-label="Slide anterior"
+          className="flex size-8 items-center justify-center rounded-full text-white/85 transition-colors hover:bg-white/15 hover:text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none sm:hidden"
+        >
+          <ChevronLeft className="size-5" />
+        </button>
+
+        <div role="tablist" aria-label="Selecionar destaque" className="flex items-center gap-1">
+          {HERO_SLIDES.map((item, index) => {
+            const isActive = index === current;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-label={`Ir para: ${item.eyebrow}`}
+                onClick={() => goTo(index)}
+                className="group flex h-9 touch-manipulation items-center justify-center px-1.5 focus-visible:outline-none"
+              >
+                <span
+                  className={cn(
+                    "h-2 rounded-full transition-all duration-300 group-focus-visible:ring-2 group-focus-visible:ring-white group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-transparent",
+                    isActive
+                      ? "bg-brand w-9 shadow-sm"
+                      : "w-2.5 bg-white/55 group-hover:bg-white/90",
+                  )}
+                />
+              </button>
+            );
+          })}
+        </div>
+
+        <button
+          type="button"
+          onClick={next}
+          aria-label="Próximo slide"
+          className="flex size-8 items-center justify-center rounded-full text-white/85 transition-colors hover:bg-white/15 hover:text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none sm:hidden"
+        >
+          <ChevronRight className="size-5" />
+        </button>
       </div>
     </section>
   );
