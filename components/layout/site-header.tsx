@@ -35,6 +35,11 @@ const HERO_ROUTES: readonly string[] = [ROUTES.home, ROUTES.about, ROUTES.produc
  * — ou em qualquer página sem hero — vira **sólido**: fundo branco com blur e
  * sombra suave, numa transição elegante.
  *
+ * Exceção: na página de DETALHE do produto (`/produtos/<slug>`) o cabeçalho é
+ * **azul institucional** (sólido, `bg-primary`), com logo/links/ícones brancos e
+ * o item ativo com realce translúcido — dá mais presença/premium à tela. Vale só
+ * ali; a listagem `/produtos` e as demais páginas não mudam.
+ *
  * Como o header é `fixed`, ele não ocupa espaço no fluxo; nas páginas sem hero
  * um espaçador de mesma altura evita que o conteúdo fique sob o cabeçalho. Na
  * home, o hero (full-screen) passa por baixo do header transparente de propósito.
@@ -59,6 +64,14 @@ export function SiteHeader(): React.ReactElement {
   // Transparente apenas sobre o hero e no topo da página.
   const transparent = hasHero && !scrolled;
 
+  // Página de DETALHE do produto (/produtos/<slug>) — cabeçalho AZUL institucional
+  // (mais presença/premium), exclusivo desta tela. A listagem /produtos (exata)
+  // NÃO entra aqui (ela já tem seu próprio hero navy).
+  const isProductDetail = pathname.startsWith(`${ROUTES.products}/`);
+
+  // Conteúdo em branco (logo/links/ícones) tanto sobre o hero quanto sobre o azul.
+  const light = transparent || isProductDetail;
+
   return (
     <>
       <header
@@ -66,24 +79,27 @@ export function SiteHeader(): React.ReactElement {
           "fixed top-0 z-50 w-full transition-[background-color,box-shadow,border-color] duration-300",
           transparent
             ? "border-b border-transparent"
-            : "border-border bg-background/85 supports-[backdrop-filter]:bg-background/70 border-b shadow-sm backdrop-blur",
+            : isProductDetail
+              ? "bg-primary border-b border-white/10 shadow-sm"
+              : "border-border bg-background/85 supports-[backdrop-filter]:bg-background/70 border-b shadow-sm backdrop-blur",
         )}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-10">
-            <Logo overHero={transparent} />
+            <Logo overHero={light} />
             <MainNav
               items={PUBLIC_NAV_ITEMS}
-              light={transparent}
+              light={light}
+              activeHighlight={isProductDetail}
               label="Navegação principal"
               className="hidden md:flex"
             />
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            <HeaderSearch light={transparent} className="hidden sm:block" />
+            <HeaderSearch light={light} className="hidden sm:block" />
             <QuoteCartButton className="hidden sm:inline-flex" />
-            <MobileNav items={PUBLIC_NAV_ITEMS} light={transparent} />
+            <MobileNav items={PUBLIC_NAV_ITEMS} light={light} />
 
             {/*
               Atalho administrativo (painel): fixado no **extremo canto direito
@@ -100,7 +116,7 @@ export function SiteHeader(): React.ReactElement {
               title="Painel administrativo"
               className={cn(
                 "focus-visible:ring-ring ml-4 inline-flex size-8 items-center justify-center rounded-full transition-colors focus-visible:ring-2 focus-visible:outline-none sm:ml-6 2xl:absolute 2xl:top-1/2 2xl:right-8 2xl:ml-0 2xl:-translate-y-1/2",
-                transparent
+                light
                   ? "text-white/70 hover:bg-white/10 hover:text-white"
                   : "text-muted-foreground/70 hover:text-foreground hover:bg-accent",
               )}

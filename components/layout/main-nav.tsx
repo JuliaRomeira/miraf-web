@@ -18,6 +18,12 @@ interface MainNavProps {
   readonly light?: boolean;
   /** Rótulo acessível do landmark `<nav>` (ex.: "Navegação principal"). */
   readonly label?: string;
+  /**
+   * Realce discreto do item ativo quando `light` (ex.: cabeçalho azul da página
+   * de detalhe do produto): fundo translúcido. Não afeta o cabeçalho transparente
+   * sobre o hero, onde o ativo fica só em branco negrito.
+   */
+  readonly activeHighlight?: boolean;
 }
 
 /**
@@ -30,6 +36,7 @@ export function MainNav({
   onNavigate,
   light = false,
   label,
+  activeHighlight = false,
 }: MainNavProps): React.ReactElement {
   const pathname = usePathname();
 
@@ -51,7 +58,7 @@ export function MainNav({
               "rounded-md px-5 py-3 text-[17px] font-medium transition-colors",
               light
                 ? isActive
-                  ? "font-semibold text-white"
+                  ? cn("font-semibold text-white", activeHighlight && "bg-white/15")
                   : "text-white/80 hover:text-white"
                 : isActive
                   ? "text-primary font-semibold"
