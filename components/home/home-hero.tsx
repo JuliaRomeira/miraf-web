@@ -323,8 +323,10 @@ export function HomeHero(): React.ReactElement {
           indicadores em barra. Cada indicador tem área de toque ampla (h-9 ≈
           36px), com a barra visível pequena; o slide ativo vira uma barra
           vermelha larga (feedback claro). Junto com o swipe, a navegação fica
-          intuitiva e óbvia em qualquer tela. */}
-      <div className="absolute bottom-24 left-1/2 z-30 flex -translate-x-1/2 items-center gap-0.5 rounded-full bg-black/30 px-1.5 py-1 ring-1 ring-white/15 backdrop-blur-sm sm:bottom-28 sm:gap-1 sm:px-2">
+          intuitiva e óbvia em qualquer tela.
+          Fica no RODAPÉ do hero (bottom-8), abaixo dos selos — antes ficava na
+          mesma faixa vertical deles e os tampava em certas larguras. */}
+      <div className="absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 items-center gap-0.5 rounded-full bg-black/30 px-1.5 py-1 ring-1 ring-white/15 backdrop-blur-sm sm:gap-1 sm:px-2">
         <button
           type="button"
           onClick={prev}
