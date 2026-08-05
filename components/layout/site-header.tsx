@@ -35,10 +35,11 @@ const HERO_ROUTES: readonly string[] = [ROUTES.home, ROUTES.about, ROUTES.produc
  * — ou em qualquer página sem hero — vira **sólido**: fundo branco com blur e
  * sombra suave, numa transição elegante.
  *
- * Exceção: na página de DETALHE do produto (`/produtos/<slug>`) o cabeçalho é
- * **azul institucional** (sólido, `bg-primary`), com logo/links/ícones brancos e
- * o item ativo com realce translúcido — dá mais presença/premium à tela. Vale só
- * ali; a listagem `/produtos` e as demais páginas não mudam.
+ * Exceção: nas telas de DETALHE do produto (`/produtos/<slug>`) e "Nossas
+ * Unidades" o cabeçalho é **azul sólido** (institucional) — o mesmo azul escuro
+ * do rodapé (`#0e2c62`) —, com logo/links/ícones brancos e o item ativo com
+ * realce translúcido. Vale só nessas telas; a listagem `/produtos` e as demais
+ * páginas não mudam.
  *
  * Como o header é `fixed`, ele não ocupa espaço no fluxo; nas páginas sem hero
  * um espaçador de mesma altura evita que o conteúdo fique sob o cabeçalho. Na
@@ -64,13 +65,16 @@ export function SiteHeader(): React.ReactElement {
   // Transparente apenas sobre o hero e no topo da página.
   const transparent = hasHero && !scrolled;
 
-  // Página de DETALHE do produto (/produtos/<slug>) — cabeçalho AZUL institucional
-  // (mais presença/premium), exclusivo desta tela. A listagem /produtos (exata)
-  // NÃO entra aqui (ela já tem seu próprio hero navy).
+  // Telas com cabeçalho AZUL sólido (institucional/premium): detalhe do produto
+  // (/produtos/<slug>) e "Nossas Unidades". Ambas usam o MESMO azul escuro do
+  // rodapé (#0e2c62), para um topo institucional consistente. A listagem
+  // /produtos (exata) NÃO entra aqui — já tem seu próprio hero navy.
   const isProductDetail = pathname.startsWith(`${ROUTES.products}/`);
+  const isUnits = pathname === ROUTES.units;
+  const blueHeader = isProductDetail || isUnits ? "bg-[#0e2c62]" : null;
 
   // Conteúdo em branco (logo/links/ícones) tanto sobre o hero quanto sobre o azul.
-  const light = transparent || isProductDetail;
+  const light = transparent || blueHeader !== null;
 
   return (
     <>
@@ -79,8 +83,8 @@ export function SiteHeader(): React.ReactElement {
           "fixed top-0 z-50 w-full transition-[background-color,box-shadow,border-color] duration-300",
           transparent
             ? "border-b border-transparent"
-            : isProductDetail
-              ? "bg-primary border-b border-white/10 shadow-sm"
+            : blueHeader
+              ? `${blueHeader} border-b border-white/10 shadow-sm`
               : "border-border bg-background/85 supports-[backdrop-filter]:bg-background/70 border-b shadow-sm backdrop-blur",
         )}
       >
@@ -90,7 +94,7 @@ export function SiteHeader(): React.ReactElement {
             <MainNav
               items={PUBLIC_NAV_ITEMS}
               light={light}
-              activeHighlight={isProductDetail}
+              activeHighlight={blueHeader !== null}
               label="Navegação principal"
               className="hidden md:flex"
             />
