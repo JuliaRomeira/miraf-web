@@ -94,7 +94,6 @@ export function SiteHeader(): React.ReactElement {
             <MainNav
               items={PUBLIC_NAV_ITEMS}
               light={light}
-              activeHighlight={blueHeader !== null}
               label="Navegação principal"
               className="hidden md:flex"
             />
