@@ -9,6 +9,7 @@ import { ROUTES } from "@/constants";
 export const metadata: Metadata = {
   title: "Categorias",
   description: "Navegue pelas categorias de produtos da Mira.",
+  alternates: { canonical: ROUTES.categories },
 };
 
 export default async function CategoriesPage(): Promise<React.ReactElement> {
@@ -17,12 +18,12 @@ export default async function CategoriesPage(): Promise<React.ReactElement> {
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <header className="mb-8 space-y-2">
-        <h1 className="text-3xl font-semibold tracking-tight">Categorias</h1>
+        <h1 className="font-display text-3xl font-semibold tracking-tight">Categorias</h1>
         <p className="text-muted-foreground">Escolha uma categoria para ver os produtos.</p>
       </header>
 
       {categories.length === 0 ? (
-        <div className="border-border text-muted-foreground rounded-lg border border-dashed p-12 text-center">
+        <div className="border-border text-muted-foreground rounded-2xl border border-dashed p-12 text-center">
           Nenhuma categoria disponível no momento.
         </div>
       ) : (

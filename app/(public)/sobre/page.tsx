@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Quem Somos",
   description:
     "Desde 1982, a Mira Distribuidora é referência na distribuição de produtos para panificação, confeitaria e food service, atendendo mais de 500 municípios em todo o estado de São Paulo.",
+  alternates: { canonical: ROUTES.about },
 };
 
 interface AboutStat {

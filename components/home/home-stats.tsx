@@ -33,7 +33,7 @@ export function HomeStats(): React.ReactElement {
                 <dd className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-[40px]">
                   {value}
                 </dd>
-                <dt className="text-primary-foreground/60 mt-2.5 text-[10.5px] font-medium tracking-[0.15em] uppercase">
+                <dt className="text-primary-foreground/80 mt-2.5 text-[10.5px] font-medium tracking-[0.15em] uppercase">
                   {label}
                 </dt>
               </div>

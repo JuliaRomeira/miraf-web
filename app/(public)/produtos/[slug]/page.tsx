@@ -18,6 +18,11 @@ import { renderRichText } from "@/lib/sanitize-html";
 import { onlyDigits } from "@/utils";
 import { ROUTES } from "@/constants";
 
+/** Base absoluta para URLs em JSON-LD (Schema.org). */
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+const toAbsoluteUrl = (path: string): string =>
+  path.startsWith("http") ? path : `${APP_URL}${path}`;
+
 interface ProductDetailPageProps {
   readonly params: Promise<{ slug: string }>;
 }
@@ -52,6 +57,7 @@ export async function generateMetadata({ params }: ProductDetailPageProps): Prom
   return {
     title,
     description,
+    alternates: { canonical: ROUTES.productDetail(product.slug) },
     openGraph: {
       title,
       description,
@@ -112,8 +118,26 @@ export default async function ProductDetailPage({
     images: product.images.map((image) => ({ url: image.url, alt: image.alt })),
   };
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description: product.shortDescription?.trim() || metaSummary(product.description),
+    ...(product.images.length > 0
+      ? { image: product.images.map((image) => toAbsoluteUrl(image.url)) }
+      : {}),
+    ...(product.sku ? { sku: product.sku } : {}),
+    ...(product.supplier?.name ? { brand: { "@type": "Brand", name: product.supplier.name } } : {}),
+    category: product.category.name,
+    url: toAbsoluteUrl(ROUTES.productDetail(product.slug)),
+  };
+
   return (
     <section className="mx-auto w-full max-w-7xl min-w-0 px-4 py-10 sm:px-6 lg:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       <nav
         aria-label="Trilha de navegação"
         className="mb-7 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm"

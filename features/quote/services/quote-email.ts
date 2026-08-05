@@ -72,7 +72,6 @@ function renderTeamEmail(quote: CreateQuoteResult): string {
     ["E-mail", quote.email],
     ["Telefone", formatPhone(quote.phone)],
   ];
-  if (quote.company) fields.push(["Empresa", quote.company]);
   if (quote.notes) fields.push(["Observações", quote.notes]);
 
   const fieldRows = fields

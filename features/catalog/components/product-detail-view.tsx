@@ -299,19 +299,14 @@ function VariationButtons({
                 aria-pressed={isSelected}
                 aria-label={`Escolher sabor ${variation.name}`}
                 className={cn(
-                  "inline-flex min-h-11 items-center gap-1.5 rounded-full border px-5 py-2.5 text-sm font-medium transition-all duration-200 ease-out active:scale-[0.97]",
+                  "focus-visible:ring-primary/50 inline-flex min-h-11 items-center gap-1.5 rounded-full border px-5 py-2.5 text-sm font-medium transition-all duration-200 ease-out focus-visible:ring-2 focus-visible:outline-none active:scale-[0.97]",
                   isSelected
-                    ? "border-primary bg-primary text-primary-foreground shadow-soft"
-                    : "border-border text-foreground hover:border-primary/50 hover:bg-accent hover:shadow-soft",
+                    ? "border-primary bg-accent text-primary ring-primary/40 shadow-soft ring-1"
+                    : "border-border text-foreground hover:border-primary/40 hover:bg-accent hover:shadow-soft",
                   !variation.available && "opacity-50",
                 )}
               >
-                {inCart && (
-                  <Check
-                    className={cn("size-4", isSelected ? "" : "text-brand")}
-                    aria-label="Na cotação"
-                  />
-                )}
+                {inCart && <Check className="text-brand size-4" aria-label="Na cotação" />}
                 {variation.name}
               </button>
             </li>
@@ -376,7 +371,7 @@ function QuoteCta({
             asChild
             size="lg"
             variant="outline"
-            className="border-border text-foreground hover:bg-muted hover:text-foreground w-full transition-all duration-200 active:scale-[0.98] sm:w-auto"
+            className="border-border text-foreground hover:bg-muted hover:text-foreground w-full rounded-full transition-all duration-200 active:scale-[0.98] sm:w-auto"
           >
             <Link href={ROUTES.quote}>
               <ClipboardList />
@@ -406,7 +401,7 @@ function QuoteCta({
         onClick={() =>
           addItem({ productId, slug, name, imageUrl, flavorId, flavorName, unit }, quantity)
         }
-        className="bg-brand text-brand-foreground hover:bg-brand/90 hover:shadow-brand/30 w-full font-semibold shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:scale-[0.99] sm:w-auto"
+        className="bg-brand text-brand-foreground hover:bg-brand/90 hover:shadow-brand/30 w-full rounded-full font-semibold shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:scale-[0.99] sm:w-auto"
       >
         <ClipboardList />
         Adicionar à cotação

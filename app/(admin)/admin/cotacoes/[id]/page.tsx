@@ -53,7 +53,9 @@ export default async function QuoteDetailPage({
           Voltar para cotações
         </Link>
         <div className="flex flex-wrap items-center gap-3">
-          <h1 className="font-display text-2xl font-semibold tracking-tight">Cotação {quote.protocol}</h1>
+          <h1 className="font-display text-2xl font-semibold tracking-tight">
+            Cotação {quote.protocol}
+          </h1>
           <QuoteStatusBadge status={quote.status} />
         </div>
         <p className="text-muted-foreground text-sm">

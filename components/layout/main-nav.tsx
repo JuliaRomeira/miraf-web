@@ -16,6 +16,8 @@ interface MainNavProps {
    * o hero): links em branco em vez das cores padrão.
    */
   readonly light?: boolean;
+  /** Rótulo acessível do landmark `<nav>` (ex.: "Navegação principal"). */
+  readonly label?: string;
 }
 
 /**
@@ -27,11 +29,12 @@ export function MainNav({
   className,
   onNavigate,
   light = false,
+  label,
 }: MainNavProps): React.ReactElement {
   const pathname = usePathname();
 
   return (
-    <nav className={cn("flex items-center gap-3", className)}>
+    <nav aria-label={label} className={cn("flex items-center gap-3", className)}>
       {items.map((item) => {
         const isActive =
           item.href === "/"

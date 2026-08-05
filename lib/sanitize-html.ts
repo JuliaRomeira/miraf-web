@@ -61,6 +61,10 @@ const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
       target: "_blank",
       rel: "noopener noreferrer",
     }),
+    // Rebaixa títulos autorais (o editor expõe H1–H3) para h3, para que a
+    // descrição do produto nunca crie um segundo h1/h2 e quebre a hierarquia.
+    h1: "h3",
+    h2: "h3",
   },
 };
 

@@ -72,7 +72,12 @@ export function SiteHeader(): React.ReactElement {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-10">
             <Logo overHero={transparent} />
-            <MainNav items={PUBLIC_NAV_ITEMS} light={transparent} className="hidden md:flex" />
+            <MainNav
+              items={PUBLIC_NAV_ITEMS}
+              light={transparent}
+              label="Navegação principal"
+              className="hidden md:flex"
+            />
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">

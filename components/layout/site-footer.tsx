@@ -48,8 +48,8 @@ export async function SiteFooter(): Promise<React.ReactElement> {
               <Image
                 src="/logo-mira.png"
                 alt="Mira"
-                width={97}
-                height={32}
+                width={102}
+                height={34}
                 className="brightness-0 invert"
               />
             </Link>
@@ -130,7 +130,7 @@ export async function SiteFooter(): Promise<React.ReactElement> {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-2 border-t border-white/15 pt-8 text-xs text-white/45 sm:flex-row">
+        <div className="mt-14 flex flex-col items-center justify-between gap-2 border-t border-white/15 pt-8 text-xs text-white/60 sm:flex-row">
           <p>
             © {year} {SITE_CONFIG.fullName}. Todos os direitos reservados.
           </p>

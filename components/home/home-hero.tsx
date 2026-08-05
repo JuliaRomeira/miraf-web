@@ -182,7 +182,7 @@ export function HomeHero(): React.ReactElement {
                     alt={item.imageAlt ?? ""}
                     fill
                     priority={index === 0}
-                    quality={90}
+                    quality={80}
                     // 116vw compensa o zoom do Ken Burns (até 1.16x): o navegador
                     // busca uma fonte ~16% maior, evitando o borrão do upscale.
                     sizes="116vw"
@@ -336,15 +336,14 @@ export function HomeHero(): React.ReactElement {
           <ChevronLeft className="size-5" />
         </button>
 
-        <div role="tablist" aria-label="Selecionar destaque" className="flex items-center gap-1">
+        <div role="group" aria-label="Selecionar destaque" className="flex items-center gap-1">
           {HERO_SLIDES.map((item, index) => {
             const isActive = index === current;
             return (
               <button
                 key={item.id}
                 type="button"
-                role="tab"
-                aria-selected={isActive}
+                aria-current={isActive ? "true" : undefined}
                 aria-label={`Ir para: ${item.eyebrow}`}
                 onClick={() => goTo(index)}
                 className="group flex h-9 touch-manipulation items-center justify-center px-1.5 focus-visible:outline-none"

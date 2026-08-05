@@ -55,7 +55,7 @@ export function QuoteCartView(): React.ReactElement {
     return (
       <div className="mx-auto max-w-md py-12 text-center">
         <ClipboardList className="text-muted-foreground mx-auto size-12" aria-hidden="true" />
-        <h1 className="mt-4 text-xl font-semibold">Sua cotação está vazia</h1>
+        <h1 className="font-display mt-4 text-xl font-semibold">Sua cotação está vazia</h1>
         <p className="text-muted-foreground mt-2">
           Adicione produtos do catálogo para solicitar um orçamento à nossa equipe.
         </p>
@@ -80,7 +80,7 @@ export function QuoteCartView(): React.ReactElement {
 
   return (
     <div>
-      <h1 className="mb-2 text-3xl font-semibold tracking-tight">Minha cotação</h1>
+      <h1 className="font-display mb-2 text-3xl font-semibold tracking-tight">Minha cotação</h1>
       <p className="text-muted-foreground mb-8">
         Revise os produtos e informe seus dados para solicitar um orçamento sem compromisso.
       </p>
@@ -88,8 +88,8 @@ export function QuoteCartView(): React.ReactElement {
         <div className="min-w-0">
           <QuoteItemList />
         </div>
-        <div className="border-border bg-card h-fit min-w-0 rounded-lg border p-6">
-          <h2 className="mb-4 text-lg font-semibold">Seus dados</h2>
+        <div className="border-border bg-card h-fit min-w-0 rounded-2xl border p-6">
+          <h2 className="font-display mb-4 text-lg font-semibold">Seus dados</h2>
           <QuoteForm
             formAction={formAction}
             isPending={isPending}

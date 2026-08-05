@@ -41,7 +41,7 @@ export function QuoteItemList(): React.ReactElement {
                   alt={item.name}
                   fill
                   sizes="64px"
-                  className="object-cover"
+                  className="object-contain p-1"
                 />
               ) : (
                 <div className="text-muted-foreground flex h-full items-center justify-center">

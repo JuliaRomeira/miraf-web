@@ -35,7 +35,6 @@ export interface CreateQuoteResult {
   readonly phone: string;
   readonly document: string;
   readonly documentType: "CPF" | "CNPJ";
-  readonly company?: string;
   readonly notes?: string;
   readonly items: readonly ResolvedQuoteItem[];
   /** Itens descartados por não existirem mais ou não estarem ativos. */
@@ -143,7 +142,6 @@ export async function createQuote(input: QuoteInput): Promise<CreateQuoteResult>
         document: input.document,
         email: input.email,
         phone: input.phone,
-        company: input.company,
         notes: input.notes,
         items: {
           create: resolvedItems.map((item) => ({
@@ -165,7 +163,6 @@ export async function createQuote(input: QuoteInput): Promise<CreateQuoteResult>
       phone: input.phone,
       document: input.document,
       documentType: input.documentType,
-      company: input.company,
       notes: input.notes,
       items: resolvedItems,
       droppedCount: requestedIds.length - resolvedItems.length,

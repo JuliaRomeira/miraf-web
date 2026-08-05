@@ -16,7 +16,7 @@ export function QuoteSuccess({ protocol }: QuoteSuccessProps): React.ReactElemen
   return (
     <div className="mx-auto max-w-xl py-8 text-center">
       <CheckCircle2 className="mx-auto size-14 text-green-600" aria-hidden="true" />
-      <h1 className="mt-4 text-2xl font-semibold tracking-tight">Cotação enviada!</h1>
+      <h1 className="font-display mt-4 text-2xl font-semibold tracking-tight">Cotação enviada!</h1>
       <p className="text-muted-foreground mt-2">
         Recebemos sua solicitação. Nossa equipe comercial entrará em contato em breve.
       </p>

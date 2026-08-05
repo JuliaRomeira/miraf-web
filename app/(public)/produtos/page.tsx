@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   title: "Produtos",
   description:
     "Encontre os produtos ideais para o seu negócio. Navegue pelas categorias e fornecedores para montar sua cotação de forma rápida e organizada.",
+  // Canonical na URL limpa: consolida as variantes filtradas (?q, ?categoria,
+  // ?fornecedor, ?ordenar, ?pagina) num só alvo de indexação.
+  alternates: { canonical: ROUTES.products },
 };
 
 interface ProductsPageProps {
@@ -104,7 +107,7 @@ export default async function ProductsPage({
           alt="Variedade de insumos para panificação e confeitaria distribuídos pela Mira"
           fill
           priority
-          unoptimized
+          sizes="100vw"
           className="object-cover object-[72%_center] sm:object-center"
         />
         {/* Scrim desktop/tablet — navy escurecendo a esquerda p/ leitura do
@@ -154,6 +157,7 @@ export default async function ProductsPage({
       </div>
 
       <section className="mx-auto w-full max-w-7xl min-w-0 px-4 pt-10 pb-16 sm:px-6 lg:px-8">
+        <h2 className="sr-only">Lista de produtos</h2>
         {result.items.length === 0 ? (
           <div className="border-border text-muted-foreground rounded-2xl border border-dashed p-12 text-center">
             Nenhum produto encontrado com os filtros selecionados.

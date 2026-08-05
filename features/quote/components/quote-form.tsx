@@ -17,15 +17,27 @@ interface QuoteFormProps {
   readonly formError?: string;
 }
 
-function FieldError({ messages }: { readonly messages?: string[] }): React.ReactElement | null {
+function FieldError({
+  id,
+  messages,
+}: {
+  readonly id: string;
+  readonly messages?: string[];
+}): React.ReactElement | null {
   if (!messages?.[0]) return null;
-  return <p className="text-destructive text-sm">{messages[0]}</p>;
+  return (
+    <p id={id} className="text-destructive text-sm">
+      {messages[0]}
+    </p>
+  );
 }
 
 /**
  * Formulário de dados do cliente. A validação/sanitização real é server-side
  * (Zod na Server Action); aqui só aplicamos máscara de exibição em CPF/CNPJ e
- * telefone para melhorar a UX. Inclui um honeypot oculto anti-bot.
+ * telefone para melhorar a UX. Inclui um honeypot oculto anti-bot. Cada erro é
+ * associado ao campo por `aria-invalid` + `aria-describedby` (leitores de tela
+ * anunciam qual campo falhou e por quê).
  */
 export function QuoteForm({
   formAction,
@@ -66,8 +78,10 @@ export function QuoteForm({
           required
           maxLength={120}
           placeholder="Digite seu nome ou o nome da empresa."
+          aria-invalid={fieldErrors?.name ? true : undefined}
+          aria-describedby={fieldErrors?.name ? "name-error" : undefined}
         />
-        <FieldError messages={fieldErrors?.name} />
+        <FieldError id="name-error" messages={fieldErrors?.name} />
       </div>
 
       <div className="space-y-2">
@@ -80,8 +94,10 @@ export function QuoteForm({
           placeholder="000.000.000-00"
           value={document}
           onChange={(event) => setDocument(formatCpfCnpj(event.target.value))}
+          aria-invalid={fieldErrors?.document ? true : undefined}
+          aria-describedby={fieldErrors?.document ? "document-error" : undefined}
         />
-        <FieldError messages={fieldErrors?.document} />
+        <FieldError id="document-error" messages={fieldErrors?.document} />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -94,8 +110,10 @@ export function QuoteForm({
             autoComplete="email"
             required
             maxLength={180}
+            aria-invalid={fieldErrors?.email ? true : undefined}
+            aria-describedby={fieldErrors?.email ? "email-error" : undefined}
           />
-          <FieldError messages={fieldErrors?.email} />
+          <FieldError id="email-error" messages={fieldErrors?.email} />
         </div>
         <div className="space-y-2">
           <Label htmlFor="phone">Telefone *</Label>
@@ -109,15 +127,24 @@ export function QuoteForm({
             placeholder="(00) 00000-0000"
             value={phone}
             onChange={(event) => setPhone(formatPhone(event.target.value))}
+            aria-invalid={fieldErrors?.phone ? true : undefined}
+            aria-describedby={fieldErrors?.phone ? "phone-error" : undefined}
           />
-          <FieldError messages={fieldErrors?.phone} />
+          <FieldError id="phone-error" messages={fieldErrors?.phone} />
         </div>
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="notes">Observações</Label>
-        <Textarea id="notes" name="notes" maxLength={1000} rows={4} />
-        <FieldError messages={fieldErrors?.notes} />
+        <Textarea
+          id="notes"
+          name="notes"
+          maxLength={1000}
+          rows={4}
+          aria-invalid={fieldErrors?.notes ? true : undefined}
+          aria-describedby={fieldErrors?.notes ? "notes-error" : undefined}
+        />
+        <FieldError id="notes-error" messages={fieldErrors?.notes} />
       </div>
 
       {formError && (

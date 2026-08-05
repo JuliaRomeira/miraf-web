@@ -42,6 +42,11 @@ const eslintConfig = [
     },
   },
   {
+    // Scripts de operação/CLI (fora do app) podem usar console livremente.
+    files: ["scripts/**/*.{ts,tsx,mts,cts,js,mjs,cjs}"],
+    rules: { "no-console": "off" },
+  },
+  {
     ignores: [
       "node_modules/**",
       ".next/**",

@@ -3,6 +3,9 @@
 import { useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
+import { cn } from "@/lib/utils";
+import { nativeSelectClass } from "@/components/ui/native-select";
+
 const SORT_OPTIONS = [
   { value: "relevancia", label: "Mais relevantes" },
   { value: "nome", label: "Nome (A–Z)" },
@@ -43,7 +46,10 @@ export function CatalogSort(): React.ReactElement {
         onChange={(event) => onChange(event.target.value)}
         disabled={pending}
         aria-label="Ordenar produtos por"
-        className="border-input bg-background text-foreground hover:border-primary/40 focus-visible:border-primary focus-visible:ring-ring/30 h-10 cursor-pointer rounded-lg border px-3 text-sm font-medium shadow-sm transition-all duration-200 focus-visible:ring-2 focus-visible:outline-none disabled:opacity-60"
+        className={cn(
+          nativeSelectClass,
+          "hover:border-primary/40 w-auto cursor-pointer font-medium",
+        )}
       >
         {SORT_OPTIONS.map((option) => (
           <option key={option.value} value={option.value}>

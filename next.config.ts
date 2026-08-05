@@ -22,9 +22,9 @@ const nextConfig: NextConfig = {
   compress: true,
   images: {
     formats: ["image/avif", "image/webp"],
-    // Níveis de qualidade permitidos ao `next/image`. 90 é usado nos banners do
-    // hero (fotos grandes exigem mais nitidez); 75 segue como padrão do restante.
-    qualities: [75, 90],
+    // Níveis de qualidade permitidos ao `next/image`. 80 nos banners do hero
+    // (equilíbrio nitidez/peso em fotos grandes); 75 é o padrão do restante.
+    qualities: [75, 80],
   },
   experimental: {
     // Otimiza importações de bibliotecas com muitos exports (tree-shaking mais agressivo)

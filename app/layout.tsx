@@ -48,15 +48,19 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   openGraph: {
     type: "website",
-    locale: SITE_CONFIG.locale,
+    // Open Graph exige o formato com underscore (pt_BR); o `<html lang>` usa o
+    // hífen (pt-BR). São padrões diferentes — não reutilizar SITE_CONFIG.locale aqui.
+    locale: "pt_BR",
     siteName: SITE_CONFIG.name,
     title: SITE_CONFIG.name,
     description: SITE_CONFIG.description,
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: SITE_CONFIG.fullName }],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_CONFIG.name,
     description: SITE_CONFIG.description,
+    images: ["/og-image.png"],
   },
 };
 

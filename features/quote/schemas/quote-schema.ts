@@ -60,12 +60,6 @@ export const quoteSchema = z
         (value) => value.length === 10 || value.length === 11,
         "Informe um telefone válido com DDD.",
       ),
-    company: z
-      .string()
-      .trim()
-      .max(120, "Nome da empresa muito longo.")
-      .optional()
-      .transform((value) => (value ? value : undefined)),
     notes: z
       .string()
       .trim()

@@ -55,7 +55,7 @@ export function CatalogSearchField(): React.ReactElement {
         onChange={(event) => setValue(event.target.value)}
         placeholder="Pesquisar produtos..."
         aria-label="Pesquisar produtos por nome, código ou fornecedor"
-        className="border-input bg-background hover:border-primary/40 focus-visible:border-primary focus-visible:ring-ring/30 placeholder:text-muted-foreground/80 h-11 w-full rounded-xl border pr-10 pl-11 text-sm shadow-sm transition-all duration-200 focus-visible:ring-2 focus-visible:outline-none [&::-webkit-search-cancel-button]:hidden"
+        className="border-input bg-background hover:border-primary/40 focus-visible:ring-ring focus-visible:ring-offset-background placeholder:text-muted-foreground/80 h-11 w-full rounded-lg border pr-10 pl-11 text-sm shadow-sm transition-all duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none [&::-webkit-search-cancel-button]:hidden"
       />
       {value && (
         <button

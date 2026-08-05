@@ -1,8 +1,20 @@
+import type { Metadata } from "next";
+
 import { HomeHero } from "@/components/home/home-hero";
 import { HomeSegments } from "@/components/home/home-segments";
 import { HomeStats } from "@/components/home/home-stats";
 import { HomeHowItWorks } from "@/components/home/home-how-it-works";
 import { HomeSuppliers } from "@/components/home/home-suppliers";
+
+export const metadata: Metadata = {
+  // `absolute` evita o template "%s | Mira" — a home tem título próprio.
+  title: {
+    absolute: "Mira | Distribuidora de insumos para food service, panificação e confeitaria",
+  },
+  description:
+    "Há mais de 40 anos distribuindo insumos para padarias, confeitarias, sorveterias e food service. Produtos das melhores marcas e cotação em poucos cliques.",
+  alternates: { canonical: "/" },
+};
 
 /**
  * Página inicial (primeiro contato). Sequência: hero (slider full-screen) →

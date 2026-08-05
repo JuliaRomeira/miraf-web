@@ -1,12 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 
 import { cn } from "@/lib/utils";
+import { CarouselArrow } from "@/components/shared/carousel-arrow";
+import { useOverflowArrows } from "@/hooks/use-overflow-arrows";
 
 export interface SectionSupplier {
   readonly slug: string;
@@ -18,42 +18,21 @@ interface SupplierSectionProps {
   readonly suppliers: readonly SectionSupplier[];
 }
 
-/** Quanto rolar (px) a cada clique nas setas. */
-const SCROLL_STEP = 280;
-
 /**
  * Carrossel de fornecedores (logos) acima da listagem, inspirado na referência
  * de UX: cards roláveis na horizontal com setas ◂ ▸. Clicar em um fornecedor
  * aplica o filtro (`?fornecedor=slug`) preservando os demais filtros e
  * reiniciando a paginação; o ativo fica destacado e clicar nele de novo (ou em
- * "Ver todos") remove o filtro. As setas aparecem só quando há overflow para
+ * "Limpar") remove o filtro. As setas aparecem só quando há overflow para
  * aquele lado.
  */
 export function SupplierSection({ suppliers }: SupplierSectionProps): React.ReactElement | null {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const scrollerRef = useRef<HTMLUListElement>(null);
-  const [canLeft, setCanLeft] = useState(false);
-  const [canRight, setCanRight] = useState(false);
-
-  const updateArrows = useCallback((): void => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    setCanLeft(el.scrollLeft > 4);
-    setCanRight(Math.ceil(el.scrollLeft + el.clientWidth) < el.scrollWidth - 4);
-  }, []);
-
-  useEffect(() => {
-    updateArrows();
-    const el = scrollerRef.current;
-    if (!el) return;
-    el.addEventListener("scroll", updateArrows, { passive: true });
-    window.addEventListener("resize", updateArrows);
-    return () => {
-      el.removeEventListener("scroll", updateArrows);
-      window.removeEventListener("resize", updateArrows);
-    };
-  }, [updateArrows, suppliers.length]);
+  const { scrollerRef, canLeft, canRight, scrollByDir } = useOverflowArrows<HTMLUListElement>({
+    step: 280,
+    revalidateKey: suppliers.length,
+  });
 
   if (suppliers.length === 0) {
     return null;
@@ -71,10 +50,6 @@ export function SupplierSection({ suppliers }: SupplierSectionProps): React.Reac
     params.delete("pagina");
     const query = params.toString();
     return query ? `${pathname}?${query}` : pathname;
-  };
-
-  const scrollByDir = (direction: 1 | -1): void => {
-    scrollerRef.current?.scrollBy({ left: direction * SCROLL_STEP, behavior: "smooth" });
   };
 
   return (
@@ -95,14 +70,11 @@ export function SupplierSection({ suppliers }: SupplierSectionProps): React.Reac
 
       <div className="relative min-w-0">
         {canLeft && (
-          <button
-            type="button"
+          <CarouselArrow
+            direction="left"
             onClick={() => scrollByDir(-1)}
-            aria-label="Ver fornecedores anteriores"
-            className="border-border bg-background/90 hover:bg-accent focus-visible:ring-ring absolute top-1/2 left-1 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full border shadow-md backdrop-blur transition focus-visible:ring-2 focus-visible:outline-none"
-          >
-            <ChevronLeft className="size-5" />
-          </button>
+            label="Ver fornecedores anteriores"
+          />
         )}
 
         <ul
@@ -115,7 +87,7 @@ export function SupplierSection({ suppliers }: SupplierSectionProps): React.Reac
               <li key={supplier.slug} className="snap-start">
                 <Link
                   href={isActive ? hrefFor("") : hrefFor(supplier.slug)}
-                  aria-pressed={isActive}
+                  aria-current={isActive ? "true" : undefined}
                   title={supplier.name}
                   className={cn(
                     // Estados unificados com os chips de categoria (normal/hover/ativo/focus).
@@ -146,14 +118,11 @@ export function SupplierSection({ suppliers }: SupplierSectionProps): React.Reac
         </ul>
 
         {canRight && (
-          <button
-            type="button"
+          <CarouselArrow
+            direction="right"
             onClick={() => scrollByDir(1)}
-            aria-label="Ver mais fornecedores"
-            className="border-border bg-background/90 hover:bg-accent focus-visible:ring-ring absolute top-1/2 right-1 z-10 flex size-9 -translate-y-1/2 items-center justify-center rounded-full border shadow-md backdrop-blur transition focus-visible:ring-2 focus-visible:outline-none"
-          >
-            <ChevronRight className="size-5" />
-          </button>
+            label="Ver mais fornecedores"
+          />
         )}
       </div>
     </section>

@@ -36,7 +36,7 @@ export function CardAddToQuoteButton({
         asChild
         size="sm"
         variant="outline"
-        className="border-brand/30 text-brand hover:bg-brand hover:text-brand-foreground hover:border-brand w-full font-semibold transition-all duration-200 active:scale-[0.98]"
+        className="border-brand/30 text-brand hover:bg-brand hover:text-brand-foreground hover:border-brand h-auto min-h-9 w-full rounded-full py-1.5 leading-tight font-semibold whitespace-normal transition-all duration-200 active:scale-[0.98]"
       >
         <Link href={ROUTES.productDetail(product.slug)}>
           <SlidersHorizontal aria-hidden="true" />
@@ -67,7 +67,7 @@ export function CardAddToQuoteButton({
     <Button
       size="sm"
       variant="outline"
-      className="border-brand/30 text-brand hover:bg-brand hover:text-brand-foreground hover:border-brand w-full font-semibold transition-all duration-200 active:scale-[0.98]"
+      className="border-brand/30 text-brand hover:bg-brand hover:text-brand-foreground hover:border-brand h-auto min-h-9 w-full rounded-full py-1.5 leading-tight font-semibold whitespace-normal transition-all duration-200 active:scale-[0.98]"
       onClick={() => addItem(product)}
       aria-label={`Adicionar ${product.name} à cotação`}
     >

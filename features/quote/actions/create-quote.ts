@@ -64,7 +64,6 @@ export async function createQuoteAction(
     document: formData.get("document"),
     email: formData.get("email"),
     phone: formData.get("phone"),
-    company: formData.get("company") ?? undefined,
     notes: formData.get("notes") ?? undefined,
     items: parseItems(formData.get("items")),
   });

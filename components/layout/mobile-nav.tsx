@@ -44,6 +44,7 @@ export function MobileNav({ items, light = false }: MobileNavProps): React.React
           <GlobalSearch onNavigate={() => setOpen(false)} />
           <MainNav
             items={items}
+            label="Menu"
             className="flex-col items-stretch gap-1"
             onNavigate={() => setOpen(false)}
           />

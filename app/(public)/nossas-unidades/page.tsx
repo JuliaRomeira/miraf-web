@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Nossas Unidades",
   description:
     "Três centros de distribuição no interior de São Paulo — São João da Boa Vista, Ribeirão Preto e São José do Rio Preto — com cobertura em mais de 500 municípios.",
+  alternates: { canonical: ROUTES.units },
 };
 
 /**

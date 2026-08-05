@@ -28,6 +28,7 @@ export function CatalogFilterPanel({
 }: CatalogFilterPanelProps): React.ReactElement {
   return (
     <div className="border-border/60 bg-card space-y-4 rounded-[20px] border p-5 shadow-[0_18px_50px_-28px_rgba(14,44,98,0.3)] sm:p-6">
+      <h2 className="sr-only">Filtrar produtos</h2>
       <CatalogSearchField />
 
       <div className="space-y-2.5">

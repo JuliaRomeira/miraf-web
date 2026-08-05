@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, useTransition } from "react";
+import { useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { CarouselArrow } from "@/components/shared/carousel-arrow";
+import { useOverflowArrows } from "@/hooks/use-overflow-arrows";
 
 interface CategoryOption {
   readonly slug: string;
@@ -18,9 +19,6 @@ interface CategoryNode extends CategoryOption {
 interface CategoryFilterProps {
   readonly categories: readonly CategoryNode[];
 }
-
-/** Quanto rolar (px) a cada clique nas setas das barras roláveis. */
-const SCROLL_STEP = 240;
 
 /**
  * Barra de chips rolável em LINHA ÚNICA. Mantém os chips numa só linha (sem
@@ -41,45 +39,19 @@ function ChipScroller({
   readonly className?: string;
   readonly children: React.ReactNode;
 }): React.ReactElement {
-  const scrollerRef = useRef<HTMLUListElement>(null);
-  const [canLeft, setCanLeft] = useState(false);
-  const [canRight, setCanRight] = useState(false);
-
-  const updateArrows = useCallback((): void => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    setCanLeft(el.scrollLeft > 4);
-    setCanRight(Math.ceil(el.scrollLeft + el.clientWidth) < el.scrollWidth - 4);
-  }, []);
-
-  useEffect(() => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    updateArrows();
-    el.addEventListener("scroll", updateArrows, { passive: true });
-    window.addEventListener("resize", updateArrows);
-    return () => {
-      el.removeEventListener("scroll", updateArrows);
-      window.removeEventListener("resize", updateArrows);
-    };
-    // Recalcula quando o conteúdo muda (troca de categoria → outras subcategorias).
-  }, [updateArrows, revalidateKey]);
-
-  const scrollByDir = (direction: 1 | -1): void => {
-    scrollerRef.current?.scrollBy({ left: direction * SCROLL_STEP, behavior: "smooth" });
-  };
+  const { scrollerRef, canLeft, canRight, scrollByDir } = useOverflowArrows<HTMLUListElement>({
+    step: 240,
+    revalidateKey,
+  });
 
   return (
     <nav aria-label={label} className="relative min-w-0">
       {canLeft && (
-        <button
-          type="button"
+        <CarouselArrow
+          direction="left"
           onClick={() => scrollByDir(-1)}
-          aria-label="Rolar para a esquerda"
-          className="border-border bg-background/90 hover:bg-accent focus-visible:ring-ring absolute top-1/2 left-0 z-10 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border shadow-md backdrop-blur transition focus-visible:ring-2 focus-visible:outline-none"
-        >
-          <ChevronLeft className="size-5" />
-        </button>
+          label="Rolar para a esquerda"
+        />
       )}
 
       <ul
@@ -90,14 +62,11 @@ function ChipScroller({
       </ul>
 
       {canRight && (
-        <button
-          type="button"
+        <CarouselArrow
+          direction="right"
           onClick={() => scrollByDir(1)}
-          aria-label="Rolar para a direita"
-          className="border-border bg-background/90 hover:bg-accent focus-visible:ring-ring absolute top-1/2 right-0 z-10 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border shadow-md backdrop-blur transition focus-visible:ring-2 focus-visible:outline-none"
-        >
-          <ChevronRight className="size-5" />
-        </button>
+          label="Rolar para a direita"
+        />
       )}
     </nav>
   );
@@ -157,8 +126,8 @@ export function CategoryFilter({ categories }: CategoryFilterProps): React.React
           // Estados unificados com os cards de fornecedor (normal/hover/ativo/focus).
           "focus-visible:ring-primary/50 inline-flex h-10 shrink-0 items-center justify-center rounded-full border px-5 text-sm font-medium whitespace-nowrap transition-all duration-200 ease-out focus-visible:ring-2 focus-visible:outline-none active:scale-[0.97]",
           isActive
-            ? "border-primary bg-accent text-primary ring-primary/40 shadow-sm ring-1"
-            : "border-border text-foreground hover:border-primary/40 hover:bg-accent hover:shadow-sm",
+            ? "border-primary bg-accent text-primary ring-primary/40 shadow-soft ring-1"
+            : "border-border text-foreground hover:border-primary/40 hover:bg-accent hover:shadow-soft",
         )}
       >
         {label}

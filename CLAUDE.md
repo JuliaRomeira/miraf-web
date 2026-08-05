@@ -2125,3 +2125,49 @@ Todos os carrosséis (hero, fornecedores, segmentos, filtros de categoria/fornec
 - ⚠️ **Limitação de ambiente registrada** (ver memória): o **preview embutido** não faz layout com a pane oculta (rects/offsetHeight = 0) e o **`resize_window` do Chrome real não altera o viewport** (trava em 2560px, dpr 1). Portanto **larguras mobile (320–768) não foram verificadas ao vivo** nesta rodada — foram validadas por auditoria de código + classes responsivas + build. Recomenda-se um passe visual mobile em ambiente com viewport real antes do go-live.
 
 Pendências anteriores seguem (produção: domínio/e-mails, Resend com domínio verificado, senha admin, deploy; conteúdo: números de marketing a confirmar, horário das unidades, `/contato` 404; visual: modo escuro).
+
+---
+
+## 2026-08-05 — Auditoria de qualidade pré-entrega (aprovação final): a11y, SEO, design system, performance
+
+Rodada de aprovação final (**sem novas features**): varredura em 4 frentes (design system, a11y/SEO, responsividade/performance, qualidade de código) por 4 agentes em paralelo + verificação no navegador (preview próprio). Baseline já sólido (tsc limpo, sem `any`, sem Prisma em componente, sem overflow a 320px). Correções aplicadas **sem tocar em identidade visual (cores/fontes/logo)**. **Nada foi commitado** (aguardando autorização da cliente).
+
+### Design system (consistência "um sistema só")
+- **Setas de carrossel unificadas + DRY:** novo hook `hooks/use-overflow-arrows.ts` (lógica `canLeft`/`canRight`/scroll, antes copiada em 4 componentes) + `components/shared/carousel-arrow.tsx` (visual único: `size-9` + `.shadow-soft` no tom `neutral`; vidro branco no `onDark`). Consumido por `category-filter`, `supplier-section`, `related-products`, `home-segments-carousel`.
+- **CTA de conversão (vermelho) em forma única = pill (`rounded-full`)** em todo o funil: header, hero, help, **detalhe** ("Adicionar à cotação") e **cards do catálogo** (antes retângulo). ⚠️ o `replace_all` do card atualizou só 1 das 2 ocorrências — corrigido e verificado no navegador (button **e** link ficaram pill).
+- **Botões de sabor** (`VariationButtons`, detalhe): ganharam **anel de foco** (faltava) e o estado ativo passou de preenchido sólido para o **tint** (`bg-accent`/`text-primary`/`ring`) idêntico aos chips de categoria.
+- **Campos do catálogo** alinhados aos primitivos: busca (`rounded-lg`, foco `ring-2`+offset padrão, sem `border-primary`/`ring/30`); ordenação passou a usar `nativeSelectClass`. `Textarea` e `Select` (Radix) ganharam `shadow-sm` + `aria-invalid` + `focus-visible` (antes `focus:`), alinhando à família do `Input`.
+- **Elevação:** chips de categoria e cards de segmento migraram de `shadow-sm`/`shadow-lg` para `.shadow-soft`/`.shadow-soft-md`.
+- **Raio/tipografia:** cards do fluxo de cotação `rounded-lg`(12)→`rounded-2xl`(16) (destoavam); títulos da cotação e o h1 de `/categorias` ganharam `font-display` (faltava).
+
+### Acessibilidade
+- **`<main id="conteudo">` + skip link** ("Pular para o conteúdo") no layout público (antes o conteúdo ficava num `<div>` sem landmark).
+- **`<nav>` rotulados** ("Navegação principal" / "Menu") via nova prop `label` em `MainNav`.
+- **Form de cotação:** erros associados por `aria-invalid` + `aria-describedby` (`FieldError` recebe `id`).
+- **Contraste:** rótulos dos números da home `white/60`→`/80`; fine print do rodapé `white/45`→`/60`.
+- Hero: indicadores `role="tablist"/"tab"` (padrão de tabs incompleto) → `role="group"` + `aria-current`. Link de fornecedor: `aria-pressed` (inválido em `<a>`) → `aria-current`. Miniatura da cotação `object-cover`→`object-contain` (não recorta).
+
+### SEO
+- **Imagem Open Graph** gerada (`public/og-image.png`, 1200×630 — navy da marca + logo branco + tagline, via `sharp`) e referenciada no metadata raiz (og + twitter). Rotas com OG próprio (detalhe do produto) sobrescrevem com a capa.
+- **JSON-LD (Schema.org):** `Organization` no layout público (contato/redes das Settings) + `Product` na página de detalhe (sem `offers` — o site não vende).
+- **Canonical** em home, `/produtos` (consolida `?q/categoria/fornecedor/ordenar/pagina`), detalhe, `/sobre`, `/nossas-unidades`, `/categorias`.
+- `og:locale` `pt-BR`→`pt_BR` (o `<html lang>` mantém o hífen). Metadata própria da home (título `absolute`, fora do template). Comentário obsoleto de `robots.ts` ("receitas") corrigido.
+- **Sanitizer** (`lib/sanitize-html`): `h1`/`h2` autorais na descrição → `h3` (evita 2º h1 / quebra de hierarquia). Salto h1→h3 em `/produtos` resolvido com `<h2 sr-only>` ("Filtrar produtos"/"Lista de produtos").
+
+### Performance
+- **`/produtos` hero:** removido `unoptimized` + `sizes="100vw"` — o celular baixava o PNG cru de **4,2 MB**; agora recebe WebP dimensionado (a fonte de 3200px mantém a nitidez no desktop). ⚠️ revalidar a nitidez na tela da cliente (2560px); reverter é trivial (repor `unoptimized`).
+- **Hero da home:** `quality` 90→**80**. ⚠️ **Gotcha (Next 15):** `quality` precisa estar em `images.qualities` do `next.config` — ajustado para `[75, 80]` (80 não estava na lista e **quebrava o render**; pego na verificação no navegador, não pelo type-check).
+- **CTA do card cortado no mobile** (320–414px, `whitespace-nowrap` em ~80px): agora quebra linha (`whitespace-normal` + `h-auto min-h-9`).
+- **`supplier-carousel`** deixou de ser Client Component desnecessário (marquee é CSS puro) → fora do bundle do cliente.
+
+### Qualidade de código
+- Componente morto `product-description.tsx` removido. Gate de ESLint destravado (override `scripts/**` para permitir `console` nos scripts de ops) → `eslint --max-warnings=0` volta a **verde**. Campo inerte `Quote.company` removido do caminho de cotação (schema/action/service/e-mail) — coluna mantida no banco e exibição de dados legados no admin intactas.
+
+### Verificação
+- `tsc --noEmit` e `eslint --max-warnings=0` **limpos**; Prettier aplicado.
+- **Navegador (preview próprio):** home, `/produtos`, detalhe **com** sabores (`bolo-cremoso-5kg`) e **sem** sabores (`adimix-super-2kg`) — **console sem erros**, sem overflow (`scrollWidth==clientWidth`), JSON-LD `Organization`+`Product` presentes, canonical/og corretos, botões de sabor com foco+tint, CTAs pill vermelhos, headings sem salto, campos unificados.
+
+### Não alterado de propósito (documentado)
+- Raios arbitrários `[18/20/22px]` de alguns painéis e as sombras "bespoke" de `catalog-filter-panel`/`home-suppliers`/`unit-card` (coerentes entre si; diferença imperceptível). `bg-white` literais (dark mode adiado). `text-[17px]` do menu (decisão da cliente). Hexes navy do hero do catálogo (casados com a arte). Montagem eager dos 6 slides do hero (a cliente **confirmou manter 6 slides**; montar só o adjacente traria "flash" ao pular pelos indicadores). Token `--success` (verde usado de forma consistente).
+
+Nota de processo: os 6 slides do hero conflitavam com a nota de 2026-08-04 (que dizia "3 slides"); **a cliente confirmou manter os 6** nesta sessão.
