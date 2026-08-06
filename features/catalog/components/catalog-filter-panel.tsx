@@ -1,4 +1,3 @@
-import { CatalogSearchField } from "@/features/catalog/components/catalog-search-field";
 import { CategoryFilter } from "@/features/catalog/components/category-filter";
 import {
   SupplierSection,
@@ -18,9 +17,9 @@ interface CatalogFilterPanelProps {
 
 /**
  * Painel único de filtros do catálogo — card branco, cantos arredondados, sombra
- * discreta. Reúne busca, categorias (pills, 2 níveis) e fornecedores (logos) num
- * só bloco, no lugar dos controles antes espalhados pela página. É apresentacional
- * (Server Component); os controles internos cuidam do estado na URL.
+ * discreta. Reúne categorias (pills, 2 níveis) e fornecedores (logos) num só
+ * bloco. A busca textual fica só na lupa do cabeçalho (que leva a `/produtos?q=`).
+ * É apresentacional (Server Component); os controles internos cuidam do estado na URL.
  */
 export function CatalogFilterPanel({
   categories,
@@ -29,7 +28,6 @@ export function CatalogFilterPanel({
   return (
     <div className="border-border/60 bg-card space-y-4 rounded-[20px] border p-5 shadow-[0_18px_50px_-28px_rgba(14,44,98,0.3)] sm:p-6">
       <h2 className="sr-only">Filtrar produtos</h2>
-      <CatalogSearchField />
 
       <div className="space-y-2.5">
         <h3 className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
