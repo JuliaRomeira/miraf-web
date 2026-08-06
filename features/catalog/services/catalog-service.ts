@@ -3,15 +3,14 @@ import { unstable_cache } from "next/cache";
 import type { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
-import { SEARCH_MIN_LENGTH, type CatalogSearchResult } from "@/features/catalog/search";
 import { CATALOG_CACHE_TAG } from "@/lib/revalidate-catalog";
 
 /**
  * Camada de dados do catálogo público. Diferente dos services de admin,
  * expõe apenas o que é público: somente produtos/categorias/fornecedores ativos.
  *
- * PERFORMANCE — as consultas de LISTAGEM (catálogo, categorias, fornecedores,
- * busca) são cacheadas com `unstable_cache` (Vercel Data Cache). Assim a maioria
+ * PERFORMANCE — as consultas de LISTAGEM (catálogo, categorias, fornecedores)
+ * são cacheadas com `unstable_cache` (Vercel Data Cache). Assim a maioria
  * das visitas NÃO toca o banco (Neon), eliminando o efeito do cold start (o banco
  * serverless dormir quando ocioso). O cache é invalidado sob demanda pela tag
  * `CATALOG_CACHE_TAG` — o painel chama `revalidatePublicCatalog()` ao salvar, então
@@ -129,70 +128,6 @@ export const listPublicProducts = unstable_cache(
     return { items, total, page, perPage, totalPages: Math.max(1, Math.ceil(total / perPage)) };
   },
   ["catalog:list-products"],
-  { tags: [CATALOG_CACHE_TAG], revalidate: CATALOG_CACHE_REVALIDATE },
-);
-
-const EMPTY_SEARCH_RESULT: CatalogSearchResult = { products: [], categories: [], suppliers: [] };
-
-/**
- * Busca global do site público (autocomplete): produtos (por nome ou código),
- * categorias e fornecedores. Só conteúdo ativo. Limita cada grupo para manter
- * a lista de sugestões enxuta e rápida.
- */
-export const searchCatalog = unstable_cache(
-  async (term: string): Promise<CatalogSearchResult> => {
-    const q = term.trim();
-    if (q.length < SEARCH_MIN_LENGTH) {
-      return EMPTY_SEARCH_RESULT;
-    }
-
-    const insensitive = { contains: q, mode: "insensitive" } as const;
-
-    const [products, categories, suppliers] = await Promise.all([
-      prisma.product.findMany({
-        where: {
-          status: "ACTIVE",
-          OR: [{ name: insensitive }, { sku: insensitive }],
-        },
-        orderBy: [{ featured: "desc" }, { order: "asc" }, { name: "asc" }],
-        take: 6,
-        select: {
-          id: true,
-          name: true,
-          slug: true,
-          sku: true,
-          category: { select: { name: true } },
-          images: { where: { isPrimary: true }, take: 1, select: { url: true } },
-        },
-      }),
-      prisma.category.findMany({
-        where: { active: true, name: insensitive },
-        orderBy: { name: "asc" },
-        take: 4,
-        select: { id: true, name: true, slug: true },
-      }),
-      prisma.supplier.findMany({
-        where: { active: true, name: insensitive },
-        orderBy: { name: "asc" },
-        take: 4,
-        select: { id: true, name: true, slug: true },
-      }),
-    ]);
-
-    return {
-      products: products.map((product) => ({
-        id: product.id,
-        name: product.name,
-        slug: product.slug,
-        sku: product.sku,
-        imageUrl: product.images[0]?.url ?? null,
-        categoryName: product.category.name,
-      })),
-      categories,
-      suppliers,
-    };
-  },
-  ["catalog:search"],
   { tags: [CATALOG_CACHE_TAG], revalidate: CATALOG_CACHE_REVALIDATE },
 );
 

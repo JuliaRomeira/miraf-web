@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LockKeyhole } from "lucide-react";
 
-import { HeaderSearch } from "@/components/layout/header-search";
 import { Logo } from "@/components/layout/logo";
 import { MainNav } from "@/components/layout/main-nav";
 import { MobileNav } from "@/components/layout/mobile-nav";
@@ -100,7 +99,6 @@ export function SiteHeader(): React.ReactElement {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            <HeaderSearch light={light} className="hidden sm:block" />
             <QuoteCartButton className="hidden sm:inline-flex" />
             <MobileNav items={PUBLIC_NAV_ITEMS} light={light} />
 

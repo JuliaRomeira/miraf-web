@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { GlobalSearch } from "@/components/layout/global-search";
 import { MainNav } from "@/components/layout/main-nav";
 import { QuoteCartButton } from "@/features/quote/components/quote-cart-button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -41,7 +40,6 @@ export function MobileNav({ items, light = false }: MobileNavProps): React.React
           <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
         <div className="mt-2 flex flex-col gap-6">
-          <GlobalSearch onNavigate={() => setOpen(false)} />
           <MainNav
             items={items}
             label="Menu"
