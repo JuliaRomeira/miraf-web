@@ -1,15 +1,32 @@
 import { cache } from "react";
+import { unstable_cache } from "next/cache";
 import type { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 import { SEARCH_MIN_LENGTH, type CatalogSearchResult } from "@/features/catalog/search";
+import { CATALOG_CACHE_TAG } from "@/lib/revalidate-catalog";
 
 /**
  * Camada de dados do catálogo público. Diferente dos services de admin,
  * expõe apenas o que é público: somente produtos/categorias/fornecedores ativos.
+ *
+ * PERFORMANCE — as consultas de LISTAGEM (catálogo, categorias, fornecedores,
+ * busca) são cacheadas com `unstable_cache` (Vercel Data Cache). Assim a maioria
+ * das visitas NÃO toca o banco (Neon), eliminando o efeito do cold start (o banco
+ * serverless dormir quando ocioso). O cache é invalidado sob demanda pela tag
+ * `CATALOG_CACHE_TAG` — o painel chama `revalidatePublicCatalog()` ao salvar, então
+ * as edições refletem na hora. O `revalidate` abaixo é só um fallback (staleness
+ * máxima caso alguma revalidação sob demanda não dispare).
+ *
+ * A página de DETALHE do produto NÃO usa este cache de dados (seus valores
+ * `Decimal` de nutrição não serializam bem no data cache); ela é cacheada como
+ * ISR na própria rota (`export const revalidate` em `/produtos/[slug]`).
  */
 
 const PRODUCTS_PER_PAGE = 12;
+
+/** Fallback de revalidação do data cache (1h). Edições revalidam sob demanda. */
+const CATALOG_CACHE_REVALIDATE = 3600;
 
 /** Campos de produto usados nos cards do catálogo (listagem, relacionados). */
 const CATALOG_CARD_SELECT = {
@@ -53,61 +70,65 @@ export interface CatalogFilters {
   page?: number;
 }
 
-export async function listPublicProducts(filters: CatalogFilters) {
-  const page = Math.max(1, filters.page ?? 1);
-  const perPage = PRODUCTS_PER_PAGE;
+export const listPublicProducts = unstable_cache(
+  async (filters: CatalogFilters) => {
+    const page = Math.max(1, filters.page ?? 1);
+    const perPage = PRODUCTS_PER_PAGE;
 
-  // Cada filtro vira uma condição no AND (categoria e busca têm cada um seu OR
-  // interno; combiná-los num AND evita que as duas chaves `OR` colidam no objeto).
-  const conditions: Prisma.ProductWhereInput[] = [];
+    // Cada filtro vira uma condição no AND (categoria e busca têm cada um seu OR
+    // interno; combiná-los num AND evita que as duas chaves `OR` colidam no objeto).
+    const conditions: Prisma.ProductWhereInput[] = [];
 
-  // `?categoria=` aceita o slug de uma categoria principal OU de uma subcategoria.
-  // Como `categoryId` é sempre a categoria PRINCIPAL, filtrar por uma raiz já traz
-  // todos os produtos dela (com ou sem subcategoria); filtrar por uma subcategoria
-  // casa em `subcategory.slug`.
-  if (filters.categorySlug) {
-    conditions.push({
-      OR: [
-        { category: { slug: filters.categorySlug } },
-        { subcategory: { slug: filters.categorySlug } },
-      ],
-    });
-  }
+    // `?categoria=` aceita o slug de uma categoria principal OU de uma subcategoria.
+    // Como `categoryId` é sempre a categoria PRINCIPAL, filtrar por uma raiz já traz
+    // todos os produtos dela (com ou sem subcategoria); filtrar por uma subcategoria
+    // casa em `subcategory.slug`.
+    if (filters.categorySlug) {
+      conditions.push({
+        OR: [
+          { category: { slug: filters.categorySlug } },
+          { subcategory: { slug: filters.categorySlug } },
+        ],
+      });
+    }
 
-  if (filters.supplierSlug) {
-    conditions.push({ supplier: { slug: filters.supplierSlug } });
-  }
+    if (filters.supplierSlug) {
+      conditions.push({ supplier: { slug: filters.supplierSlug } });
+    }
 
-  // Busca por nome, código (SKU), descrição OU nome do fornecedor.
-  if (filters.q) {
-    conditions.push({
-      OR: [
-        { name: { contains: filters.q, mode: "insensitive" } },
-        { sku: { contains: filters.q, mode: "insensitive" } },
-        { description: { contains: filters.q, mode: "insensitive" } },
-        { supplier: { name: { contains: filters.q, mode: "insensitive" } } },
-      ],
-    });
-  }
+    // Busca por nome, código (SKU), descrição OU nome do fornecedor.
+    if (filters.q) {
+      conditions.push({
+        OR: [
+          { name: { contains: filters.q, mode: "insensitive" } },
+          { sku: { contains: filters.q, mode: "insensitive" } },
+          { description: { contains: filters.q, mode: "insensitive" } },
+          { supplier: { name: { contains: filters.q, mode: "insensitive" } } },
+        ],
+      });
+    }
 
-  const where: Prisma.ProductWhereInput = {
-    status: "ACTIVE",
-    ...(conditions.length > 0 ? { AND: conditions } : {}),
-  };
+    const where: Prisma.ProductWhereInput = {
+      status: "ACTIVE",
+      ...(conditions.length > 0 ? { AND: conditions } : {}),
+    };
 
-  const [items, total] = await Promise.all([
-    prisma.product.findMany({
-      where,
-      orderBy: SORT_ORDER_BY[filters.sort ?? "relevancia"],
-      skip: (page - 1) * perPage,
-      take: perPage,
-      select: CATALOG_CARD_SELECT,
-    }),
-    prisma.product.count({ where }),
-  ]);
+    const [items, total] = await Promise.all([
+      prisma.product.findMany({
+        where,
+        orderBy: SORT_ORDER_BY[filters.sort ?? "relevancia"],
+        skip: (page - 1) * perPage,
+        take: perPage,
+        select: CATALOG_CARD_SELECT,
+      }),
+      prisma.product.count({ where }),
+    ]);
 
-  return { items, total, page, perPage, totalPages: Math.max(1, Math.ceil(total / perPage)) };
-}
+    return { items, total, page, perPage, totalPages: Math.max(1, Math.ceil(total / perPage)) };
+  },
+  ["catalog:list-products"],
+  { tags: [CATALOG_CACHE_TAG], revalidate: CATALOG_CACHE_REVALIDATE },
+);
 
 const EMPTY_SEARCH_RESULT: CatalogSearchResult = { products: [], categories: [], suppliers: [] };
 
@@ -116,64 +137,72 @@ const EMPTY_SEARCH_RESULT: CatalogSearchResult = { products: [], categories: [],
  * categorias e fornecedores. Só conteúdo ativo. Limita cada grupo para manter
  * a lista de sugestões enxuta e rápida.
  */
-export async function searchCatalog(term: string): Promise<CatalogSearchResult> {
-  const q = term.trim();
-  if (q.length < SEARCH_MIN_LENGTH) {
-    return EMPTY_SEARCH_RESULT;
-  }
+export const searchCatalog = unstable_cache(
+  async (term: string): Promise<CatalogSearchResult> => {
+    const q = term.trim();
+    if (q.length < SEARCH_MIN_LENGTH) {
+      return EMPTY_SEARCH_RESULT;
+    }
 
-  const insensitive = { contains: q, mode: "insensitive" } as const;
+    const insensitive = { contains: q, mode: "insensitive" } as const;
 
-  const [products, categories, suppliers] = await Promise.all([
-    prisma.product.findMany({
-      where: {
-        status: "ACTIVE",
-        OR: [{ name: insensitive }, { sku: insensitive }],
-      },
-      orderBy: [{ featured: "desc" }, { order: "asc" }, { name: "asc" }],
-      take: 6,
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        sku: true,
-        category: { select: { name: true } },
-        images: { where: { isPrimary: true }, take: 1, select: { url: true } },
-      },
-    }),
-    prisma.category.findMany({
-      where: { active: true, name: insensitive },
-      orderBy: { name: "asc" },
-      take: 4,
-      select: { id: true, name: true, slug: true },
-    }),
-    prisma.supplier.findMany({
-      where: { active: true, name: insensitive },
-      orderBy: { name: "asc" },
-      take: 4,
-      select: { id: true, name: true, slug: true },
-    }),
-  ]);
+    const [products, categories, suppliers] = await Promise.all([
+      prisma.product.findMany({
+        where: {
+          status: "ACTIVE",
+          OR: [{ name: insensitive }, { sku: insensitive }],
+        },
+        orderBy: [{ featured: "desc" }, { order: "asc" }, { name: "asc" }],
+        take: 6,
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          sku: true,
+          category: { select: { name: true } },
+          images: { where: { isPrimary: true }, take: 1, select: { url: true } },
+        },
+      }),
+      prisma.category.findMany({
+        where: { active: true, name: insensitive },
+        orderBy: { name: "asc" },
+        take: 4,
+        select: { id: true, name: true, slug: true },
+      }),
+      prisma.supplier.findMany({
+        where: { active: true, name: insensitive },
+        orderBy: { name: "asc" },
+        take: 4,
+        select: { id: true, name: true, slug: true },
+      }),
+    ]);
 
-  return {
-    products: products.map((product) => ({
-      id: product.id,
-      name: product.name,
-      slug: product.slug,
-      sku: product.sku,
-      imageUrl: product.images[0]?.url ?? null,
-      categoryName: product.category.name,
-    })),
-    categories,
-    suppliers,
-  };
-}
+    return {
+      products: products.map((product) => ({
+        id: product.id,
+        name: product.name,
+        slug: product.slug,
+        sku: product.sku,
+        imageUrl: product.images[0]?.url ?? null,
+        categoryName: product.category.name,
+      })),
+      categories,
+      suppliers,
+    };
+  },
+  ["catalog:search"],
+  { tags: [CATALOG_CACHE_TAG], revalidate: CATALOG_CACHE_REVALIDATE },
+);
 
 /**
  * `React.cache` deduplica a chamada dentro do mesmo request: a página de detalhe
  * do produto invoca esta query no `generateMetadata` e novamente no componente —
  * com o cache, o banco é consultado uma única vez por request (é a query mais
  * pesada do site: imagens + variações + nutrição + relacionados).
+ *
+ * NÃO usa `unstable_cache` (os valores `Decimal` da nutrição não serializam bem
+ * no data cache) — a página `/produtos/[slug]` é cacheada como ISR na própria
+ * rota, então esta query só roda na geração/revalidação, não a cada visita.
  */
 export const getPublicProductBySlug = cache(async (slug: string) => {
   return prisma.product.findFirst({
@@ -210,48 +239,56 @@ export const getPublicProductBySlug = cache(async (slug: string) => {
  * já conta TODOS os produtos ativos da raiz (com ou sem subcategoria) — é o
  * `totalActiveProducts`.
  */
-export async function listActiveCategoryTree() {
-  const categories = await prisma.category.findMany({
-    where: { active: true },
-    orderBy: [{ order: "asc" }, { name: "asc" }],
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-      imageUrl: true,
-      parentId: true,
-      _count: { select: { products: { where: { status: "ACTIVE" } } } },
-    },
-  });
+export const listActiveCategoryTree = unstable_cache(
+  async () => {
+    const categories = await prisma.category.findMany({
+      where: { active: true },
+      orderBy: [{ order: "asc" }, { name: "asc" }],
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        imageUrl: true,
+        parentId: true,
+        _count: { select: { products: { where: { status: "ACTIVE" } } } },
+      },
+    });
 
-  const childrenByParent = new Map<string, typeof categories>();
-  for (const category of categories) {
-    if (category.parentId) {
-      const siblings = childrenByParent.get(category.parentId) ?? [];
-      siblings.push(category);
-      childrenByParent.set(category.parentId, siblings);
+    const childrenByParent = new Map<string, typeof categories>();
+    for (const category of categories) {
+      if (category.parentId) {
+        const siblings = childrenByParent.get(category.parentId) ?? [];
+        siblings.push(category);
+        childrenByParent.set(category.parentId, siblings);
+      }
     }
-  }
 
-  return categories
-    .filter((category) => category.parentId === null)
-    .map((root) => ({
-      ...root,
-      children: childrenByParent.get(root.id) ?? [],
-      totalActiveProducts: root._count.products,
-    }));
-}
+    return categories
+      .filter((category) => category.parentId === null)
+      .map((root) => ({
+        ...root,
+        children: childrenByParent.get(root.id) ?? [],
+        totalActiveProducts: root._count.products,
+      }));
+  },
+  ["catalog:category-tree"],
+  { tags: [CATALOG_CACHE_TAG], revalidate: CATALOG_CACHE_REVALIDATE },
+);
 
-export async function listActiveSuppliers() {
-  return prisma.supplier.findMany({
-    where: { active: true },
-    orderBy: [{ order: "asc" }, { name: "asc" }],
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-      logoUrl: true,
-      _count: { select: { products: { where: { status: "ACTIVE" } } } },
-    },
-  });
-}
+export const listActiveSuppliers = unstable_cache(
+  async () => {
+    return prisma.supplier.findMany({
+      where: { active: true },
+      orderBy: [{ order: "asc" }, { name: "asc" }],
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        logoUrl: true,
+        _count: { select: { products: { where: { status: "ACTIVE" } } } },
+      },
+    });
+  },
+  ["catalog:active-suppliers"],
+  { tags: [CATALOG_CACHE_TAG], revalidate: CATALOG_CACHE_REVALIDATE },
+);

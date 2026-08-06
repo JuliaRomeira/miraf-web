@@ -18,6 +18,15 @@ import { renderRichText } from "@/lib/sanitize-html";
 import { onlyDigits } from "@/utils";
 import { ROUTES } from "@/constants";
 
+/**
+ * ISR: a página de detalhe é cacheada no CDN (renderizada sob demanda na 1ª
+ * visita, depois servida do cache). Assim as visitas não esperam o banco (Neon)
+ * acordar do cold start. O painel revalida sob demanda ao salvar
+ * (`revalidatePath("/produtos/[slug]", "page")` em `revalidatePublicCatalog`),
+ * então as edições aparecem na hora; este `revalidate` é só o fallback (1h).
+ */
+export const revalidate = 3600;
+
 /** Base absoluta para URLs em JSON-LD (Schema.org). */
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 const toAbsoluteUrl = (path: string): string =>
