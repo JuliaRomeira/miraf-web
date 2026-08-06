@@ -18,9 +18,11 @@ import { CATALOG_CACHE_TAG } from "@/lib/revalidate-catalog";
  * as edições refletem na hora. O `revalidate` abaixo é só um fallback (staleness
  * máxima caso alguma revalidação sob demanda não dispare).
  *
- * A página de DETALHE do produto NÃO usa este cache de dados (seus valores
- * `Decimal` de nutrição não serializam bem no data cache); ela é cacheada como
- * ISR na própria rota (`export const revalidate` em `/produtos/[slug]`).
+ * O DETALHE do produto (`getPublicProductBySlug`) também usa este data cache; os
+ * `Decimal` de nutrição viram string no cache e o `buildNutritionView` os lê com
+ * `Number(...)` (formatação pt-BR preservada). A rota `/produtos/[slug]` ainda
+ * declara `export const revalidate` (ISR) — agora que os dados são cacheados, a
+ * página pode virar estática/ISR no CDN.
  */
 
 const PRODUCTS_PER_PAGE = 12;
@@ -195,42 +197,50 @@ export const searchCatalog = unstable_cache(
 );
 
 /**
- * `React.cache` deduplica a chamada dentro do mesmo request: a página de detalhe
- * do produto invoca esta query no `generateMetadata` e novamente no componente —
- * com o cache, o banco é consultado uma única vez por request (é a query mais
- * pesada do site: imagens + variações + nutrição + relacionados).
+ * Detalhe do produto: a query mais pesada do site (imagens + variações +
+ * nutrição + relacionados). Usa `unstable_cache` (data cache) para NÃO tocar o
+ * banco a cada visita — igual às listagens, protege do cold start do Neon (e,
+ * sem dados "não-cacheados", permite que a rota `/produtos/[slug]` vire ISR).
+ * `React.cache` por fora deduplica as duas chamadas do mesmo request
+ * (`generateMetadata` + corpo).
  *
- * NÃO usa `unstable_cache` (os valores `Decimal` da nutrição não serializam bem
- * no data cache) — a página `/produtos/[slug]` é cacheada como ISR na própria
- * rota, então esta query só roda na geração/revalidação, não a cada visita.
+ * Sobre o `Decimal` da nutrição: é serializado como string no cache; o
+ * `buildNutritionView` lê os valores com `Number(...)`, então voltam a formatar
+ * em pt-BR normalmente (verificado no navegador).
  */
-export const getPublicProductBySlug = cache(async (slug: string) => {
-  return prisma.product.findFirst({
-    where: { slug, status: "ACTIVE" },
-    include: {
-      // Galeria de nível do produto (sem variação).
-      images: { where: { flavorId: null }, orderBy: [{ isPrimary: "desc" }, { order: "asc" }] },
-      flavors: {
-        orderBy: [{ order: "asc" }, { createdAt: "asc" }],
+export const getPublicProductBySlug = cache(
+  unstable_cache(
+    async (slug: string) => {
+      return prisma.product.findFirst({
+        where: { slug, status: "ACTIVE" },
         include: {
-          // Galeria própria da variação (frente, verso, embalagem…).
-          images: { orderBy: [{ isPrimary: "desc" }, { order: "asc" }] },
+          // Galeria de nível do produto (sem variação).
+          images: { where: { flavorId: null }, orderBy: [{ isPrimary: "desc" }, { order: "asc" }] },
+          flavors: {
+            orderBy: [{ order: "asc" }, { createdAt: "asc" }],
+            include: {
+              // Galeria própria da variação (frente, verso, embalagem…).
+              images: { orderBy: [{ isPrimary: "desc" }, { order: "asc" }] },
+              nutrition: { include: { rows: true } },
+            },
+          },
+          category: { select: { name: true, slug: true } },
+          subcategory: { select: { name: true, slug: true } },
+          supplier: { select: { name: true, slug: true } },
           nutrition: { include: { rows: true } },
+          // Produtos relacionados ativos, no mesmo formato dos cards do catálogo.
+          relatedProducts: {
+            where: { status: "ACTIVE" },
+            orderBy: [{ order: "asc" }, { name: "asc" }],
+            select: CATALOG_CARD_SELECT,
+          },
         },
-      },
-      category: { select: { name: true, slug: true } },
-      subcategory: { select: { name: true, slug: true } },
-      supplier: { select: { name: true, slug: true } },
-      nutrition: { include: { rows: true } },
-      // Produtos relacionados ativos, no mesmo formato dos cards do catálogo.
-      relatedProducts: {
-        where: { status: "ACTIVE" },
-        orderBy: [{ order: "asc" }, { name: "asc" }],
-        select: CATALOG_CARD_SELECT,
-      },
+      });
     },
-  });
-});
+    ["catalog:product-by-slug"],
+    { tags: [CATALOG_CACHE_TAG], revalidate: CATALOG_CACHE_REVALIDATE },
+  ),
+);
 
 /**
  * Categorias ativas do catálogo público, organizadas em dois níveis. Cada
