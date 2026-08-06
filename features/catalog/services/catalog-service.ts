@@ -237,3 +237,16 @@ export const listActiveSuppliers = unstable_cache(
   ["catalog:active-suppliers"],
   { tags: [CATALOG_CACHE_TAG], revalidate: CATALOG_CACHE_REVALIDATE },
 );
+
+/**
+ * Slugs de todos os produtos ativos — usado por `generateStaticParams` na página
+ * de detalhe para pré-renderizar (ISR) cada produto. Roda no build (e na
+ * revalidação); produtos novos, fora do build, são gerados sob demanda e cacheados.
+ */
+export async function listActiveProductSlugs(): Promise<string[]> {
+  const products = await prisma.product.findMany({
+    where: { status: "ACTIVE" },
+    select: { slug: true },
+  });
+  return products.map((product) => product.slug);
+}

@@ -11,7 +11,10 @@ import {
   type ProductDetailData,
 } from "@/features/catalog/components/product-detail-view";
 import { RelatedProducts } from "@/features/catalog/components/related-products";
-import { getPublicProductBySlug } from "@/features/catalog/services/catalog-service";
+import {
+  getPublicProductBySlug,
+  listActiveProductSlugs,
+} from "@/features/catalog/services/catalog-service";
 import { buildNutritionView } from "@/features/nutrition/services/nutrition-view";
 import { getSiteSettings } from "@/features/settings/services/site-settings";
 import { renderRichText } from "@/lib/sanitize-html";
@@ -19,13 +22,20 @@ import { onlyDigits } from "@/utils";
 import { ROUTES } from "@/constants";
 
 /**
- * ISR: a página de detalhe é cacheada no CDN (renderizada sob demanda na 1ª
- * visita, depois servida do cache). Assim as visitas não esperam o banco (Neon)
- * acordar do cold start. O painel revalida sob demanda ao salvar
+ * ISR: a página de detalhe é pré-renderizada no build (`generateStaticParams`
+ * lista os produtos ativos) e servida do CDN, sem tocar o banco a cada visita —
+ * elimina o cold start do Neon para o visitante. Produtos novos (fora do build)
+ * são gerados sob demanda e cacheados. O painel revalida sob demanda ao salvar
  * (`revalidatePath("/produtos/[slug]", "page")` em `revalidatePublicCatalog`),
- * então as edições aparecem na hora; este `revalidate` é só o fallback (1h).
+ * então as edições aparecem na hora; este `revalidate` é o fallback (1h).
  */
 export const revalidate = 3600;
+
+/** Pré-renderiza (ISR) a página de cada produto ativo no build. */
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
+  const slugs = await listActiveProductSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
 
 /** Base absoluta para URLs em JSON-LD (Schema.org). */
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
