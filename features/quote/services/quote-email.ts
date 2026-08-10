@@ -9,10 +9,13 @@ import type { CreateQuoteResult } from "@/features/quote/services/quote-service"
 /**
  * Envio de e-mails da cotação — DEGRADAÇÃO GRACIOSA.
  *
- * O banco é a fonte da verdade; o e-mail é notificação best-effort. Se o Resend
- * não estiver configurado (ex.: dev) ou o envio falhar, a cotação continua
- * salva e o painel já a mostra — a solicitação nunca se perde. Por isso nada
- * aqui lança: retornamos um relatório e logamos.
+ * O banco é a fonte da verdade; o e-mail é notificação best-effort. Se nenhum
+ * canal de envio estiver configurado (SMTP ou Resend) ou o envio falhar, a
+ * cotação continua salva e o painel já a mostra — a solicitação nunca se perde.
+ * Por isso nada aqui lança: retornamos um relatório e logamos.
+ *
+ * Canal de envio (prioridade): SMTP (e-mail da própria empresa, ex.: Google
+ * Workspace) > Resend. Basta configurar as variáveis do canal desejado.
  *
  * Destinatário do comercial: prioriza as Settings editáveis pela cliente
  * (`quote_email_recipient` + `quote_email_cc`), com fallback para o env
@@ -120,6 +123,73 @@ function splitEmails(value: string): string[] {
     .filter(Boolean);
 }
 
+/** Uma mensagem de e-mail pronta para envio (o remetente é do canal). */
+interface EmailMessage {
+  readonly to: string[];
+  readonly cc?: string[];
+  readonly replyTo?: string;
+  readonly subject: string;
+  readonly html: string;
+}
+
+/** Canal de envio já configurado. Cada canal cuida do seu próprio remetente. */
+interface EmailSender {
+  readonly label: string;
+  send(message: EmailMessage): Promise<{ error?: unknown }>;
+}
+
+/**
+ * Resolve o canal de envio a partir do ambiente. Prioridade: SMTP (e-mail da
+ * própria empresa) > Resend. Retorna `null` se nenhum estiver configurado.
+ */
+async function resolveSender(): Promise<EmailSender | null> {
+  // 1) SMTP — envia pelo e-mail da empresa (ex.: Google Workspace).
+  if (env.SMTP_HOST && env.SMTP_USER && env.SMTP_PASSWORD) {
+    const { createTransport } = await import("nodemailer");
+    const port = Number(env.SMTP_PORT) || 587;
+    const transporter = createTransport({
+      host: env.SMTP_HOST,
+      port,
+      secure: port === 465, // 465 = SSL direto; 587 = STARTTLS
+      auth: { user: env.SMTP_USER, pass: env.SMTP_PASSWORD },
+    });
+    const from = env.SMTP_FROM?.trim() || env.SMTP_USER;
+    return {
+      label: "SMTP",
+      async send({ to, cc, replyTo, subject, html }) {
+        try {
+          await transporter.sendMail({ from, to, cc, replyTo, subject, html });
+          return {};
+        } catch (error) {
+          return { error };
+        }
+      },
+    };
+  }
+
+  // 2) Resend (fallback).
+  const resendFrom = env.RESEND_FROM_EMAIL?.trim();
+  if (env.RESEND_API_KEY && resendFrom) {
+    const resend = new Resend(env.RESEND_API_KEY);
+    return {
+      label: "Resend",
+      async send({ to, cc, replyTo, subject, html }) {
+        const { error } = await resend.emails.send({
+          from: resendFrom,
+          to,
+          ...(cc && cc.length > 0 ? { cc } : {}),
+          ...(replyTo ? { replyTo } : {}),
+          subject,
+          html,
+        });
+        return { error: error ?? undefined };
+      },
+    };
+  }
+
+  return null;
+}
+
 /**
  * Dispara os dois e-mails (comercial + confirmação ao cliente). Nunca lança:
  * qualquer falha é logada e reportada no retorno.
@@ -131,10 +201,10 @@ export async function sendQuoteEmails(quote: CreateQuoteResult): Promise<QuoteEm
     customerEmailSent: false,
   };
 
-  const from = env.RESEND_FROM_EMAIL?.trim();
-  if (!env.RESEND_API_KEY || !from) {
+  const sender = await resolveSender();
+  if (!sender) {
     console.warn(
-      `[cotação] Resend não configurado — e-mail não enviado (cotação ${quote.protocol} salva no banco).`,
+      `[cotação] Envio de e-mail não configurado (sem SMTP nem Resend) — cotação ${quote.protocol} salva no banco.`,
     );
     return report;
   }
@@ -148,16 +218,15 @@ export async function sendQuoteEmails(quote: CreateQuoteResult): Promise<QuoteEm
     return report;
   }
 
-  const cc = settings.quoteEmailCc ? splitEmails(settings.quoteEmailCc) : undefined;
+  const ccList = settings.quoteEmailCc ? splitEmails(settings.quoteEmailCc) : [];
+  const cc = ccList.length > 0 ? ccList : undefined;
   const mutableReport = { ...report, configured: true };
-  const resend = new Resend(env.RESEND_API_KEY);
 
   // E-mail para o comercial.
   try {
-    const { error } = await resend.emails.send({
-      from,
+    const { error } = await sender.send({
       to: [recipient],
-      ...(cc && cc.length > 0 ? { cc } : {}),
+      cc,
       replyTo: quote.email,
       subject: `Nova cotação ${quote.protocol} — ${quote.name}`,
       html: renderTeamEmail(quote),
@@ -173,8 +242,7 @@ export async function sendQuoteEmails(quote: CreateQuoteResult): Promise<QuoteEm
 
   // E-mail de confirmação ao cliente (best-effort, independente do anterior).
   try {
-    const { error } = await resend.emails.send({
-      from,
+    const { error } = await sender.send({
       to: [quote.email],
       subject: `Recebemos sua cotação — ${quote.protocol}`,
       html: renderCustomerEmail(quote),

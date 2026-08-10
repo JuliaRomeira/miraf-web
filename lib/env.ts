@@ -47,6 +47,25 @@ const envSchema = z.object({
       "RESEND_FROM_EMAIL deve ser um e-mail ou 'Nome <email>'.",
     ),
   QUOTE_RECIPIENT_EMAIL: z.string().email().optional().or(z.literal("")),
+
+  // SMTP (opcional) — envio de cotações pelo e-mail da própria empresa
+  // (ex.: Google Workspace). Quando SMTP_HOST/USER/PASSWORD estão definidos,
+  // tem PRIORIDADE sobre o Resend. Vazio = usa Resend (ou desativa o e-mail).
+  SMTP_HOST: z.string().optional(),
+  SMTP_PORT: z.string().optional(),
+  SMTP_USER: z.string().optional(),
+  SMTP_PASSWORD: z.string().optional(),
+  // Remetente exibido. Aceita e-mail puro ou "Nome <email>". Vazio = usa SMTP_USER.
+  SMTP_FROM: z
+    .string()
+    .optional()
+    .refine(
+      (value) =>
+        !value ||
+        /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value) ||
+        /<[^@\s]+@[^@\s]+\.[^@\s]+>/.test(value),
+      "SMTP_FROM deve ser um e-mail ou 'Nome <email>'.",
+    ),
 });
 
 /**
@@ -63,6 +82,11 @@ const parsedEnv = envSchema.safeParse({
   RESEND_API_KEY: process.env.RESEND_API_KEY,
   RESEND_FROM_EMAIL: process.env.RESEND_FROM_EMAIL,
   QUOTE_RECIPIENT_EMAIL: process.env.QUOTE_RECIPIENT_EMAIL,
+  SMTP_HOST: process.env.SMTP_HOST,
+  SMTP_PORT: process.env.SMTP_PORT,
+  SMTP_USER: process.env.SMTP_USER,
+  SMTP_PASSWORD: process.env.SMTP_PASSWORD,
+  SMTP_FROM: process.env.SMTP_FROM,
 });
 
 if (!parsedEnv.success) {

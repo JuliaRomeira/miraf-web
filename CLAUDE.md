@@ -2211,3 +2211,14 @@ Vermelho `#ed1c24` distribuído de forma equilibrada (azul segue predominante; "
 - Verificado: `type-check` + `lint` + Prettier limpos.
 
 Pendências inalteradas (produção: domínio/e-mails oficiais, Resend com domínio verificado, senha admin, deploy; conteúdo: números de marketing, `/contato` 404, modo escuro).
+
+---
+
+## 2026-08-10 (envio de cotação) — Canal SMTP (e-mail da própria empresa) além do Resend
+
+A cliente quis enviar as cotações pelo **próprio e-mail** (`karen@miraff.com.br`, Google Workspace), sem depender do Resend / verificação de domínio. Adicionado um **canal SMTP** com prioridade sobre o Resend, mantendo a degradação graciosa.
+
+- `features/quote/services/quote-email.ts`: novo `resolveSender()` que escolhe o canal a partir do ambiente — **SMTP** (`SMTP_HOST`+`SMTP_USER`+`SMTP_PASSWORD` definidos) **> Resend** (`RESEND_API_KEY`+`RESEND_FROM_EMAIL`) > nenhum (loga, cotação já salva). Abstração `EmailSender.send({to,cc,replyTo,subject,html})`; cada canal cuida do próprio `from`. Nada lança. `nodemailer` (+`@types/nodemailer`) adicionado; importado dinamicamente só quando o SMTP é usado.
+- `lib/env.ts`: novos opcionais `SMTP_HOST`, `SMTP_PORT` (default 587; 465 = SSL), `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` (e-mail puro ou "Nome <email>"). `.env.example` documenta as duas opções (SMTP vs Resend) com a nota da **"Senha de app"** do Google (exige verificação em 2 etapas; usar a senha de 16 dígitos, não a normal).
+- **Como ativar (produção/Vercel):** preencher `SMTP_HOST=smtp.gmail.com`, `SMTP_PORT=587`, `SMTP_USER=<email>`, `SMTP_PASSWORD=<senha de app>`, `SMTP_FROM="Mira <email>"`. O destinatário do comercial continua vindo do painel (Configurações → E-mails de cotação) com fallback `QUOTE_RECIPIENT_EMAIL`.
+- Verificado: `type-check` + `lint` + Prettier limpos. Envio real depende das variáveis (a cliente vai gerar a senha de app).

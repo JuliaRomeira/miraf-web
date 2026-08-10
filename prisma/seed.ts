@@ -74,7 +74,7 @@ const SETTINGS: SettingSeed[] = [
   },
   {
     key: "quote_email_recipient",
-    value: process.env.QUOTE_RECIPIENT_EMAIL || "comercial@miraf.com.br",
+    value: process.env.QUOTE_RECIPIENT_EMAIL || "karen@miraff.com.br",
     description: "Email principal que recebe as notificações de novas cotações.",
   },
   {
