@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import { getCurrentUser } from "@/features/auth/services/current-user";
+import { AdminPageHeader } from "@/components/admin/page-header";
 import { updateSettingsAction } from "@/features/settings/actions/update-settings";
 import { SettingsForm } from "@/features/settings/components/settings-form";
 import { getEditableSettings } from "@/features/settings/services/site-settings";
@@ -23,12 +24,10 @@ export default async function SettingsPage(): Promise<React.ReactElement> {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="font-display text-2xl font-semibold tracking-tight">Configurações</h1>
-        <p className="text-muted-foreground text-sm">
-          Informações do site usadas no rodapé, no hero da home, no contato e no envio de cotações.
-        </p>
-      </div>
+      <AdminPageHeader
+        title="Configurações"
+        description="Informações do site usadas no rodapé, no contato e no envio de cotações."
+      />
 
       <SettingsForm action={updateSettingsAction} initial={settings} />
     </div>

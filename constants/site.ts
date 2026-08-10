@@ -43,6 +43,7 @@ export const ROUTES = {
     quotes: "/admin/cotacoes",
     users: "/admin/usuarios",
     settings: "/admin/configuracoes",
+    help: "/admin/ajuda",
     login: "/login",
   },
 } as const;

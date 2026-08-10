@@ -2,6 +2,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Pencil, Plus } from "lucide-react";
 
+import { AdminPageHeader } from "@/components/admin/page-header";
+import { StatusBadge } from "@/components/admin/status-badge";
 import { DeleteButton } from "@/components/shared/delete-button";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,22 +42,19 @@ export default async function UsersPage(): Promise<React.ReactElement> {
 
   return (
     <div className="space-y-6">
-      <header className="flex items-center justify-between gap-4">
-        <div>
-          <h1 className="font-display text-2xl font-semibold tracking-tight">Usuários</h1>
-          <p className="text-muted-foreground text-sm">
-            Gerencie quem tem acesso ao painel administrativo.
-          </p>
-        </div>
+      <AdminPageHeader
+        title="Usuários"
+        description="Gerencie quem tem acesso ao painel administrativo."
+      >
         <Button asChild>
           <Link href={`${ROUTES.admin.users}/novo`}>
             <Plus />
             Novo usuário
           </Link>
         </Button>
-      </header>
+      </AdminPageHeader>
 
-      <div className="border-border rounded-lg border">
+      <div className="border-border bg-card shadow-soft overflow-hidden rounded-xl border">
         <Table>
           <TableHeader>
             <TableRow>
@@ -84,13 +83,9 @@ export default async function UsersPage(): Promise<React.ReactElement> {
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{ROLE_LABEL[user.role]}</TableCell>
                   <TableCell>
-                    <span
-                      className={
-                        user.active ? "text-green-600 dark:text-green-500" : "text-muted-foreground"
-                      }
-                    >
+                    <StatusBadge tone={user.active ? "success" : "neutral"}>
                       {user.active ? "Ativo" : "Inativo"}
-                    </span>
+                    </StatusBadge>
                   </TableCell>
                   <TableCell className="text-muted-foreground">
                     {dateFormatter.format(user.createdAt)}

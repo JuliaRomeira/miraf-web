@@ -18,9 +18,9 @@ export function QuoteStatusSummary({
   total,
 }: QuoteStatusSummaryProps): React.ReactElement {
   return (
-    <section className="bg-card text-card-foreground border-border rounded-lg border">
+    <section className="bg-card text-card-foreground border-border shadow-soft rounded-xl border">
       <header className="border-border border-b px-5 py-4">
-        <h2 className="text-base font-semibold">Cotações por status</h2>
+        <h2 className="font-display text-base font-semibold">Cotações por status</h2>
         <p className="text-muted-foreground text-sm">Distribuição de todas as solicitações.</p>
       </header>
 

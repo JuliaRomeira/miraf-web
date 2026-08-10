@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { QuoteStatus } from "@prisma/client";
 import { Eye, Inbox } from "lucide-react";
 
+import { AdminPageHeader } from "@/components/admin/page-header";
 import { AdminPagination } from "@/components/shared/admin-pagination";
 import { DeleteButton } from "@/components/shared/delete-button";
 import { Button } from "@/components/ui/button";
@@ -62,12 +63,10 @@ export default async function QuotesPage({
 
   return (
     <div className="space-y-6">
-      <header className="space-y-1">
-        <h1 className="font-display text-2xl font-semibold tracking-tight">Cotações</h1>
-        <p className="text-muted-foreground text-sm">
-          Solicitações de orçamento recebidas pelo site.
-        </p>
-      </header>
+      <AdminPageHeader
+        title="Cotações"
+        description="Solicitações de orçamento recebidas pelo site."
+      />
 
       <nav className="flex flex-wrap gap-2" aria-label="Filtrar por status">
         {filters.map((filter) => (
@@ -92,7 +91,7 @@ export default async function QuotesPage({
           {activeStatus ? "Nenhuma cotação com este status." : "Nenhuma cotação recebida ainda."}
         </div>
       ) : (
-        <div className="border-border rounded-lg border">
+        <div className="border-border bg-card shadow-soft overflow-hidden rounded-xl border">
           <Table>
             <TableHeader>
               <TableRow>

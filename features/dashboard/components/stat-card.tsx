@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { LucideIcon } from "lucide-react";
+import { ArrowUpRight, type LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -11,8 +11,11 @@ interface StatCardProps {
   hint?: string;
   /** Quando informado, o card inteiro vira um link para a seção. */
   href?: string;
-  /** Destaca o card (usado para o indicador que exige ação). */
-  emphasis?: boolean;
+  /**
+   * `attention` destaca o card em vermelho (usado quando há algo aguardando
+   * ação, como cotações pendentes). `default` usa o azul da marca.
+   */
+  tone?: "default" | "attention";
 }
 
 /**
@@ -25,29 +28,39 @@ export function StatCard({
   icon: Icon,
   hint,
   href,
-  emphasis = false,
+  tone = "default",
 }: StatCardProps): React.ReactElement {
+  const attention = tone === "attention" && value > 0;
+
   const content = (
     <>
-      <div className="flex items-center justify-between gap-2">
-        <span className="text-muted-foreground text-sm font-medium">{label}</span>
-        <Icon
-          className={cn("size-5 shrink-0", emphasis ? "text-primary" : "text-muted-foreground")}
-          aria-hidden
-        />
+      <div className="flex items-start justify-between gap-2">
+        <span
+          className={cn(
+            "flex size-10 items-center justify-center rounded-lg",
+            attention ? "bg-brand/10 text-brand" : "bg-accent text-primary",
+          )}
+        >
+          <Icon className="size-5" aria-hidden />
+        </span>
+        {href && (
+          <ArrowUpRight className="text-muted-foreground/50 group-hover:text-primary size-4 transition-colors" />
+        )}
       </div>
-      <div className="mt-3 flex items-baseline gap-2">
+      <div className="mt-4">
         <span className="text-3xl font-semibold tracking-tight tabular-nums">{value}</span>
+        <p className="text-muted-foreground mt-0.5 text-sm font-medium">{label}</p>
       </div>
-      {hint && <p className="text-muted-foreground mt-1 text-xs">{hint}</p>}
+      {hint && <p className="text-muted-foreground/80 mt-1 text-xs">{hint}</p>}
     </>
   );
 
   const className = cn(
-    "bg-card text-card-foreground rounded-lg border p-5 transition-colors",
-    emphasis ? "border-primary/40" : "border-border",
+    "group bg-card text-card-foreground shadow-soft block rounded-xl border p-5 transition-all",
+    attention ? "border-brand/30" : "border-border",
+    href && "hover:shadow-soft-md hover:-translate-y-0.5 hover:border-primary/40",
     href &&
-      "hover:border-primary/60 hover:bg-accent/40 focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+      "focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
   );
 
   if (href) {

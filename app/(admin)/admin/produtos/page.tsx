@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Pencil, Plus, Search } from "lucide-react";
 
+import { AdminPageHeader } from "@/components/admin/page-header";
+import { StatusBadge, type StatusTone } from "@/components/admin/status-badge";
 import { AdminPagination } from "@/components/shared/admin-pagination";
 import { DeleteButton } from "@/components/shared/delete-button";
 import { Button } from "@/components/ui/button";
@@ -27,6 +29,12 @@ const STATUS_LABEL: Record<string, string> = {
   DRAFT: "Rascunho",
   ACTIVE: "Ativo",
   INACTIVE: "Inativo",
+};
+
+const STATUS_TONE: Record<string, StatusTone> = {
+  DRAFT: "warning",
+  ACTIVE: "success",
+  INACTIVE: "neutral",
 };
 
 const STATUS_VALUES = ["DRAFT", "ACTIVE", "INACTIVE"] as const;
@@ -66,18 +74,14 @@ export default async function ProductsPage({
 
   return (
     <div className="space-y-6">
-      <header className="flex items-center justify-between gap-4">
-        <div>
-          <h1 className="font-display text-2xl font-semibold tracking-tight">Produtos</h1>
-          <p className="text-muted-foreground text-sm">Gerencie o catálogo de produtos.</p>
-        </div>
+      <AdminPageHeader title="Produtos" description="Gerencie o catálogo de produtos.">
         <Button asChild>
           <Link href={`${ROUTES.admin.products}/novo`}>
             <Plus />
             Novo produto
           </Link>
         </Button>
-      </header>
+      </AdminPageHeader>
 
       {/* Filtros (form GET, funciona sem JS): busca por nome/código + status. */}
       <form method="get" className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -125,7 +129,7 @@ export default async function ProductsPage({
         </div>
       ) : (
         <>
-          <div className="border-border rounded-lg border">
+          <div className="border-border bg-card shadow-soft overflow-hidden rounded-xl border">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -163,15 +167,9 @@ export default async function ProductsPage({
                         {product.supplier?.name ?? "—"}
                       </TableCell>
                       <TableCell>
-                        <span
-                          className={
-                            product.status === "ACTIVE"
-                              ? "text-green-600 dark:text-green-500"
-                              : "text-muted-foreground"
-                          }
-                        >
+                        <StatusBadge tone={STATUS_TONE[product.status] ?? "neutral"}>
                           {STATUS_LABEL[product.status] ?? product.status}
-                        </span>
+                        </StatusBadge>
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center justify-end gap-1">

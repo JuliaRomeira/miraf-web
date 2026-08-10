@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/features/auth/services/current-user";
 import { AdminSidebar } from "@/components/layout/admin-sidebar";
 import { AdminTopbar } from "@/components/layout/admin-topbar";
+import { AdminOnboarding } from "@/components/admin/onboarding/admin-onboarding";
 import { ROUTES } from "@/constants";
 
 /**
@@ -31,10 +32,13 @@ export default async function AdminLayout({
   return (
     <div className="flex min-h-screen">
       <AdminSidebar role={user.role} />
-      <div className="flex min-h-screen min-w-0 flex-1 flex-col">
+      <div className="bg-muted/40 flex min-h-screen min-w-0 flex-1 flex-col">
         <AdminTopbar userName={user.name} role={user.role} />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8">{children}</main>
+        <main className="flex-1 p-4 sm:p-6 lg:p-8">
+          <div className="mx-auto w-full max-w-7xl">{children}</div>
+        </main>
       </div>
+      <AdminOnboarding role={user.role} />
     </div>
   );
 }

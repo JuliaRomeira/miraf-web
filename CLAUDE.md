@@ -2171,3 +2171,43 @@ Rodada de aprovação final (**sem novas features**): varredura em 4 frentes (de
 - Raios arbitrários `[18/20/22px]` de alguns painéis e as sombras "bespoke" de `catalog-filter-panel`/`home-suppliers`/`unit-card` (coerentes entre si; diferença imperceptível). `bg-white` literais (dark mode adiado). `text-[17px]` do menu (decisão da cliente). Hexes navy do hero do catálogo (casados com a arte). Montagem eager dos 6 slides do hero (a cliente **confirmou manter 6 slides**; montar só o adjacente traria "flash" ao pular pelos indicadores). Token `--success` (verde usado de forma consistente).
 
 Nota de processo: os 6 slides do hero conflitavam com a nota de 2026-08-04 (que dizia "3 slides"); **a cliente confirmou manter os 6** nesta sessão.
+
+---
+
+## 2026-08-10 — Redesign do painel administrativo (identidade Mira) + sistema de ajuda/onboarding
+
+Duas frentes, sem quebrar nenhuma funcionalidade: todas as mudanças são **apresentacionais** (classes/markup/wrappers) ou **arquivos novos**. Nenhum `name` de campo, binding de action, guard, schema ou fluxo de dados foi tocado. Os tokens da marca (`--primary #17479e`, `--brand #ed1c24`) **já existiam** no `globals.css`, então o site público não foi afetado (nada nos tokens mudou). Decisões da cliente nesta sessão: **sidebar azul-marinho** + **documentar os controles de banner que já existem** (sem inventar tela nem mexer no banco).
+
+### 1. Identidade visual / redesign da interface
+
+- **Sidebar azul-marinho** (`admin-sidebar.tsx`): `bg-gradient-to-b from-[#0e2c62] to-[#123a7e]` (mesmo navy do rodapé/hero), logo **branca** (`Logo overHero`), texto claro. Item ativo em "pílula" branca com texto azul (`bg-white text-primary`); inativos `text-white/70 hover:bg-white/10`.
+- **Navegação agrupada** (`admin-nav.tsx` + `constants/navigation.ts`): `AdminNavItem` ganhou `group` (`painel`/`catalogo`/`vendas`/`admin`); novos `visibleAdminNavGroups(role)`, `ADMIN_NAV_GROUP_LABEL/ORDER` e `ADMIN_HELP_NAV_ITEM`. A sidebar renderiza seções com rótulo ("Painel/Catálogo/Vendas/Administração") + um rodapé "Central de ajuda". `ADMIN_NAV_ITEMS`/`visibleAdminNavItems` **mantidos** (não removi nada). Cada link tem `data-tour="<slug>"` (âncora do tour).
+- **Menu mobile** (`admin-mobile-nav.tsx`): mesmo navy no `Sheet` (`w-72`, `[&>button]:text-white/70` para o X).
+- **Topbar** (`admin-topbar.tsx`, segue Server Component): `sticky top-0 z-30 backdrop-blur`; rótulo "Painel administrativo", **central de ajuda (?)**, "Ver site", divisor, **chip do usuário** (avatar com inicial em `bg-primary/10` + nome + papel) e logout (form server action, inalterado).
+- **Layout** (`app/(admin)/layout.tsx`): conteúdo em `bg-muted/40` com `max-w-7xl` central; monta `<AdminOnboarding role=... />`.
+- **Botões** (`ui/button.tsx`): adicionados estados `active:` (hover/disabled já existiam). Primário azul e destrutivo vermelho preservados.
+- **Novos primitivos**: `components/admin/page-header.tsx` (título `font-display` + descrição + ações) e `components/admin/status-badge.tsx` (`StatusBadge` com tons success/neutral/warning/danger/info; vermelho reservado a `danger`). Aplicados nas 6 telas de lista (produtos/categorias/fornecedores/cotações/usuários/configurações): cabeçalho padronizado, badges de status (substituem o texto verde ad-hoc) e tabelas em card (`bg-card shadow-soft rounded-xl`).
+
+### 2. Dashboard
+
+- `dashboard/page.tsx` + `stat-card.tsx` redesenhados: KPIs com **badge de ícone** (azul; **vermelho `bg-brand/10` quando "Cotações pendentes" > 0** = atenção), hover com elevação; nova faixa **"Ações rápidas"** (novo produto/categoria/fornecedor, ver cotações); painéis "Cotações recentes"/"por status" com `shadow-soft` + `font-display`; card **"É a primeira vez por aqui?"** com atalho ao manual. `StatCard.emphasis` virou `tone: "default" | "attention"`.
+
+### 3. Ajuda / onboarding (tudo novo, sem libs externas — CSP-safe)
+
+- **Modal de boas-vindas na 1ª visita** + **tour guiado** em `components/admin/onboarding/admin-onboarding.tsx` (client, montado no layout). O modal aparece uma vez (`localStorage: mira:admin:welcome-seen`); botões "Ver como usar o painel" (inicia o tour) e "Agora não". O tour é um **holofote** (box-shadow spread) que destaca cada item do menu via `data-tour` + balão de explicação; adapta-se ao papel (EDITOR não vê Usuários/Configurações); no mobile (menu escondido) cai em balões centralizados. Reabrível por evento `mira:start-tour`.
+- **Central de ajuda (topbar)**: `components/admin/help/help-menu.tsx` (botão `?`) → diálogo com "Ver como usar o painel", atalhos por área e "Abrir manual completo".
+- **Manual completo**: `app/(admin)/admin/ajuda/page.tsx` (Server Component, rota `ROUTES.admin.help = "/admin/ajuda"`), linguagem simples, com índice + seções: Acesso, Produtos, Categorias, Fornecedores, **Imagens e banners** (honesto: fotos de produto, imagem/banner da categoria, logo do fornecedor; banner principal da home é fixo/manutenção), Cotações, Usuários (admin), Configurações (admin), Dúvidas frequentes, **Dados de acesso** (só ADMIN: `admin@miraf.com.br` / senha inicial `Miraf@2026`, com ressalva de que pode ter sido trocada) e **Cuidados importantes**. Conteúdo/steps do tour centralizados em `constants/admin-help.ts`. Botão "Iniciar tour" via `start-tour-button.tsx` (client).
+
+### Verificação
+
+- `type-check` + `lint` + Prettier limpos; **`next build` de produção passou** (47 rotas, todas as `/admin/*` compilam com o shell novo — prova de que não há erro de boundary RSC nem import quebrado). Build feito com o dev **parado** (lição registrada). Login/render **autenticado** não exercitado no navegador: (a) o middleware redireciona `/admin/*` → `/login` sem sessão, então rotas admin não compilam por request anônimo; (b) por política, não digito senha para autenticar. Verificação visual/interativa do modal/tour/estados hover ao vivo pende de a cliente logar (ou autorizar) — limitação de preview já registrada. Nenhuma credencial foi alterada.
+
+### Ajuste (mesma data) — mais presença do vermelho da marca (pedido da cliente)
+
+Vermelho `#ed1c24` distribuído de forma equilibrada (azul segue predominante; "Excluir" continua sendo o único destrutivo vermelho):
+
+- **Detalhes:** barra de acento vermelha no **item ativo** do menu lateral (`admin-nav.tsx`) e barra vertical vermelha antes do **título** de toda página (`AdminPageHeader`).
+- **Botões:** nova variante **`brand`** em `ui/button.tsx` (`bg-brand`, com `focus-visible:ring-brand`), usada em CTAs de destaque **não destrutivos** — "Ver como usar o painel" (modal de boas-vindas), destaque da central de ajuda, `StartTourButton` (default agora `brand`) e "Abrir manual" (card "primeira vez" do dashboard). Botões de CRUD (Salvar/Novo/Filtrar) seguem **azuis** de propósito, para não colidir com o vermelho de exclusão.
+- Verificado: `type-check` + `lint` + Prettier limpos.
+
+Pendências inalteradas (produção: domínio/e-mails oficiais, Resend com domínio verificado, senha admin, deploy; conteúdo: números de marketing, `/contato` 404, modo escuro).

@@ -17,6 +17,7 @@ interface AdminMobileNavProps {
 
 /**
  * Acesso à navegação do painel em telas pequenas (hamburger na topbar).
+ * O painel lateral usa o mesmo azul-marinho da sidebar desktop.
  */
 export function AdminMobileNav({ role }: AdminMobileNavProps): React.ReactElement {
   const [open, setOpen] = useState(false);
@@ -28,20 +29,24 @@ export function AdminMobileNav({ role }: AdminMobileNavProps): React.ReactElemen
           <Menu />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-64 p-0">
-        <SheetHeader className="border-border h-16 justify-center border-b px-6">
+      <SheetContent
+        side="left"
+        className="w-72 border-white/10 bg-gradient-to-b from-[#0e2c62] to-[#123a7e] p-0 text-white [&>button]:text-white/70 [&>button]:hover:text-white"
+      >
+        <SheetHeader className="h-16 justify-center border-b border-white/10 px-6">
           {/* Título mantido para leitores de tela (Radix exige); o logo é o rótulo visual. */}
           <SheetTitle className="sr-only">Painel administrativo Mira</SheetTitle>
           <Logo
             priority={false}
+            overHero
             href={ROUTES.admin.dashboard}
             label="Mira — painel administrativo"
             onNavigate={() => setOpen(false)}
             tooltip={false}
           />
         </SheetHeader>
-        <div className="p-4">
-          <AdminNav role={role} onNavigate={() => setOpen(false)} />
+        <div className="flex-1 overflow-y-auto p-4">
+          <AdminNav role={role} onNavigate={() => setOpen(false)} showHelp />
         </div>
       </SheetContent>
     </Sheet>

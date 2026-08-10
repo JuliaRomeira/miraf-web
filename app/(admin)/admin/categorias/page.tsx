@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Pencil, Plus } from "lucide-react";
 
+import { AdminPageHeader } from "@/components/admin/page-header";
+import { StatusBadge } from "@/components/admin/status-badge";
 import { DeleteButton } from "@/components/shared/delete-button";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,27 +26,24 @@ export default async function CategoriesPage(): Promise<React.ReactElement> {
 
   return (
     <div className="space-y-6">
-      <header className="flex items-center justify-between gap-4">
-        <div>
-          <h1 className="font-display text-2xl font-semibold tracking-tight">Categorias</h1>
-          <p className="text-muted-foreground text-sm">
-            Gerencie as categorias principais. As subcategorias ficam dentro de cada categoria.
-          </p>
-        </div>
+      <AdminPageHeader
+        title="Categorias"
+        description="Gerencie as categorias principais. As subcategorias ficam dentro de cada categoria."
+      >
         <Button asChild>
           <Link href={`${ROUTES.admin.categories}/nova`}>
             <Plus />
             Nova categoria
           </Link>
         </Button>
-      </header>
+      </AdminPageHeader>
 
       {categories.length === 0 ? (
         <div className="border-border text-muted-foreground rounded-lg border border-dashed p-10 text-center text-sm">
           Nenhuma categoria cadastrada ainda. Crie a primeira para começar o catálogo.
         </div>
       ) : (
-        <div className="border-border rounded-lg border">
+        <div className="border-border bg-card shadow-soft overflow-hidden rounded-xl border">
           <Table>
             <TableHeader>
               <TableRow>
@@ -67,15 +66,9 @@ export default async function CategoriesPage(): Promise<React.ReactElement> {
                   <TableCell className="text-right">{category._count.products}</TableCell>
                   <TableCell className="text-right">{category.order}</TableCell>
                   <TableCell>
-                    <span
-                      className={
-                        category.active
-                          ? "text-green-600 dark:text-green-500"
-                          : "text-muted-foreground"
-                      }
-                    >
+                    <StatusBadge tone={category.active ? "success" : "neutral"}>
                       {category.active ? "Ativa" : "Inativa"}
-                    </span>
+                    </StatusBadge>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center justify-end gap-1">
