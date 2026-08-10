@@ -11,12 +11,17 @@ interface AdminSidebarProps {
 /**
  * Barra lateral fixa do painel administrativo (visível a partir de `md`).
  * Usa o azul-marinho da marca Mira (mesmo tom do rodapé do site) para dar
- * identidade forte ao painel, mantendo o conteúdo em fundo claro. Em telas
- * menores, a navegação é acessada via `AdminMobileNav` na topbar.
+ * identidade forte ao painel, mantendo o conteúdo em fundo claro.
+ *
+ * `sticky top-0 h-svh`: a barra fica presa ao topo da janela e acompanha a
+ * rolagem em páginas altas (ex.: Central de ajuda) — antes ela rolava junto e
+ * sumia. `self-start` evita que o flex a estique até a altura do conteúdo (o
+ * que anularia o sticky). O menu interno rola sozinho se ficar maior que a
+ * tela. Em telas menores, a navegação é acessada via `AdminMobileNav`.
  */
 export function AdminSidebar({ role }: AdminSidebarProps): React.ReactElement {
   return (
-    <aside className="hidden w-64 shrink-0 flex-col bg-gradient-to-b from-[#0e2c62] to-[#123a7e] text-white md:flex">
+    <aside className="sticky top-0 hidden h-svh w-64 shrink-0 flex-col self-start bg-gradient-to-b from-[#0e2c62] to-[#123a7e] text-white md:flex">
       <div className="flex h-16 items-center border-b border-white/10 px-6">
         <Logo
           priority={false}
