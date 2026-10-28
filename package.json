@@ -21,7 +21,8 @@
     "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio",
     "prisma:seed": "tsx prisma/seed.ts",
-    "validate": "npm run type-check && npm run lint && npm run format:check"
+    "validate": "npm run type-check && npm run lint && npm run format:check",
+    "test": "tsx --test tests/*.test.ts"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
