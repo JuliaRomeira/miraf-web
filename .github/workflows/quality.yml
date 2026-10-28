@@ -11,6 +11,10 @@ permissions:
 jobs:
   quality:
     runs-on: ubuntu-latest
+    env:
+      # Apenas para carregar a configuração do Prisma durante a geração do cliente.
+      # Os testes desta etapa não acessam o banco.
+      DATABASE_URL: postgresql://ci:ci@localhost:5432/mira_ci
     steps:
       - name: Checkout
         uses: actions/checkout@v4
