@@ -1,8 +1,31 @@
-# Miraf Web Platform
+# Mira | Catálogo e solicitações de cotação
 
 Plataforma web moderna para geração de cotações e apresentação de catálogo, focada em food service, panificação, confeitaria e sorveterias.
 
-> **Este NÃO é um e-commerce.** O objetivo é gerar **solicitações de orçamento**, não vendas diretas.
+> **Não é um e-commerce.** A plataforma organiza o catálogo e permite solicitar orçamentos; não realiza vendas pelo site.
+
+## Contexto e situação do projeto
+
+Este é um **projeto freelancer desenvolvido para uma distribuidora**, com necessidades reais de apresentação de produtos e atendimento comercial. A solução reúne catálogo consultável, detalhes dos produtos e um fluxo de solicitação de cotação para a equipe comercial.
+
+**Status (outubro de 2026):** desenvolvimento e validação; **a plataforma ainda não foi lançada oficialmente em produção**. O endereço abaixo é uma prévia técnica, não uma indicação de operação comercial.
+
+- **Prévia do projeto:** [miraf-web.vercel.app](https://miraf-web.vercel.app/) — ambiente de demonstração, sujeito a mudanças ou restrições de acesso
+- **Escopo do catálogo:** mais de **366 produtos** considerados no projeto; **nem todos estão cadastrados ou disponíveis na interface**. Este número não representa vendas, acessos ou produtos publicados.
+
+### Interface
+
+![Prévia da interface da plataforma Mira](https://raw.githubusercontent.com/JuliaRomeira/portfolio-julia/main/assets/mira-interface.webp)
+
+*Imagem utilizada no meu portfólio; representa uma etapa do projeto e pode diferir da versão atual.*
+
+### Problema e solução
+
+O projeto busca facilitar a descoberta de produtos de uma distribuidora e organizar pedidos de orçamento que, de outra forma, dependeriam de interações manuais e de informações dispersas.
+
+**Fluxo implementado no código:** consulta ao catálogo e aos detalhes de produtos (incluindo informações técnicas e nutricionais, quando cadastradas), seleção de itens, solicitação de cotação e acompanhamento administrativo. A conclusão dessas funcionalidades no código **não substitui homologação nem publicação oficial**.
+
+
 
 ---
 
@@ -37,7 +60,7 @@ Plataforma web moderna para geração de cotações e apresentação de catálog
 
 ```bash
 # 1) Clonar e instalar
-git clone <repo-url> miraf-web
+git clone https://github.com/JuliaRomeira/miraf-web.git
 cd miraf-web
 npm install
 
@@ -178,12 +201,15 @@ Em produção (VPS + Nginx), configurar:
 
 ---
 
-## Próximos passos
+## Qualidade e evolução
 
-Esta é a **fundação do projeto**. As próximas etapas são, nesta ordem:
+O repositório dispõe de scripts para verificar **tipagem**, **lint** e **formatação** (`npm run validate`). A publicação comercial requer validação com a cliente, dados completos e revisão dos fluxos em ambiente real. Verificações automatizadas de regras de negócio e CI são melhorias planejadas e não devem ser confundidas com funcionalidades já testadas.
 
-1. **Schema Prisma** completo (User, Category, Brand, Product, Recipe, Quote, QuoteItem, Settings)
-2. **Feature de autenticação** do admin
-3. **Feature de produtos** (catálogo público + CRUD no admin)
-4. **Feature de cotação** (fluxo completo até envio de email)
-5. **Painel administrativo** (dashboard + demais menus)
+## Aprendizados e decisões técnicas
+
+- Organização do código por funcionalidades, com separação entre componentes, validação de entrada e serviços.
+- Validação de dados com Zod e persistência relacional com PostgreSQL/Prisma.
+- Estrutura para informações nutricionais e técnicas dos produtos.
+- Fluxo de cotação com painel de acompanhamento, preservando a distinção entre **pedido de orçamento** e **compra online**.
+
+Desenvolvimento: **Júlia Romeira**, em projeto freelancer com uso de ferramentas de IA como apoio em etapas do trabalho.
